@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/09_UI/StartUI.uss?fileID=7433441132597879392&amp;guid=fdcc80413412ee6489aec7a260fcccda&amp;type=3#StartUI" />
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row-reverse;">
+        <ui:VisualElement style="flex-grow: 1; background-image: url(&apos;project://database/Assets/02_Assets/Texture/StartScene.renderTexture?fileID=8400000&amp;guid=a40e8524539d72b4b9c5eedb10d1b1f7&amp;type=2#StartScene&apos;); align-items: center;">
+            <ui:Label text="BLUE VS RED" display-tooltip-when-elided="true" style="font-size: 200px; -unity-font-style: bold; -unity-text-align: middle-center; top: 100px;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="width: 470px; flex-direction: column-reverse; align-items: center; background-color: rgba(51, 51, 51, 255);">
+            <ui:Button text="Quit" display-tooltip-when-elided="true" name="QuitBtn" class="Button" />
+            <ui:Button text="Settings" display-tooltip-when-elided="true" name="SettingBtn" class="Button" />
+            <ui:Button text="GameStart" display-tooltip-when-elided="true" name="StartBtn" class="Button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
