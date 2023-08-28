@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f1746c41ac27824ab652c26b1a7d936, type: 3}
+  m_Name: CharacterList
+  m_EditorClassIdentifier: 
+  characterList:
+  - characterNum: 0
+    name: Blue
+    description: "\uD30C\uB780 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
+    _image: {fileID: 8400000, guid: 2a309d9f4e3dd3345b8632a74b2bf6b8, type: 2}
+  - characterNum: 1
+    name: Red
+    description: "\uBE68\uAC04 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
+    _image: {fileID: 8400000, guid: 32c68850359f60a4fb0543829298a90b, type: 2}
