@@ -1,16 +1,19 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
-public class CharacterInfo
+public class Character
 {
     public int characterNum;
     public string name;
     public string description;
-    public RenderTexture _image;
+    public RenderTexture texure;
 }
 
 [CreateAssetMenu(menuName = "SO/Character")]
 public class CharacterListSO : ScriptableObject
 {
-    public List<CharacterInfo> List;
+    public List<Character> List;
 }
 

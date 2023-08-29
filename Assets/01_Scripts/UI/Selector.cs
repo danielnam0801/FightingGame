@@ -1,56 +1,98 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CustomUI;
 using UnityEngine.UIElements;
+using Core;
+using System.Linq;
+using System;
 
-public class Selector : MonoBehaviour
+public enum SelectState
 {
-    [SerializeField] CharacterListSO _characterList;
-    [SerializeField] VisualTreeAsset characterPanel;
+    None,
+    Choosing,
+    Selected,
+}
 
-    UIDocument _uiDocument;
+public class Selector
+{
+    public SelectState currentState;
+    protected VisualElement _target;
 
-    VisualElement _LeftPanel;
-    VisualElement _RightPanel;
-    VisualElement _SelectPanel;
-    Label _VSLabel;
-    private void Awake()
+    InputKey _keys;
+
+    List<Slot> slots;
+    int _curIdx;
+
+    //protected Selector(VisualElement targetpanel, InputKey keys, List<Slot> slots)
+    //{
+    //    currentState = SelectState.None;
+    //    _target = targetpanel;
+    //    _keys = keys;
+    //    _curIdx = 0;
+    //    this.slots = slots;
+    //}
+
+    public Selector(InputKey keys, List<Slot> slots)
     {
-        _uiDocument = GetComponent<UIDocument>();
+        currentState = SelectState.None;
+        _keys = keys;
+        _curIdx = 0;
+        this.slots = slots;
     }
 
-    private void OnEnable()
+    public void Update()
     {
-        var root = _uiDocument.rootVisualElement;
-
-        _LeftPanel = root.Q<VisualElement>("Middle--left");
-        _RightPanel = root.Q<VisualElement>("Middle--right");
-        _SelectPanel = root.Q<VisualElement>("CharacterSet");
-
-        _VSLabel = root.Q<Label>("VSLabel");
- 
-        MakeCharPanel();
-    }
-
-    private void MakeCharPanel()
-    {
-        for(int i = 0; i < _characterList.List.Count; i++)
+        if (Input.anyKeyDown)
         {
-            VisualElement template = characterPanel.Instantiate().Q("CharacterVisual");
-            _SelectPanel.Add(template);
+            if (Input.GetKeyDown(_keys.selectKey))
+            {
+                currentState = SelectState.Selected;
+                Select();
+            }
+            else
+            {
+                currentState = SelectState.Choosing;
+                Choose();
+            }
         }
     }
-    
-    public void Selected(int selectid, CharacterSlot slot)
-    {
-        Background bg = new Background();
-        bg.renderTexture = slot.image;
 
-        if (selectid == 1) // 1p
-            _LeftPanel.style.backgroundImage = bg;
-        else // 2p
-            _RightPanel.style.backgroundImage = bg;
+    public virtual void Select()
+    {
+        //선택 됐을때 사운드 재생 등등
 
     }
+
+    public void Choose()
+    {
+        if (Input.GetKeyDown(_keys.leftKey))
+        {
+            MovingTarget(-1);
+        }
+        if (Input.GetKeyDown(_keys.rightKey))
+        {
+            MovingTarget(1);
+        }
+    }
+
+    private void MovingTarget(int idx)
+    {
+        _curIdx += idx;
+        if(_curIdx < 0)
+            _curIdx = slots.Count() - 1;
+        
+        if(_curIdx >= slots.Count())
+            _curIdx = 0;
+
+
+        Slot currentSlot = FindSlotByIndex(idx);
+        //나중에 컬러가 아니라 1p, 2p 파넬로 바꿔줘야함
+        currentSlot.Element.style.backgroundColor = Color.red;
+    }
+
+    private Slot FindSlotByIndex(int idx)
+    {
+        return slots[idx];
+    }
+
 }
