@@ -16,8 +16,8 @@ MonoBehaviour:
   - characterNum: 0
     name: BlueGuy
     description: "\uD30C\uB780\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
-    _image: {fileID: 8400000, guid: 2a309d9f4e3dd3345b8632a74b2bf6b8, type: 2}
+    texure: {fileID: 8400000, guid: 2a309d9f4e3dd3345b8632a74b2bf6b8, type: 2}
   - characterNum: 1
     name: RedGuy
     description: "\uBE68\uAC04\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
-    _image: {fileID: 8400000, guid: 32c68850359f60a4fb0543829298a90b, type: 2}
+    texure: {fileID: 8400000, guid: 32c68850359f60a4fb0543829298a90b, type: 2}

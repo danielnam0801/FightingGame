@@ -16,12 +16,13 @@ public enum SelectState
 public class Selector
 {
     public SelectState currentState;
-    protected VisualElement _target;
+    protected Sprite target;
 
     InputKey _keys;
 
     List<Slot> slots;
     int _curIdx;
+    int _prevIdx;
 
     //protected Selector(VisualElement targetpanel, InputKey keys, List<Slot> slots)
     //{
@@ -38,6 +39,7 @@ public class Selector
         _keys = keys;
         _curIdx = 0;
         this.slots = slots;
+        Debug.Log(slots.Count);
     }
 
     public void Update()
@@ -55,6 +57,14 @@ public class Selector
                 Choose();
             }
         }
+    }
+
+    public virtual void Focus()
+    {
+        Slot currentSlot = FindSlotByIndex(_curIdx);
+        Slot prevSlot = FindSlotByIndex(_prevIdx);
+        //나중에 컬러가 아니라 1p, 2p 파넬로 바꿔줘야함
+        
     }
 
     public virtual void Select()
@@ -77,17 +87,16 @@ public class Selector
 
     private void MovingTarget(int idx)
     {
+        _prevIdx = _curIdx;
         _curIdx += idx;
+
         if(_curIdx < 0)
             _curIdx = slots.Count() - 1;
         
         if(_curIdx >= slots.Count())
             _curIdx = 0;
 
-
-        Slot currentSlot = FindSlotByIndex(idx);
-        //나중에 컬러가 아니라 1p, 2p 파넬로 바꿔줘야함
-        currentSlot.Element.style.backgroundColor = Color.red;
+        Focus();
     }
 
     private Slot FindSlotByIndex(int idx)

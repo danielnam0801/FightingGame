@@ -16,7 +16,7 @@ public class SelectUI : MonoBehaviour
     VisualElement _SlotPanel;
     Label _VSLabel;
 
-    List<CharacterSlot> _characters = new List<CharacterSlot>();
+    List<Slot> _characters = new List<Slot>();
     //List<MapSlot> _maps = new List<MapSlot>();
 
     Selector player1;
@@ -53,13 +53,14 @@ public class SelectUI : MonoBehaviour
 
 
         player1 = new Player1(p1, _characters);
-        player2 = new Player2();
+        player2 = new Player2(p2, _characters);
         //Slot 클릭이벤트 구현해야함  
     }
 
     private void Update()
     {
-        
+        player1?.Update();
+        player2?.Update();
     }
 
     private void MakeCharacterSlot()
@@ -70,7 +71,8 @@ public class SelectUI : MonoBehaviour
             element.style.backgroundImage = SetImage(_characterList.List[i].texure);
             _SlotPanel.Add(element);
 
-            Slot slot = new Slot(element, i);
+            CharacterSlot slot = new CharacterSlot(element, i);
+            _characters.Add(slot);
         }
     }
 

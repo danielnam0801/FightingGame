@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class CharacterSlot : Slot
 {
-    protected CharacterSlot(VisualElement element, int idx) : base(element, idx)
+    public CharacterSlot(VisualElement element, int idx) : base(element, idx)
     {
     }
 }

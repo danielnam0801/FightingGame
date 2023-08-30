@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class Slot
 {
 
-    public bool IsStaying { get; set; }
+    public bool IsFocused { get; set; }
     public bool IsSelected { get; set; }
     public VisualElement Element { get; set; }  
     public int SlotIndex { get; set; }
