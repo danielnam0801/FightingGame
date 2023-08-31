@@ -6,80 +6,66 @@ using Core;
 using System.Linq;
 using System;
 
-public enum SelectState
-{
-    None,
-    Choosing,
-    Selected,
+public enum Player 
+{ 
+    player1,
+    player2,
 }
 
-public class Selector
+public enum SelectState
+{
+    none,
+    focus,
+    select,
+}
+
+public abstract class Selector
 {
     public SelectState currentState;
-    protected Sprite target;
 
-    InputKey _keys;
+    protected Sprite target;
+    protected InputKey keys;
+    protected Player player;
+    protected int _curIdx;
+    protected int _prevIdx;
 
     List<Slot> slots;
-    int _curIdx;
-    int _prevIdx;
 
-    //protected Selector(VisualElement targetpanel, InputKey keys, List<Slot> slots)
-    //{
-    //    currentState = SelectState.None;
-    //    _target = targetpanel;
-    //    _keys = keys;
-    //    _curIdx = 0;
-    //    this.slots = slots;
-    //}
-
-    public Selector(InputKey keys, List<Slot> slots)
+    public Selector(Player player, InputKey keys, List<Slot> slots)
     {
-        currentState = SelectState.None;
-        _keys = keys;
-        _curIdx = 0;
         this.slots = slots;
-        Debug.Log(slots.Count);
+        this.player = player;
+        this.keys = keys;
+
+        _curIdx = 0;
+        _prevIdx = 0;
+        currentState = SelectState.none;
     }
 
     public void Update()
     {
         if (Input.anyKeyDown)
         {
-            if (Input.GetKeyDown(_keys.selectKey))
+            if (Input.GetKeyDown(keys.selectKey))
             {
-                currentState = SelectState.Selected;
+                currentState = SelectState.select;
+                Debug.Log("selelct");
                 Select();
             }
             else
             {
-                currentState = SelectState.Choosing;
+                currentState = SelectState.focus;
                 Choose();
             }
         }
     }
-
-    public virtual void Focus()
-    {
-        Slot currentSlot = FindSlotByIndex(_curIdx);
-        Slot prevSlot = FindSlotByIndex(_prevIdx);
-        //나중에 컬러가 아니라 1p, 2p 파넬로 바꿔줘야함
-        
-    }
-
-    public virtual void Select()
-    {
-        //선택 됐을때 사운드 재생 등등
-
-    }
-
     public void Choose()
     {
-        if (Input.GetKeyDown(_keys.leftKey))
+        if (Input.GetKeyDown(keys.leftKey))
         {
             MovingTarget(-1);
         }
-        if (Input.GetKeyDown(_keys.rightKey))
+        if (Input.GetKeyDown(keys.rightKey))
         {
             MovingTarget(1);
         }
@@ -98,10 +84,12 @@ public class Selector
 
         Focus();
     }
-
-    private Slot FindSlotByIndex(int idx)
+    protected Slot FindSlotByIndex(int idx)
     {
         return slots[idx];
     }
+
+    public abstract void Focus();
+    public abstract void Select();
 
 }

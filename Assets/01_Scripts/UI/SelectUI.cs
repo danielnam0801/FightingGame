@@ -44,16 +44,18 @@ public class SelectUI : MonoBehaviour
         p1.leftKey = KeyCode.A;
         p1.downKey = KeyCode.S;
         p1.rightKey = KeyCode.D;
+        p1.selectKey = KeyCode.Space;
         
         InputKey p2 = new InputKey();
         p2.upKey = KeyCode.UpArrow;
         p2.leftKey = KeyCode.LeftArrow;
         p2.downKey = KeyCode.DownArrow;
         p2.rightKey = KeyCode.RightArrow;
+        p2.selectKey = KeyCode.Return;
 
 
-        player1 = new Player1(p1, _characters);
-        player2 = new Player2(p2, _characters);
+        player1 = new Player1(Player.player1, p1, _characters, _LeftPanel);
+        player2 = new Player2(Player.player2, p2, _characters, _RightPanel);
         //Slot 클릭이벤트 구현해야함  
     }
 
