@@ -30,6 +30,7 @@ public class Player1 : Selector
         //currentslot.Element.RemoveFromClassList("focus");
         //currentslot.Element.AddToClassList("select");
         
+        //leftPanel에 안뜸 고쳐야함
         targetPanel.style.backgroundImage = currentslot.Element.style.backgroundImage;
     }
 
