@@ -8,7 +8,7 @@ public class Character
     public int characterNum;
     public string name;
     public string description;
-    public RenderTexture texure;
+    public RenderTexture texture;
 }
 
 [CreateAssetMenu(menuName = "SO/Character")]

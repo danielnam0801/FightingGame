@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Core;
 using UnityEngine.UIElements;
+using System;
 
 public class SelectUI : MonoBehaviour
 {
@@ -54,8 +55,8 @@ public class SelectUI : MonoBehaviour
         p2.selectKey = KeyCode.Return;
 
 
-        player1 = new Player1(Player.player1, p1, _characters, _LeftPanel);
-        player2 = new Player2(Player.player2, p2, _characters, _RightPanel);
+        player1 = new Player1(this, Player.player1, p1, _characters);
+        player2 = new Player2(this, Player.player2, p2, _characters);
         //Slot 클릭이벤트 구현해야함  
     }
 
@@ -70,18 +71,28 @@ public class SelectUI : MonoBehaviour
         for(int i = 0; i < _characterList.List.Count; i++)
         {
             VisualElement element = _slotAsset.Instantiate().Q("Slot");
-            element.style.backgroundImage = SetImage(_characterList.List[i].texure);
+            RenderTexture image = _characterList.List[i].texture;
+           
+            element.style.backgroundImage = SetImage(image);
             _SlotPanel.Add(element);
 
-            CharacterSlot slot = new CharacterSlot(element, i);
+            CharacterSlot slot = new CharacterSlot(element, image, i);
             _characters.Add(slot);
         }
     }
 
-    private Background SetImage(RenderTexture _texture)
+    private StyleBackground SetImage(RenderTexture texture)
     {
-        Background bg;
-        bg.renderTexture = _texture;
-        return bg;
+        return new StyleBackground(Background.FromRenderTexture(texture));
+    }
+
+    public void SetLeftPanelImage(Slot slot)
+    {
+        _LeftPanel.style.backgroundImage = SetImage(slot.Image);
+    }
+
+    public void SetRightPanelImage(Slot slot)
+    {
+        _RightPanel.style.backgroundImage = SetImage(slot.Image);
     }
 }

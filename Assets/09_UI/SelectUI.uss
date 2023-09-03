@@ -23,21 +23,19 @@
     height: 100%;
     overflow: visible;
     justify-content: flex-end;
+    -unity-background-image-tint-color: rgba(255, 205, 205, 255);
+    background-image: url('project://database/Assets/02_Assets/Texture/BlueCharacterTex.renderTexture?fileID=8400000&guid=2a309d9f4e3dd3345b8632a74b2bf6b8&type=2#BlueCharacterTex');
 }
 
 .left {
     align-items: flex-start;
-    -unity-background-image-tint-color: rgba(241, 114, 98, 255);
-    background-color: rgba(0, 0, 0, 255);
 }
 
 .right {
     align-items: flex-end;
-    -unity-background-image-tint-color: rgba(0, 125, 255, 255);
-    background-color: rgba(0, 0, 0, 255);
 }
 
-.CharacterPanel {
+.slot {
     width: 150px;
     height: 150px;
     background-color: rgba(255, 0, 0, 0);
@@ -59,22 +57,15 @@
     margin-bottom: 6px;
 }
 
-.slot.focus {
-    border-left-color: rgb(255, 0, 0);
-    border-right-color: rgb(255, 0, 0);
-    border-top-color: rgb(255, 0, 0);
-    border-bottom-color: rgb(255, 0, 0);
-}
-
 .slot.select {
-    -unity-background-image-tint-color: rgba(125, 122, 122, 255);
-    border-left-color: rgba(255, 255, 255, 255);
-    border-right-color: rgba(255, 255, 255, 255);
-    border-top-color: rgba(255, 255, 255, 255);
-    border-bottom-color: rgba(255, 255, 255, 255);
+    -unity-background-image-tint-color: rgb(125, 122, 122);
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
 }
 
-.p1 {
+.slot.p1 {
     border-left-color: rgba(255, 0, 0, 255);
     border-right-color: rgba(255, 0, 0, 255);
     border-top-color: rgba(255, 0, 0, 255);
@@ -83,15 +74,23 @@
     border-right-width: 3px;
     border-top-width: 3px;
     border-bottom-width: 3px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
-.p2 {
-    border-left-color: rgba(0, 87, 255, 255);
-    border-right-color: rgba(0, 87, 255, 255);
-    border-top-color: rgba(0, 87, 255, 255);
-    border-bottom-color: rgba(0, 87, 255, 255);
+.slot.p2 {
+    border-left-color: rgba(0, 97, 255, 255);
+    border-right-color: rgba(0, 97, 255, 255);
+    border-top-color: rgba(0, 97, 255, 255);
+    border-bottom-color: rgba(0, 97, 255, 255);
     border-left-width: 3px;
     border-right-width: 3px;
     border-top-width: 3px;
     border-bottom-width: 3px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 }

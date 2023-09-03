@@ -23,20 +23,22 @@ public abstract class Selector
 {
     public SelectState currentState;
 
-    protected Sprite target;
     protected InputKey keys;
     protected Player player;
     protected int _curIdx;
     protected int _prevIdx;
+    protected SelectUI selectUI;
+    
+    private List<Slot> slots;
 
-    List<Slot> slots;
 
-    public Selector(Player player, InputKey keys, List<Slot> slots)
+    public Selector(SelectUI selectUI, Player player, InputKey keys, List<Slot> slots)
     {
+        this.selectUI = selectUI;
         this.slots = slots;
         this.player = player;
         this.keys = keys;
-
+    
         _curIdx = 0;
         _prevIdx = 0;
         currentState = SelectState.none;
@@ -49,7 +51,6 @@ public abstract class Selector
             if (Input.GetKeyDown(keys.selectKey))
             {
                 currentState = SelectState.select;
-                Debug.Log("selelct");
                 Select();
             }
             else
