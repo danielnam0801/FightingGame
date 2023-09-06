@@ -6,9 +6,9 @@ using UnityEngine.UIElements;
 
 public class Player1 : Selector
 {
-  
-    public Player1(SelectUI selectUI, Player player, InputKey keys, List<Slot> slots) : base(selectUI, player, keys, slots)
+    public Player1(SelectUI selectUI, Player player, InputKey keys, List<Slot> slots) : base(selectUI, keys, slots)
     {
+        this.player = player;
     }
 
     public override void Focus()
@@ -18,12 +18,14 @@ public class Player1 : Selector
 
         currentslot.Element.AddToClassList("p1");
         prevslot.Element.RemoveFromClassList("p1");
+        prevslot.IsSelected -= 1;
     }
 
     public override void Select()
     {
         Debug.Log("Player1 Setting");
         Slot currentslot = FindSlotByIndex(_curIdx);
+        currentslot.IsSelected += 1;
         selectUI.SetLeftPanelImage(currentslot);
     }
 

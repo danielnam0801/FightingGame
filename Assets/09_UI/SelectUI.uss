@@ -19,12 +19,20 @@
 }
 
 .Middle--Panel {
-    width: 50%;
-    height: 100%;
+    width: 40%;
+    height: 80%;
     overflow: visible;
     justify-content: flex-end;
-    -unity-background-image-tint-color: rgba(255, 205, 205, 255);
+    -unity-background-image-tint-color: rgb(255, 205, 205);
     background-image: url('project://database/Assets/02_Assets/Texture/BlueCharacterTex.renderTexture?fileID=8400000&guid=2a309d9f4e3dd3345b8632a74b2bf6b8&type=2#BlueCharacterTex');
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .left {
@@ -66,10 +74,10 @@
 }
 
 .slot.p1 {
-    border-left-color: rgba(255, 0, 0, 255);
-    border-right-color: rgba(255, 0, 0, 255);
-    border-top-color: rgba(255, 0, 0, 255);
-    border-bottom-color: rgba(255, 0, 0, 255);
+    border-left-color: rgb(255, 0, 0);
+    border-right-color: rgb(255, 0, 0);
+    border-top-color: rgb(255, 0, 0);
+    border-bottom-color: rgb(255, 0, 0);
     border-left-width: 3px;
     border-right-width: 3px;
     border-top-width: 3px;
@@ -81,10 +89,10 @@
 }
 
 .slot.p2 {
-    border-left-color: rgba(0, 97, 255, 255);
-    border-right-color: rgba(0, 97, 255, 255);
-    border-top-color: rgba(0, 97, 255, 255);
-    border-bottom-color: rgba(0, 97, 255, 255);
+    border-left-color: rgb(0, 97, 255);
+    border-right-color: rgb(0, 97, 255);
+    border-top-color: rgb(0, 97, 255);
+    border-bottom-color: rgb(0, 97, 255);
     border-left-width: 3px;
     border-right-width: 3px;
     border-top-width: 3px;
@@ -93,4 +101,14 @@
     border-bottom-left-radius: 3px;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+}
+
+.ModeButton.cp {
+    color: rgba(77, 73, 73, 255);
+}
+
+.ModeButton.p1 {
+}
+
+.ModeButton.p2 {
 }

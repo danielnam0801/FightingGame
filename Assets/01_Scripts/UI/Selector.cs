@@ -6,19 +6,6 @@ using Core;
 using System.Linq;
 using System;
 
-public enum Player 
-{ 
-    player1,
-    player2,
-}
-
-public enum SelectState
-{
-    none,
-    focus,
-    select,
-}
-
 public abstract class Selector
 {
     public SelectState currentState;
@@ -32,11 +19,10 @@ public abstract class Selector
     private List<Slot> slots;
 
 
-    public Selector(SelectUI selectUI, Player player, InputKey keys, List<Slot> slots)
+    public Selector(SelectUI selectUI, InputKey keys, List<Slot> slots)
     {
         this.selectUI = selectUI;
         this.slots = slots;
-        this.player = player;
         this.keys = keys;
     
         _curIdx = 0;
