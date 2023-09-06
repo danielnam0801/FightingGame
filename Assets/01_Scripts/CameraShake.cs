@@ -22,10 +22,6 @@ public class CameraShake : MonoBehaviour
     void Start()
     {
 
-        //if(Input.GetKeyDown(KeyCode.W))
-        //{
-        //    StartCoroutine(StopShake());
-        //}
     }
     private void Update()
     {
