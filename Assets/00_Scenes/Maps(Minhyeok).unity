@@ -307,7 +307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18783325}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.2, y: 1.16, z: -2.544}
+  m_LocalPosition: {x: 5.2, y: 1.16, z: -1.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2519,7 +2519,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754925435}
-  m_LocalRotation: {x: 0.1268918, y: -0.5053456, z: 0.24002175, w: 0.8190933}
+  m_LocalRotation: {x: 0.12689182, y: -0.5053456, z: 0.24002175, w: 0.81909335}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2748,9 +2748,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1000013228589232, guid: 3bf11e47adbdd4542a4be54c81dac563, type: 3}
+    - target: {fileID: 1000012719737562, guid: 3bf11e47adbdd4542a4be54c81dac563, type: 3}
       propertyPath: m_Name
       value: BlueGuy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013228589232, guid: 3bf11e47adbdd4542a4be54c81dac563, type: 3}
+      propertyPath: m_Name
+      value: BlueGuy_123
       objectReference: {fileID: 0}
     - target: {fileID: 4000010082109902, guid: 3bf11e47adbdd4542a4be54c81dac563, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3378,6 +3382,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bf11e47adbdd4542a4be54c81dac563, type: 3}
+--- !u!4 &863016511 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4000013725626834, guid: 3bf11e47adbdd4542a4be54c81dac563,
+    type: 3}
+  m_PrefabInstance: {fileID: 837860242}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &873439402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5014,8 +5024,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 863016511}
+  m_Follow: {fileID: 1898796578}
   m_CommonLens: 1
   m_Lens:
     FieldOfView: 40
@@ -5598,6 +5608,7 @@ MonoBehaviour:
   fCam: {fileID: 1182226050}
   hitEffect: {fileID: 18783327}
   winningDirector: {fileID: 1898796579}
+  timeline: {fileID: 0}
   hitAmplitudeGain: 1
   hitFrequencyGain: 2
   shakeTime: 1
@@ -6761,7 +6772,7 @@ MonoBehaviour:
   m_PivotOffset: {x: 1, y: 0, z: 0}
   m_AmplitudeGain: 0
   m_FrequencyGain: 0
-  mNoiseOffsets: {x: 0, y: 0, z: 0}
+  mNoiseOffsets: {x: -480.73544, y: -482.0205, z: 76.80359}
 --- !u!1001 &1862608594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6849,6 +6860,12 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 837860242}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1898796578 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4000010719486322, guid: 3bf11e47adbdd4542a4be54c81dac563,
+    type: 3}
+  m_PrefabInstance: {fileID: 837860242}
+  m_PrefabAsset: {fileID: 0}
 --- !u!320 &1898796579
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -6859,7 +6876,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 5ab132fdc3fede2498432d41c3345d8e, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0

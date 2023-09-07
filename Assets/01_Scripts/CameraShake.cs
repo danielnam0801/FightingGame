@@ -5,6 +5,7 @@ using Cinemachine;
 using System;
 using UnityEngine.VFX;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 public class CameraShake : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class CameraShake : MonoBehaviour
     [SerializeField] CinemachineFreeLook fCam;
     [SerializeField] VisualEffect hitEffect;
     [SerializeField] PlayableDirector winningDirector;
+    [SerializeField] TimelineAsset timeline;
 
     [SerializeField] float hitAmplitudeGain = 2, hitFrequencyGain = 2, shakeTime = 1;
     private bool isWin = false;
@@ -23,11 +25,13 @@ public class CameraShake : MonoBehaviour
         perlin = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         fCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
         fCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
-        //winningDirector = GameObject.Find("BlueGuy").GetComponent<PlayableDirector>();
+        winningDirector = GameObject.Find("BlueGuy_123").GetComponent<PlayableDirector>();
+        //timeline = 
     }
 
     void Start()
     {
+
         winningDirector.Stop();
     }
     private void Update()
@@ -36,13 +40,10 @@ public class CameraShake : MonoBehaviour
         {
             StartCoroutine(ShakeCamera());
         }
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    StartCoroutine(RotateCamera());
-        //}
         if(Input.GetKeyDown(KeyCode.E))
         {
             StartCoroutine(RotateCamera());
+            vCam.gameObject.SetActive(false);
         }
     }
     IEnumerator ShakeCamera()
@@ -62,8 +63,6 @@ public class CameraShake : MonoBehaviour
     IEnumerator RotateCamera()
     {
         winningDirector.Play();
-        vCam.gameObject.SetActive(false);
-
         yield return null;
     }
 }
