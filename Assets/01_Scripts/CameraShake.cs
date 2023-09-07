@@ -4,14 +4,17 @@ using UnityEngine;
 using Cinemachine;
 using System;
 using UnityEngine.VFX;
+using UnityEngine.Playables;
 
 public class CameraShake : MonoBehaviour
 {
     private CinemachineVirtualCamera vCam;
     private CinemachineBasicMultiChannelPerlin perlin;
+    [SerializeField] CinemachineFreeLook fCam;
     [SerializeField] VisualEffect hitEffect;
+    [SerializeField] PlayableDirector winningDirector;
 
-   [SerializeField]  float hitAmplitudeGain = 2, hitFrequencyGain = 2, shakeTime = 1;
+    [SerializeField] float hitAmplitudeGain = 2, hitFrequencyGain = 2, shakeTime = 1;
     bool isShaking = false;
     float shakeTimeElapsed = 0f;
 
@@ -19,11 +22,12 @@ public class CameraShake : MonoBehaviour
     {
         vCam = GetComponent<CinemachineVirtualCamera>();
         perlin = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        //winningDirector = GameObject.Find("BlueGuy").GetComponent<PlayableDirector>();
     }
 
     void Start()
     {
-
+        winningDirector.Stop();
     }
     private void Update()
     {
@@ -31,10 +35,11 @@ public class CameraShake : MonoBehaviour
         {
             StartCoroutine(ShakeCamera());
         }
-        if(Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             StartCoroutine(RotateCamera());
         }
+
     }
     IEnumerator ShakeCamera()
     {
@@ -52,7 +57,13 @@ public class CameraShake : MonoBehaviour
     }
     IEnumerator RotateCamera()
     {
-        transform.Rotate(Vector3.one, 90);
+        fCam.m_XAxis.m_InputAxisValue = 0;
+        fCam.m_XAxis.Value = 0;
+        fCam.m_YAxis.Value = 0;
+        fCam.m_YAxis.m_InputAxisValue = 0;
+        winningDirector.Play();
+        vCam.gameObject.SetActive(false);
         yield return null;
     }
 }
+
