@@ -24,6 +24,7 @@ public class Player1 : Selector
             beforeSelectedSlot.IsSelected -= 1;
             _beforeSelectedIdx = null;
         }
+        isSelect = false;
     }
 
     public override void Select()
@@ -34,6 +35,7 @@ public class Player1 : Selector
         currentslot.IsSelected += 1;
         selectUI.SetLeftPanelImage(currentslot);
         Debug.Log("Player1 Setting");
+        isSelect = true;
     }
 
 

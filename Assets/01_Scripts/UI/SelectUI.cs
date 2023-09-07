@@ -13,19 +13,31 @@ public class SelectUI : MonoBehaviour
 
     UIDocument _uiDocument;
 
+    #region VisualElements
+
     VisualElement _LeftPanel;
     VisualElement _RightPanel;
     VisualElement _SlotPanel;
-    Label _VSLabel;
+    VisualElement _ReadyPanel;
+    
+    Button _modBtnleft;
+    Button _modBtnright;
+    Button _returnBtn;
+
+    Label _VSElement;
+    Label _timeElement;
+
+    #endregion
 
     List<Slot> _characters = new List<Slot>();
     //List<MapSlot> _maps = new List<MapSlot>();
 
     Selector player1;
     Selector player2;
+    TimeLabel timeLabel;
 
-    Button _modBtnleft;
-    Button _modBtnright;
+    bool isSelectAll = false;
+    
     private void Awake()
     {
         _uiDocument = GetComponent<UIDocument>();
@@ -38,10 +50,13 @@ public class SelectUI : MonoBehaviour
         _LeftPanel = root.Q<VisualElement>("Middle--left");
         _RightPanel = root.Q<VisualElement>("Middle--right");
         _SlotPanel = root.Q<VisualElement>("SlotPanel");
-        _VSLabel = root.Q<Label>("VSLabel");
-
+        _ReadyPanel = root.Q<VisualElement>("ReadyPanel");
+        _VSElement = root.Q<Label>("VSLabel");
+        _timeElement = root.Q<Label>("TimeLabel");
+        _returnBtn = root.Q<Button>("ReturnBtn");
         _modBtnleft = root.Q<Button>("1pBtn");
         _modBtnright = root.Q<Button>("2pBtn");
+
 
         MakeCharacterSlot();
 
@@ -63,15 +78,41 @@ public class SelectUI : MonoBehaviour
         player2 = new Player2(this, Player.player2, p2, _characters);
         //Slot 클릭이벤트 구현해야함  
 
+        timeLabel = new TimeLabel(this, _timeElement, 90f);
         ModeButton modeBtnleft = new ModeButton(_modBtnleft, Player.player1);
         ModeButton modeBtnright = new ModeButton(_modBtnright, Player.player2);
 
+        _returnBtn.RegisterCallback<ClickEvent>((evt) =>
+        {
+            GoMain();
+        });
+    
     }
 
     private void Update()
     {
+        if(player1.isSelect && player2.isSelect)
+        {
+            isSelectAll = true;
+            _ReadyPanel.RemoveFromClassList("off");
+        }
+        else
+        {
+            isSelectAll = false;
+            _ReadyPanel.AddToClassList("off");
+        }
+
+        if(isSelectAll)
+        {
+            if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+            {
+                GoToGameScene();
+            }
+        }
+
         player1?.Update();
         player2?.Update();
+        timeLabel.Update();
     }
 
     private void MakeCharacterSlot()
@@ -106,15 +147,22 @@ public class SelectUI : MonoBehaviour
 
     public void SetRightPanelImage(Slot slot)
     {
-        VerticallyFlipRenderTexture(slot.Image);
         _RightPanel.style.backgroundImage = SetReverseImage(slot.Image);
     }
 
-    public static void VerticallyFlipRenderTexture(RenderTexture target)
+    private void GoToGameScene()
     {
-        var temp = RenderTexture.GetTemporary(target.descriptor);
-        Graphics.Blit(target, temp, new Vector2(1, -1), new Vector2(0, 1));
-        Graphics.Blit(temp, target);
-        RenderTexture.ReleaseTemporary(temp);
+        //GameScene으로 이동
+        //현재 선택된 정보들을 전부 넘겨줘야함
+        // Player1,2 캐릭터, AI 여부
+        // 랜덤 맵
+        timeLabel.Stop = true;
+        Debug.Log("GoGameScene");
+    }
+
+    public void GoMain()
+    {
+        //Main으로 이동
+        Debug.Log("GoMain");
     }
 }

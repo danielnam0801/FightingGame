@@ -156,3 +156,11 @@
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
+
+#ReadyPanel.off {
+    left: 2000px;
+}
+
+#ReadyPanel {
+    transition-duration: 0.2s;
+}

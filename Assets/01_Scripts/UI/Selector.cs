@@ -19,6 +19,7 @@ public abstract class Selector
     
     private List<Slot> slots;
 
+    public bool isSelect = false;
 
     public Selector(SelectUI selectUI, InputKey keys, List<Slot> slots)
     {
