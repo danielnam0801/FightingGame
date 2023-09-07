@@ -18,15 +18,22 @@ public class Player1 : Selector
 
         currentslot.Element.AddToClassList("p1");
         prevslot.Element.RemoveFromClassList("p1");
-        prevslot.IsSelected -= 1;
+        if (_beforeSelectedIdx != null)
+        {
+            Slot beforeSelectedSlot = FindSlotByIndex(_beforeSelectedIdx.Value);
+            beforeSelectedSlot.IsSelected -= 1;
+            _beforeSelectedIdx = null;
+        }
     }
 
     public override void Select()
     {
-        Debug.Log("Player1 Setting");
+        if (_beforeSelectedIdx == _curIdx) return;
+        _beforeSelectedIdx = _curIdx;
         Slot currentslot = FindSlotByIndex(_curIdx);
         currentslot.IsSelected += 1;
         selectUI.SetLeftPanelImage(currentslot);
+        Debug.Log("Player1 Setting");
     }
 
 

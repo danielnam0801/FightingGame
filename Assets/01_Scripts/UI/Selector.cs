@@ -14,6 +14,7 @@ public abstract class Selector
     protected Player player;
     protected int _curIdx;
     protected int _prevIdx;
+    protected int? _beforeSelectedIdx;
     protected SelectUI selectUI;
     
     private List<Slot> slots;
@@ -27,6 +28,7 @@ public abstract class Selector
     
         _curIdx = 0;
         _prevIdx = 0;
+        _beforeSelectedIdx = null;
         currentState = SelectState.none;
     }
 
