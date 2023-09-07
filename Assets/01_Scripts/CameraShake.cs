@@ -15,13 +15,14 @@ public class CameraShake : MonoBehaviour
     [SerializeField] PlayableDirector winningDirector;
 
     [SerializeField] float hitAmplitudeGain = 2, hitFrequencyGain = 2, shakeTime = 1;
-    bool isShaking = false;
-    float shakeTimeElapsed = 0f;
+    private bool isWin = false;
 
     private void Awake()
     {
         vCam = GetComponent<CinemachineVirtualCamera>();
         perlin = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        fCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
+        fCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
         //winningDirector = GameObject.Find("BlueGuy").GetComponent<PlayableDirector>();
     }
 
@@ -31,15 +32,18 @@ public class CameraShake : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q)&&!isWin)
         {
             StartCoroutine(ShakeCamera());
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        //if (Input.GetKeyDown(KeyCode.W))
+        //{
+        //    StartCoroutine(RotateCamera());
+        //}
+        if(Input.GetKeyDown(KeyCode.E))
         {
             StartCoroutine(RotateCamera());
         }
-
     }
     IEnumerator ShakeCamera()
     {
@@ -57,12 +61,9 @@ public class CameraShake : MonoBehaviour
     }
     IEnumerator RotateCamera()
     {
-        fCam.m_XAxis.m_InputAxisValue = 0;
-        fCam.m_XAxis.Value = 0;
-        fCam.m_YAxis.Value = 0;
-        fCam.m_YAxis.m_InputAxisValue = 0;
         winningDirector.Play();
         vCam.gameObject.SetActive(false);
+
         yield return null;
     }
 }
