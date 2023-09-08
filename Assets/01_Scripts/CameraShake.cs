@@ -14,6 +14,7 @@ public class CameraShake : MonoBehaviour
     [SerializeField] CinemachineFreeLook fCam;
     [SerializeField] VisualEffect hitEffect;
     [SerializeField] PlayableDirector winningDirector;
+    [SerializeField] PlayableDirector losingDirector;
     [SerializeField] TimelineAsset timeline;
 
     [SerializeField] float hitAmplitudeGain = 2, hitFrequencyGain = 2, shakeTime = 1;
@@ -26,13 +27,13 @@ public class CameraShake : MonoBehaviour
         fCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
         fCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
         winningDirector = GameObject.Find("BlueGuy_123").GetComponent<PlayableDirector>();
-        //timeline = 
+        losingDirector = GameObject.Find("RedGuy_123").GetComponent<PlayableDirector>();
     }
 
     void Start()
     {
-
         winningDirector.Stop();
+        losingDirector.Stop();
     }
     private void Update()
     {
@@ -42,10 +43,18 @@ public class CameraShake : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine(RotateCamera());
+            StartCoroutine(WinnerRotateCamera());
+            vCam.gameObject.SetActive(false);
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(LoserRotateCamera());
             vCam.gameObject.SetActive(false);
         }
     }
+
+
+
     IEnumerator ShakeCamera()
     {
         perlin.m_AmplitudeGain = hitAmplitudeGain;
@@ -60,9 +69,14 @@ public class CameraShake : MonoBehaviour
         perlin.m_FrequencyGain = 0;
         yield return new WaitForSeconds(0.5f);
     }
-    IEnumerator RotateCamera()
+    IEnumerator WinnerRotateCamera()
     {
         winningDirector.Play();
+        yield return null;
+    }
+    IEnumerator LoserRotateCamera()
+    {
+        losingDirector.Play();
         yield return null;
     }
 }
