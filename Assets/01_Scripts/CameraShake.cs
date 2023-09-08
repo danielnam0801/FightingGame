@@ -11,7 +11,8 @@ public class CameraShake : MonoBehaviour
 {
     private CinemachineVirtualCamera vCam;
     private CinemachineBasicMultiChannelPerlin perlin;
-    [SerializeField] CinemachineFreeLook fCam;
+    [SerializeField] CinemachineFreeLook blueGuyFCam;
+    [SerializeField] CinemachineFreeLook redGuyFCam;
     [SerializeField] VisualEffect hitEffect;
     [SerializeField] PlayableDirector winningDirector;
     [SerializeField] PlayableDirector losingDirector;
@@ -24,8 +25,10 @@ public class CameraShake : MonoBehaviour
     {
         vCam = GetComponent<CinemachineVirtualCamera>();
         perlin = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-        fCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
-        fCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
+        blueGuyFCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
+        blueGuyFCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
+        redGuyFCam.m_XAxis.m_InputAxisName = "";
+        redGuyFCam.m_YAxis.m_InputAxisName = "";
         winningDirector = GameObject.Find("BlueGuy_123").GetComponent<PlayableDirector>();
         losingDirector = GameObject.Find("RedGuy_123").GetComponent<PlayableDirector>();
     }
@@ -45,11 +48,13 @@ public class CameraShake : MonoBehaviour
         {
             StartCoroutine(WinnerRotateCamera());
             vCam.gameObject.SetActive(false);
+            winningDirector.Stop();
         }
         if(Input.GetKeyDown(KeyCode.R))
         {
             StartCoroutine(LoserRotateCamera());
             vCam.gameObject.SetActive(false);
+            losingDirector.Stop();
         }
     }
 
