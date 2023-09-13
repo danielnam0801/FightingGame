@@ -16,18 +16,18 @@ public class CameraShake : MonoBehaviour
     [SerializeField] VisualEffect hitEffect;
     [SerializeField] PlayableDirector winningDirector;
     [SerializeField] PlayableDirector losingDirector;
-    [SerializeField] TimelineAsset timeline;
 
     [SerializeField] float hitAmplitudeGain = 2, hitFrequencyGain = 2, shakeTime = 1;
     private bool isWin = false;
+    private bool isLose = false;
 
     private void Awake()
     {
         vCam = GetComponent<CinemachineVirtualCamera>();
         perlin = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        blueGuyFCam =GameObject.Find("BlueGuy_123").GetComponent<CinemachineFreeLook>();
-        redGuyFCam = GameObject.Find("RedGuy_123").GetComponent<CinemachineFreeLook>();
+        blueGuyFCam =GameObject.Find("BlueGuyFreeLook").GetComponent<CinemachineFreeLook>();
+        redGuyFCam = GameObject.Find("RedGuyFreeLook").GetComponent<CinemachineFreeLook>();
 
         blueGuyFCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
         blueGuyFCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
@@ -37,6 +37,9 @@ public class CameraShake : MonoBehaviour
 
         winningDirector = GameObject.Find("BlueGuy_123").GetComponent<PlayableDirector>();
         losingDirector = GameObject.Find("RedGuy_123").GetComponent<PlayableDirector>();
+
+        blueGuyFCam.gameObject.SetActive(false);
+        redGuyFCam.gameObject.SetActive(false);
     }
 
     void Start()
@@ -46,21 +49,19 @@ public class CameraShake : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)&&!isWin)
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             StartCoroutine(ShakeCamera());
         }
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.E) )
         {
             StartCoroutine(WinnerRotateCamera());
             vCam.gameObject.SetActive(false);
-            winningDirector.Stop();
         }
         if(Input.GetKeyDown(KeyCode.R))
         {
             StartCoroutine(LoserRotateCamera());
             vCam.gameObject.SetActive(false);
-            losingDirector.Stop();
         }
     }
 
@@ -82,11 +83,13 @@ public class CameraShake : MonoBehaviour
     }
     IEnumerator WinnerRotateCamera()
     {
+        blueGuyFCam.gameObject.SetActive(true);
         winningDirector.Play();
         yield return null;
     }
     IEnumerator LoserRotateCamera()
     {
+        redGuyFCam.gameObject.SetActive(true);
         losingDirector.Play();
         yield return null;
     }
