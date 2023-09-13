@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class CharacterSlot : Slot
 {
-    public CharacterSlot(VisualElement element, RenderTexture image, int idx) : base(element, image, idx)
+    public CharacterSlot(SelectUI selectedUI, VisualElement element, StyleBackground image, int idx) : base(selectedUI, element, image, idx)
     {
     }
 }

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Core;
 using UnityEngine.UIElements;
-using System;
-using UnityEngine.Experimental.Rendering;
 
 public class SelectUI : MonoBehaviour
 {
@@ -47,6 +45,7 @@ public class SelectUI : MonoBehaviour
     {
         var root = _uiDocument.rootVisualElement;
 
+        #region Elements
         _LeftPanel = root.Q<VisualElement>("Middle--left");
         _RightPanel = root.Q<VisualElement>("Middle--right");
         _SlotPanel = root.Q<VisualElement>("SlotPanel");
@@ -56,10 +55,11 @@ public class SelectUI : MonoBehaviour
         _returnBtn = root.Q<Button>("ReturnBtn");
         _modBtnleft = root.Q<Button>("1pBtn");
         _modBtnright = root.Q<Button>("2pBtn");
-
+        #endregion
 
         MakeCharacterSlot();
 
+        #region CreateSelector
         InputKey p1 = new InputKey();
         p1.upKey = KeyCode.W;
         p1.leftKey = KeyCode.A;
@@ -74,8 +74,9 @@ public class SelectUI : MonoBehaviour
         p2.rightKey = KeyCode.RightArrow;
         p2.selectKey = KeyCode.Return;
 
-        player1 = new Player1(this, Player.player1, p1, _characters);
-        player2 = new Player2(this, Player.player2, p2, _characters);
+        player1 = new Selector(Player.player1, p1, _characters);
+        player2 = new Selector(Player.player2, p2, _characters);
+        #endregion
         //Slot 클릭이벤트 구현해야함  
 
         timeLabel = new TimeLabel(this, _timeElement, 90f);
@@ -117,16 +118,26 @@ public class SelectUI : MonoBehaviour
 
     private void MakeCharacterSlot()
     {
-        for(int i = 0; i < _characterList.List.Count; i++)
+        List<Character> list = _characterList.GetCharacterList();
+        
+        for (int i = 0; i < list.Count; i++)
         {
             VisualElement element = _slotAsset.Instantiate().Q("Slot");
-            RenderTexture image = _characterList.List[i].texture;
-           
-            element.style.backgroundImage = SetImage(image);
-            _SlotPanel.Add(element);
-
-            CharacterSlot slot = new CharacterSlot(element, image, i);
+            Slot slot;
+            if(i == list.Count - 1) //항상 마지막은 랜덤 슬롯
+            {
+                Sprite image = list[i].GetSprite();
+                element.style.backgroundImage = SetImage(image);
+                slot = new RandomSlot(this, element, SetImage(image), i);
+            }
+            else
+            {
+                RenderTexture image = list[i].GetRenderTexture();
+                element.style.backgroundImage = SetImage(image);
+                slot = new CharacterSlot(this, element, SetImage(image), i);
+            }
             _characters.Add(slot);
+            _SlotPanel.Add(element);
         }
     }
 
@@ -135,19 +146,19 @@ public class SelectUI : MonoBehaviour
         return new StyleBackground(Background.FromRenderTexture(texture));
     }
 
-    private StyleBackground SetReverseImage(RenderTexture texture)
+    private StyleBackground SetImage(Sprite sprite)
     {
-        return new StyleBackground(Background.FromRenderTexture(texture));
+        return new StyleBackground(Background.FromSprite(sprite));
     }
 
     public void SetLeftPanelImage(Slot slot)
     {
-        _LeftPanel.style.backgroundImage = SetImage(slot.Image);
+        _LeftPanel.style.backgroundImage = slot.Image;
     }
 
     public void SetRightPanelImage(Slot slot)
     {
-        _RightPanel.style.backgroundImage = SetReverseImage(slot.Image);
+        _RightPanel.style.backgroundImage = slot.Image;
     }
 
     private void GoToGameScene()

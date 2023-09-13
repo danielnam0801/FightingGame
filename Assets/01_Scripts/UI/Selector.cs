@@ -6,7 +6,7 @@ using Core;
 using System.Linq;
 using System;
 
-public abstract class Selector
+public class Selector
 {
     public SelectState currentState;
 
@@ -15,18 +15,17 @@ public abstract class Selector
     protected int _curIdx;
     protected int _prevIdx;
     protected int? _beforeSelectedIdx;
-    protected SelectUI selectUI;
     
     private List<Slot> slots;
 
     public bool isSelect = false;
 
-    public Selector(SelectUI selectUI, InputKey keys, List<Slot> slots)
+    public Selector(Player player, InputKey keys, List<Slot> slots)
     {
-        this.selectUI = selectUI;
         this.slots = slots;
         this.keys = keys;
-    
+        this.player = player;
+
         _curIdx = 0;
         _prevIdx = 0;
         _beforeSelectedIdx = null;
@@ -74,12 +73,39 @@ public abstract class Selector
 
         Focus();
     }
+
+    public virtual void Focus()
+    {
+        Slot currentslot = FindSlotByIndex(_curIdx);
+        Slot prevslot = FindSlotByIndex(_prevIdx);
+
+        currentslot.Focused(player);
+        prevslot.Arrived(player);
+
+        if (_beforeSelectedIdx != null)
+        {
+            Slot beforeSelectedSlot = FindSlotByIndex(_beforeSelectedIdx.Value);
+            beforeSelectedSlot.IsSelected -= 1;
+            _beforeSelectedIdx = null;
+        }
+        
+        isSelect = false;
+    }
+
+    public virtual void Select()
+    {
+        if (_beforeSelectedIdx == _curIdx) return;
+        _beforeSelectedIdx = _curIdx;
+       
+        Slot currentslot = FindSlotByIndex(_curIdx);
+        currentslot.Selected(player);
+        
+        isSelect = true;
+    }
+    
     protected Slot FindSlotByIndex(int idx)
     {
         return slots[idx];
     }
-
-    public abstract void Focus();
-    public abstract void Select();
 
 }
