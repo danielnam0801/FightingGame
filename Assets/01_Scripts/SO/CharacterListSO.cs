@@ -13,20 +13,23 @@ public enum ImageType
 [Serializable]
 public class Character
 {
+    [HideInInspector]
     public int characterNum;
+    [HideInInspector]
     public string name;
+    [HideInInspector]
     public string description;
 
-    [SerializeField] private ImageType imageType;
-    [HideInInspector][SerializeField] private RenderTexture renderTexture;
-    [HideInInspector][SerializeField] private Sprite sprite;
-    [HideInInspector][SerializeField] private Texture2D texture2d;
+    [HideInInspector, SerializeField] private ImageType imageType;
+    [HideInInspector, SerializeField] private RenderTexture renderTexture;
+    [HideInInspector, SerializeField] private Sprite sprite;
+    [HideInInspector, SerializeField] private Texture2D texture2d;
 
     public RenderTexture GetRenderTexture(){
         if(renderTexture != null)
             return renderTexture;
         else
-            Debug.Log("Texture¾øÀ½");
+            Debug.Log("Textureì—†ìŒ");
         return null;
     }
 
@@ -35,7 +38,7 @@ public class Character
         if (sprite != null)
             return sprite;
         else
-            Debug.Log("Texture¾øÀ½");
+            Debug.Log("Textureì—†ìŒ");
         return null;
     }
 
@@ -44,7 +47,7 @@ public class Character
         if (texture2d != null)
             return texture2d;
         else
-            Debug.Log("Texture¾øÀ½");
+            Debug.Log("Textureì—†ìŒ");
         return null;
     }
 
@@ -54,8 +57,8 @@ public class Character
 [CreateAssetMenu(menuName = "SO/Character")]
 public class CharacterListSO : ScriptableObject
 {
-    [SerializeField]
-    private List<Character> List;
+    [HideInInspector]
+    public List<Character> List;
 
     public List<Character> GetCharacterList() => List;
 }
