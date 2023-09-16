@@ -9,7 +9,7 @@ public class ChangePropertyTypeInspector : EditorWindow
 {
     private bool _isActive;
     private SerializedObject _characterSO = null;
-    private ReorderableList _listRE = null;
+    private ReorderableList _list = null;
 
     private CharacterListSO _characterList;
  
@@ -27,11 +27,11 @@ public class ChangePropertyTypeInspector : EditorWindow
         {
             _characterSO = new SerializedObject(_characterList);
             //Init
-            _listRE = new ReorderableList(_characterSO, _characterSO.FindProperty("List")
+            _list = new ReorderableList(_characterSO, _characterSO.FindProperty("List")
                 , true, true, true, true);
-            Debug.Log(_listRE);
-            _listRE.drawHeaderCallback = (rect) => EditorGUI.LabelField(rect, "Characters");
-            _listRE.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
+            Debug.Log(_list);
+            _list.drawHeaderCallback = (rect) => EditorGUI.LabelField(rect, "Characters");
+            _list.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
             {
                 rect.y += 2f;
                 rect.height = EditorGUIUtility.singleLineHeight;
