@@ -13,6 +13,8 @@ public class Selector
     protected InputKey keys;
     protected Player player;
     protected int _curIdx;
+    public int GetCurSlotIdx => _curIdx;
+
     protected int _prevIdx;
     protected int? _beforeSelectedIdx;
     

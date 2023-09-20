@@ -13,43 +13,37 @@ MonoBehaviour:
   m_Name: CharacterList
   m_EditorClassIdentifier: 
   List:
-  - characterNum: 1
-    name: RedGuy
+  - name: RedGuy
     description: "\uBE68\uAC04\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
     imageType: 0
     renderTexture: {fileID: 8400000, guid: 32c68850359f60a4fb0543829298a90b, type: 2}
     sprite: {fileID: 21300000, guid: 3086d66a563317b40a20a20da2c64ac0, type: 3}
     texture2d: {fileID: 0}
-  - characterNum: 2
-    name: GreenGuy
+  - name: GreenGuy
     description: "\uCD08\uB85D\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
     imageType: 0
     renderTexture: {fileID: 8400000, guid: b2a1c6100bc3fed409b27eebf22f7d82, type: 2}
     sprite: {fileID: 0}
     texture2d: {fileID: 0}
-  - characterNum: 3
-    name: PinkGuy
+  - name: PinkGuy
     description: "\uD551\uD06C\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
     imageType: 0
     renderTexture: {fileID: 8400000, guid: 8b364ef584207d744b74fec149676360, type: 2}
     sprite: {fileID: 0}
     texture2d: {fileID: 0}
-  - characterNum: 4
-    name: BlackGuy
+  - name: BlackGuy
     description: "\uAC80\uC815\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
     imageType: 0
     renderTexture: {fileID: 8400000, guid: f77553ac52a6a1649978d17bb13f298a, type: 2}
     sprite: {fileID: 0}
     texture2d: {fileID: 0}
-  - characterNum: 5
-    name: Random
+  - name: Random
     description: "\uB79C\uB364\uC2AC\uB86F"
     imageType: 1
     renderTexture: {fileID: 8400000, guid: a40e8524539d72b4b9c5eedb10d1b1f7, type: 2}
     sprite: {fileID: 21300000, guid: 602b72d4617c3694aa94419fc1b68e04, type: 3}
     texture2d: {fileID: 0}
-  - characterNum: 5
-    name: Random
+  - name: Random
     description: "\uB79C\uB364\uC2AC\uB86F"
     imageType: 1
     renderTexture: {fileID: 8400000, guid: a40e8524539d72b4b9c5eedb10d1b1f7, type: 2}

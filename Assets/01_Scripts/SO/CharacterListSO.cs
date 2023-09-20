@@ -13,18 +13,17 @@ public enum ImageType
 [Serializable]
 public class Character
 {
-    [HideInInspector]
-    public int characterNum;
-    [HideInInspector]
     public string name;
-    [HideInInspector]
     public string description;
 
-    [HideInInspector, SerializeField] private ImageType imageType;
-    [HideInInspector, SerializeField] private RenderTexture renderTexture;
-    [HideInInspector, SerializeField] private Sprite sprite;
-    [HideInInspector, SerializeField] private Texture2D texture2d;
-
+    //[HideInInspector, SerializeField] private ImageType imageType;
+    //[HideInInspector, SerializeField] private RenderTexture renderTexture;
+    //[HideInInspector, SerializeField] private Sprite sprite;
+    //[HideInInspector, SerializeField] private Texture2D texture2d;
+    public ImageType imageType;
+    public RenderTexture renderTexture;
+    public Sprite sprite;
+    public Texture2D texture2d;
     public RenderTexture GetRenderTexture(){
         if(renderTexture != null)
             return renderTexture;
@@ -57,7 +56,7 @@ public class Character
 [CreateAssetMenu(menuName = "SO/Character")]
 public class CharacterListSO : ScriptableObject
 {
-    [HideInInspector]
+    [SerializeField]
     public List<Character> List;
 
     public List<Character> GetCharacterList() => List;

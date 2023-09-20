@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -5,100 +6,71 @@ using UnityEditorInternal;
 using UnityEngine;
 
 [CustomEditor(typeof(CharacterListSO))]
-public class ChangePropertyTypeInspector : EditorWindow
+public class ChangePropertyTypeInspector : Editor
 {
-    private bool _isActive;
-    private SerializedObject _characterSO = null;
-    private ReorderableList _list = null;
+    SerializedProperty characterlist;
+    CharacterListSO characterSO;
+    private ReorderableList list = null;
 
-    private CharacterListSO _characterList;
- 
-    private const string _helpText = "Cannot find 'CharacterListSO' component on any GameObject in the scene!";
- 
-    private static Vector2 _windowsMinSize = Vector2.one * 500f;
-    private static Rect _helpRect = new Rect(0f, 0f, 400f, 100f);
-    private static Rect _listRect = new Rect(Vector2.zero, _windowsMinSize);
-    
+    //private CharacterListSO _characterList;
+
+    //private const string _helpText = "Cannot find 'CharacterListSO' component on any GameObject in the scene!";
+
+    //private static Vector2 _windowsMinSize = Vector2.one * 500f;
+    //private static Rect _helpRect = new Rect(0f, 0f, 400f, 100f);
+    //private static Rect _listRect = new Rect(Vector2.zero, _windowsMinSize);
+
+
     private void OnEnable()
     {
-        //_characterList = Resources.Load<CharacterListSO>("CharacterList");
-        _characterList = FindObjectOfType<CharacterListSO>();
-        if (_characterList)
-        {
-            _characterSO = new SerializedObject(_characterList);
-            //Init
-            _list = new ReorderableList(_characterSO, _characterSO.FindProperty("List")
-                , true, true, true, true);
-            Debug.Log(_list);
-            _list.drawHeaderCallback = (rect) => EditorGUI.LabelField(rect, "Characters");
-            _list.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
-            {
-                rect.y += 2f;
-                rect.height = EditorGUIUtility.singleLineHeight;
-                GUIContent objectLabel = new GUIContent($"Character {index}");
-                EditorGUI.PropertyField(rect, _listRE.serializedProperty.GetArrayElementAtIndex(index), objectLabel);
-            };
-
-        }
-    }
-    
-    private void OnInspectorUpdate()
-    {
-        Repaint();
+        //characterSO = target as CharacterListSO;
+        //characterlist = serializedObject.FindProperty("List");
+        //list = new ReorderableList(serializedObject, characterlist, true, true, true, true);
+        //list.drawElementCallback = DrawListItems;
+        //list.drawHeaderCallback = DrawHeader;
+   
     }
 
-    public void OnGUI()
+    private void DrawListItems(Rect rect, int index, bool isActive, bool isFocused)
     {
+        //var 
+        SerializedProperty element = list.serializedProperty.GetArrayElementAtIndex(index);
+        EditorGUI.Foldout(rect, true, GUIContent.none);
+       // EditorGUILayout.Foldout(true, GUIContent.none);
+        EditorGUI.LabelField(new Rect(rect.x, rect.y, 100, EditorGUIUtility.singleLineHeight), "Name");
+        EditorGUI.PropertyField(new Rect(rect.x, rect.y, 100, EditorGUIUtility.singleLineHeight),
+            element.FindPropertyRelative("name"), 
+            GUIContent.none
+        );
+        EditorGUI.LabelField(new Rect(rect.x, rect.y + 100, 100, EditorGUIUtility.singleLineHeight), "Description");
+        EditorGUI.PropertyField(new Rect(rect.x + 40, rect.y + 100, 100, EditorGUIUtility.singleLineHeight),
+            element.FindPropertyRelative("description"), 
+            GUIContent.none
+        );
+        EditorGUI.PropertyField(new Rect(rect.x, rect.y + 200, 100, EditorGUIUtility.singleLineHeight),
+            element.FindPropertyRelative("imageType"), 
+            GUIContent.none
+        );
+       // EditorGUILayout.EndFoldoutHeaderGroup();
+    }
+
+    private void DrawHeader(Rect rect)
+    {
+        string name = "characters";
+        EditorGUI.LabelField(rect, name, EditorStyles.boldLabel);
+    }
+
+    public override void OnInspectorGUI()
+    {
+        //serializedObject.Update();
         //base.OnInspectorGUI();
-        OnInspectorUpdate();
-    
-        if (_characterSO == null)
-        {
-            EditorGUI.HelpBox(_helpRect, _helpText, MessageType.Warning);
-            return;
-        }
-        else if (_characterSO != null)
-        {
-            _characterSO.Update();
-            _listRE.DoList(_listRect);
-            _characterSO.ApplyModifiedProperties();
-        }
-        
-        GUILayout.Space(_listRE.GetHeight() + 30f);
-        GUILayout.Label("Please select Game Objects to simulate");
-        GUILayout.Space(10f);
- 
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Space(30f);
-    }
+        //list.DoLayoutList();
 
-    private void DrawCharacterList(SerializedProperty prop)
-    {
-        EditorGUILayout.PropertyField(prop);
-        EditorGUI.indentLevel += 1;
-        for (int i = 0; i < prop.arraySize; i++)
-        {
-            EditorGUILayout.PropertyField(prop.GetArrayElementAtIndex(i));    
-        }
+        //serializedObject.ApplyModifiedProperties();
 
-        EditorGUI.indentLevel -= 1;
-        // EditorGUILayout.PropertyField(prop.FindPropertyRelative("characterNum"));
-        // EditorGUILayout.PropertyField(prop.FindPropertyRelative("name"));
-        // EditorGUILayout.PropertyField(prop.FindPropertyRelative("description"));
-        // EditorGUILayout.PropertyField(prop.FindPropertyRelative("imageType"));
-
-        // switch ((ImageType)prop.FindPropertyRelative("imageType").intValue)
-        // {
-        //     case ImageType.Sprite:
-        //         EditorGUILayout.PropertyField(prop.FindPropertyRelative("sprite"));
-        //         break;
-        //     case ImageType.RenderTexture:
-        //         EditorGUILayout.PropertyField(prop.FindPropertyRelative("renderTexture"));
-        //         break;
-        //     case ImageType.Texture2d:
-        //         EditorGUILayout.PropertyField(prop.FindPropertyRelative("texture2d"));
-        //         break;
-        // }
-        // serializedObject.ApplyModifiedProperties();
+        //if (GUI.changed)
+        //{
+        //    EditorUtility.SetDirty(characterSO);
+        //}
     }
 }

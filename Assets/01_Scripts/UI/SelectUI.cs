@@ -1,8 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Core;
 using UnityEngine.UIElements;
+using System;
+
+class PlayerInfo
+{
+    public int characterNum;
+    public bool isAi;
+}
 
 public class SelectUI : MonoBehaviour
 {
@@ -167,6 +173,9 @@ public class SelectUI : MonoBehaviour
         //현재 선택된 정보들을 전부 넘겨줘야함
         // Player1,2 캐릭터, AI 여부
         // 랜덤 맵
+
+
+
         timeLabel.Stop = true;
         Debug.Log("GoGameScene");
     }

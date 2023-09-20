@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public class RandomSlot : Slot
 {
@@ -11,6 +12,8 @@ public class RandomSlot : Slot
 
     public void SetRandom()
     {
+        DataManager<Data>.Instance.ChangeDataToJson(data);
+        DataManager<Data>.Instance.LoadData("s");
 
     }
 }
