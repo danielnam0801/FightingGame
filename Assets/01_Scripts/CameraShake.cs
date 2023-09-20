@@ -14,6 +14,7 @@ public class CameraShake : MonoBehaviour
     [SerializeField] CinemachineFreeLook blueGuyFCam;
     [SerializeField] CinemachineFreeLook redGuyFCam;
     [SerializeField] VisualEffect hitEffect;
+    [SerializeField] PlayableDirector introDirector;
     [SerializeField] PlayableDirector winningDirector;
     [SerializeField] PlayableDirector losingDirector;
 
@@ -28,6 +29,7 @@ public class CameraShake : MonoBehaviour
 
         blueGuyFCam =GameObject.Find("BlueGuyFreeLook").GetComponent<CinemachineFreeLook>();
         redGuyFCam = GameObject.Find("RedGuyFreeLook").GetComponent<CinemachineFreeLook>();
+        
 
         blueGuyFCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
         blueGuyFCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
@@ -37,6 +39,7 @@ public class CameraShake : MonoBehaviour
 
         winningDirector = GameObject.Find("BlueGuy_123").GetComponent<PlayableDirector>();
         losingDirector = GameObject.Find("RedGuy_123").GetComponent<PlayableDirector>();
+        introDirector = GameObject.Find("IntroTimeLine").GetComponent<PlayableDirector>();
 
         blueGuyFCam.gameObject.SetActive(false);
         redGuyFCam.gameObject.SetActive(false);
@@ -44,6 +47,7 @@ public class CameraShake : MonoBehaviour
 
     void Start()
     {
+        introDirector.Play();
         winningDirector.Stop();
         losingDirector.Stop();
     }
@@ -51,6 +55,7 @@ public class CameraShake : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            introDirector.Stop();
             StartCoroutine(ShakeCamera());
         }
         if(Input.GetKeyDown(KeyCode.E) )
@@ -84,15 +89,16 @@ public class CameraShake : MonoBehaviour
     IEnumerator WinnerRotateCamera()
     {
         blueGuyFCam.gameObject.SetActive(true);
+        introDirector.Stop();
         winningDirector.Play();
         yield return null;
     }
     IEnumerator LoserRotateCamera()
     {
         redGuyFCam.gameObject.SetActive(true);
+        introDirector.Stop();
         losingDirector.Play();
         yield return null;
     }
-    
 }
 
