@@ -63,7 +63,7 @@ public class ChangePropertyTypeInspector : Editor
     public override void OnInspectorGUI()
     {
         //serializedObject.Update();
-        //base.OnInspectorGUI();
+        base.OnInspectorGUI();
         //list.DoLayoutList();
 
         //serializedObject.ApplyModifiedProperties();

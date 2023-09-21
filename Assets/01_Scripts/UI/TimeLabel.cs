@@ -36,7 +36,7 @@ public class TimeLabel
         if(t < 0f)
         {
             Debug.Log("시간 초과 메뉴로 돌아갑니다");
-            SelectUI.GoMain();
+            SelectUI.GoIntro();
         }
     }
 

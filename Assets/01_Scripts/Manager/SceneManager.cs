@@ -4,12 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class SceneManager : Singleton<SceneManager>
 {
-    public void LoadScene(string sceneName)
+    private void LoadScene(string sceneName)
     {
-        StartCoroutine(LoadScene(sceneName));
+        StartCoroutine(LoadSceneCor(sceneName));
     }
 
-    IEnumerator LoadScene(string name)
+    IEnumerator LoadSceneCor(string name)
     {
         AsyncOperation async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName: name);
         while(!async.isDone)
@@ -19,4 +19,8 @@ public class SceneManager : Singleton<SceneManager>
         }
         Debug.Log("¾À ·Îµå ¼º°ø");
     }
+
+    public void LoadIntroScene() => LoadScene("IntroScene");
+    public void LoadSelectScene() => LoadScene("SelectScene");
+    public void LoadGameScene() => LoadScene("GameScene");
 }

@@ -95,7 +95,7 @@ public class SelectUI : MonoBehaviour
 
         _returnBtn.RegisterCallback<ClickEvent>((evt) =>
         {
-            GoMain();
+            GoIntro();
         });
     
     }
@@ -213,14 +213,15 @@ public class SelectUI : MonoBehaviour
         DataManager<PlayerInfo>.SaveData(p2);
         timeLabel.Stop = true;
 
+        SceneManager.Instance.LoadGameScene();
 
         //Debug.Log(DataManager<PlayerInfo>.LoadData(Path.Player1Path).character.name);
         //Debug.Log(DataManager<PlayerInfo>.LoadData(Path.Player2Path).character.name);
     }
 
-    public void GoMain()
+    public void GoIntro()
     {
-        //Main으로 이동
-        Debug.Log("GoMain");
+        SceneManager.Instance.LoadIntroScene();
+        Debug.Log("GoIntro");
     }
 }
