@@ -5,9 +5,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour{
-
-    [SerializeField] VisualTreeAsset _startAsset;
-    UIDocument _document;
+    private UIDocument _document;
 
     private void Awake()
     {

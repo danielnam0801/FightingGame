@@ -1,16 +1,26 @@
+using System.IO;
 using UnityEngine;
 
-public class DataManager<T> : MonoBehaviour where T : class
+public static class DataManager<T> where T : IJsonData
 {
-    public static DataManager<T> Instance;
-
-    public string ChangeDataToJson(T data)
+    public static void SaveData(T data)
     {
-        return JsonUtility.ToJson(data);
+        File.WriteAllText($"{Application.dataPath}/{data.Path}", JsonUtility.ToJson(data));
+        Debug.Log("Save");
     }
 
-    public T LoadData(string data)
+    public static T LoadData(string path)
     {
-        return JsonUtility.FromJson<T>(data);
+        if(File.Exists($"{Application.dataPath}/{path}"))
+        {
+            Debug.Log("Load 성공");
+            return JsonUtility.FromJson<T>(File.ReadAllText($"{Application.dataPath}/{path}"));
+        }
+        else
+        {
+            Debug.Log("Load 실패");
+            return default(T);
+        }
+        
     }
 }

@@ -4,15 +4,17 @@ using Core;
 using UnityEngine.UIElements;
 using System;
 
-class PlayerInfo
+[Serializable]
+class PlayerInfo : IJsonData
 {
-    public int characterNum;
-    public bool isAi;
+    public Character character;
+    public Player mode;
+    public string Path { get; set; }
 }
 
 public class SelectUI : MonoBehaviour
 {
-    [SerializeField] CharacterListSO _characterList;
+    [SerializeField] CharacterListSO _characterListSO;
     [SerializeField] VisualTreeAsset _slotAsset;
 
     UIDocument _uiDocument;
@@ -39,6 +41,8 @@ public class SelectUI : MonoBehaviour
     Selector player1;
     Selector player2;
     TimeLabel timeLabel;
+    ModeButton modeBtn1p;
+    ModeButton modeBtn2p;
 
     bool isSelectAll = false;
     
@@ -86,8 +90,8 @@ public class SelectUI : MonoBehaviour
         //Slot 클릭이벤트 구현해야함  
 
         timeLabel = new TimeLabel(this, _timeElement, 90f);
-        ModeButton modeBtnleft = new ModeButton(_modBtnleft, Player.player1);
-        ModeButton modeBtnright = new ModeButton(_modBtnright, Player.player2);
+        modeBtn1p = new ModeButton(_modBtnleft, Player.player1);
+        modeBtn2p = new ModeButton(_modBtnright, Player.player2);
 
         _returnBtn.RegisterCallback<ClickEvent>((evt) =>
         {
@@ -124,7 +128,7 @@ public class SelectUI : MonoBehaviour
 
     private void MakeCharacterSlot()
     {
-        List<Character> list = _characterList.GetCharacterList();
+        List<Character> list = _characterListSO.GetCharacterList();
         
         for (int i = 0; i < list.Count; i++)
         {
@@ -174,10 +178,44 @@ public class SelectUI : MonoBehaviour
         // Player1,2 캐릭터, AI 여부
         // 랜덤 맵
 
+        int p1idx;
+        int p2idx;
 
+        /// 
+        /// 랜덤슬롯인지 확인해주는 곳
+        ///
+        if(_characters[player1.GetCurSlotIdx] as RandomSlot != null)
+            p1idx = UnityEngine.Random.Range(0, _characters.Count - 2); // 맨 마지막 idx는 randomslot이기에 빼줌
+        else
+            p1idx = player1.GetCurSlotIdx;
+        if(_characters[player2.GetCurSlotIdx] as RandomSlot != null)
+            p2idx = UnityEngine.Random.Range(0, _characters.Count - 2); // 맨 마지막 idx는 randomslot이기에 빼줌
+        else
+            p2idx = player2.GetCurSlotIdx;
+        ///
+        ///
+        ///
 
+        PlayerInfo p1 = new PlayerInfo
+        {
+            character = _characterListSO.List[p1idx],
+            mode = modeBtn1p.GetCurrentMode,
+            Path = Path.Player1Path
+        };
+        PlayerInfo p2 = new PlayerInfo
+        {
+            character = _characterListSO.List[p2idx],
+            mode = modeBtn2p.GetCurrentMode,
+            Path = Path.Player2Path
+        };
+
+        DataManager<PlayerInfo>.SaveData(p1);
+        DataManager<PlayerInfo>.SaveData(p2);
         timeLabel.Stop = true;
-        Debug.Log("GoGameScene");
+
+
+        //Debug.Log(DataManager<PlayerInfo>.LoadData(Path.Player1Path).character.name);
+        //Debug.Log(DataManager<PlayerInfo>.LoadData(Path.Player2Path).character.name);
     }
 
     public void GoMain()

@@ -7,13 +7,14 @@ using System;
 
 public class ModeButton
 {
-    Button _modBtn;
-    Player _currentMod;
-    Player _linkedPlayer;
-
     string player1 = "p1";
     string player2 = "p2";
     string computer = "cp";
+
+    Button _modBtn;
+    Player _currentMod;
+    Player _linkedPlayer;
+    public Player GetCurrentMode => _currentMod;
 
     public ModeButton(Button button, Player player)
     {
