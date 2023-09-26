@@ -1,0 +1,23 @@
+.Button {
+    font-size: 50px;
+    -unity-font-style: bold;
+    background-color: rgba(0, 0, 0, 255);
+    width: 95%;
+    height: 100px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    border-left-color: rgba(166, 166, 166, 255);
+    border-right-color: rgba(166, 166, 166, 255);
+    border-top-color: rgba(166, 166, 166, 255);
+    border-bottom-color: rgba(166, 166, 166, 255);
+    color: rgba(255, 255, 255, 255);
+}
+
+.Button:hover {
+    transition-duration: 0.5s;
+    left: 100px;
+}

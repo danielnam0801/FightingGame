@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/09_UI/SelectUI.uss?fileID=7433441132597879392&amp;guid=f879356e84218ba4eaea7e9d2e21f053&amp;type=3#SelectUI" />
+    <ui:VisualElement name="Slot" class="slot" />
+</ui:UXML>
