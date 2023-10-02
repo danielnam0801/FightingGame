@@ -37,10 +37,10 @@ MonoBehaviour:
     renderTexture: {fileID: 8400000, guid: f77553ac52a6a1649978d17bb13f298a, type: 2}
     sprite: {fileID: 0}
     texture2d: {fileID: 0}
-  - name: Random
-    description: "\uB79C\uB364\uC2AC\uB86F"
-    imageType: 1
-    renderTexture: {fileID: 8400000, guid: a40e8524539d72b4b9c5eedb10d1b1f7, type: 2}
+  - name: Blueboy
+    description: "\uD30C\uB780\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
+    imageType: 0
+    renderTexture: {fileID: 8400000, guid: 2a309d9f4e3dd3345b8632a74b2bf6b8, type: 2}
     sprite: {fileID: 21300000, guid: 602b72d4617c3694aa94419fc1b68e04, type: 3}
     texture2d: {fileID: 0}
   - name: Random

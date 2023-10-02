@@ -1,114 +1,117 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Core;
 using System.Linq;
-using System;
+using CustomUI;
 
-public class Selector
+namespace SelectScene
 {
-    public SelectState currentState;
 
-    protected InputKey keys;
-    protected Player player;
-    protected int _curIdx;
-    public Player GetPlayer => player;
-    public int GetCurSlotIdx => _curIdx;
+    public class Selector
+    {
+        public SelectState currentState;
 
-    protected int _prevIdx;
-    protected int? _beforeSelectedIdx;
+        protected InputKey keys;
+        protected Player player;
+        protected int _curIdx;
+        public Player GetPlayer => player;
+        public int GetCurSlotIdx => _curIdx;
+
+        protected int _prevIdx;
+        protected int? _beforeSelectedIdx;
     
-    private List<Slot> slots;
+        private List<Slot> slots;
 
-    public bool isSelect = false;
+        public bool isSelect = false;
 
-    public Selector(Player player, InputKey keys, List<Slot> slots)
-    {
-        this.slots = slots;
-        this.keys = keys;
-        this.player = player;
-
-        _curIdx = 0;
-        _prevIdx = 0;
-        _beforeSelectedIdx = null;
-        currentState = SelectState.none;
-    }
-
-    public void Update()
-    {
-        if (Input.anyKeyDown)
+        public Selector(Player player, InputKey keys, List<Slot> slots)
         {
-            if (Input.GetKeyDown(keys.selectKey))
-            {
-                currentState = SelectState.select;
-                Select();
-            }
-            else
-            {
-                currentState = SelectState.focus;
-                Choose();
-            }
-        }
-    }
-    public void Choose()
-    {
-        if (Input.GetKeyDown(keys.leftKey))
-        {
-            MovingTarget(-1);
-        }
-        if (Input.GetKeyDown(keys.rightKey))
-        {
-            MovingTarget(1);
-        }
-    }
+            this.slots = slots;
+            this.keys = keys;
+            this.player = player;
 
-    private void MovingTarget(int idx)
-    {
-        _prevIdx = _curIdx;
-        _curIdx += idx;
-
-        if(_curIdx < 0)
-            _curIdx = slots.Count() - 1;
-        
-        if(_curIdx >= slots.Count())
             _curIdx = 0;
-
-        Focus();
-    }
-
-    public virtual void Focus()
-    {
-        Slot currentslot = FindSlotByIndex(_curIdx);
-        Slot prevslot = FindSlotByIndex(_prevIdx);
-
-        currentslot.Focused(player);
-        prevslot.Arrived(player);
-
-        if (_beforeSelectedIdx != null)
-        {
-            Slot beforeSelectedSlot = FindSlotByIndex(_beforeSelectedIdx.Value);
-            beforeSelectedSlot.IsSelected -= 1;
+            _prevIdx = 0;
             _beforeSelectedIdx = null;
+            currentState = SelectState.none;
         }
-        
-        isSelect = false;
-    }
 
-    public virtual void Select()
-    {
-        if (_beforeSelectedIdx == _curIdx) return;
-        _beforeSelectedIdx = _curIdx;
-       
-        Slot currentslot = FindSlotByIndex(_curIdx);
-        currentslot.Selected(player);
+        public void Update()
+        {
+            if (Input.anyKeyDown)
+            {
+                if (Input.GetKeyDown(keys.selectKey))
+                {
+                    currentState = SelectState.select;
+                    Select();
+                }
+                else
+                {
+                    currentState = SelectState.focus;
+                    Choose();
+                }
+            }
+        }
+        public void Choose()
+        {
+            if (Input.GetKeyDown(keys.leftKey))
+            {
+                MovingTarget(-1);
+            }
+            if (Input.GetKeyDown(keys.rightKey))
+            {
+                MovingTarget(1);
+            }
+        }
+
+        private void MovingTarget(int idx)
+        {
+            _prevIdx = _curIdx;
+            _curIdx += idx;
+
+            if(_curIdx < 0)
+                _curIdx = slots.Count() - 1;
         
-        isSelect = true;
-    }
+            if(_curIdx >= slots.Count())
+                _curIdx = 0;
+
+            Focus();
+        }
+
+        public virtual void Focus()
+        {
+            Slot currentslot = FindSlotByIndex(_curIdx);
+            Slot prevslot = FindSlotByIndex(_prevIdx);
+
+            currentslot.Focused(player);
+            prevslot.Arrived(player);
+
+            if (_beforeSelectedIdx != null)
+            {
+                Slot beforeSelectedSlot = FindSlotByIndex(_beforeSelectedIdx.Value);
+                beforeSelectedSlot.IsSelected -= 1;
+                _beforeSelectedIdx = null;
+            }
+        
+            isSelect = false;
+        }
+
+        public virtual void Select()
+        {
+            if (_beforeSelectedIdx == _curIdx) return;
+            _beforeSelectedIdx = _curIdx;
+       
+            Slot currentslot = FindSlotByIndex(_curIdx);
+            currentslot.Selected(player);
+        
+            isSelect = true;
+        }
     
-    protected Slot FindSlotByIndex(int idx)
-    {
-        return slots[idx];
+        protected Slot FindSlotByIndex(int idx)
+        {
+            return slots[idx];
+        }
+
     }
 
 }
