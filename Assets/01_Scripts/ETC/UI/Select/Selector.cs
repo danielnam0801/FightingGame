@@ -34,6 +34,10 @@ namespace SelectScene
             _prevIdx = 0;
             _beforeSelectedIdx = null;
             currentState = SelectState.none;
+
+            slots[_curIdx].Element.AddToClassList("focus");
+            slots[_curIdx].Element.AddToClassList("p1");
+            slots[_curIdx].Element.AddToClassList("p2");
         }
 
         public void Update()
