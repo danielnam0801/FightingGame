@@ -15,37 +15,43 @@ MonoBehaviour:
   List:
   - name: RedGuy
     description: "\uBE68\uAC04\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
+    material: {fileID: 2100000, guid: aab1ba24fba2741479d34952e713eed4, type: 2}
     imageType: 0
     renderTexture: {fileID: 8400000, guid: 32c68850359f60a4fb0543829298a90b, type: 2}
-    sprite: {fileID: 21300000, guid: 3086d66a563317b40a20a20da2c64ac0, type: 3}
+    sprite: {fileID: 0}
     texture2d: {fileID: 0}
   - name: GreenGuy
     description: "\uCD08\uB85D\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
+    material: {fileID: 2100000, guid: 9ea132d7967ba3640983b0c5b54524d0, type: 2}
     imageType: 0
     renderTexture: {fileID: 8400000, guid: b2a1c6100bc3fed409b27eebf22f7d82, type: 2}
     sprite: {fileID: 0}
     texture2d: {fileID: 0}
   - name: PinkGuy
     description: "\uD551\uD06C\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
+    material: {fileID: 2100000, guid: 70522f74ce2a85a4491c51d708ab585e, type: 2}
     imageType: 0
     renderTexture: {fileID: 8400000, guid: 8b364ef584207d744b74fec149676360, type: 2}
     sprite: {fileID: 0}
     texture2d: {fileID: 0}
   - name: BlackGuy
     description: "\uAC80\uC815\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
+    material: {fileID: 2100000, guid: e0c3461c063beba46aefca29b2b7b160, type: 2}
     imageType: 0
     renderTexture: {fileID: 8400000, guid: f77553ac52a6a1649978d17bb13f298a, type: 2}
     sprite: {fileID: 0}
     texture2d: {fileID: 0}
   - name: Blueboy
     description: "\uD30C\uB780\uC0C9 \uAE30\uBCF8 \uCE90\uB9AD\uD130"
+    material: {fileID: 2100000, guid: 1e1c9a1deae9a6b46afd13d6beef18db, type: 2}
     imageType: 0
     renderTexture: {fileID: 8400000, guid: 2a309d9f4e3dd3345b8632a74b2bf6b8, type: 2}
-    sprite: {fileID: 21300000, guid: 602b72d4617c3694aa94419fc1b68e04, type: 3}
+    sprite: {fileID: 0}
     texture2d: {fileID: 0}
   - name: Random
     description: "\uB79C\uB364\uC2AC\uB86F"
+    material: {fileID: 0}
     imageType: 1
-    renderTexture: {fileID: 8400000, guid: a40e8524539d72b4b9c5eedb10d1b1f7, type: 2}
+    renderTexture: {fileID: 0}
     sprite: {fileID: 21300000, guid: 602b72d4617c3694aa94419fc1b68e04, type: 3}
     texture2d: {fileID: 0}

@@ -1,7 +1,7 @@
 .Button {
     font-size: 50px;
     -unity-font-style: bold;
-    background-color: rgba(0, 0, 0, 255);
+    background-color: rgb(0, 0, 0);
     width: 95%;
     height: 100px;
     margin-top: 20px;
@@ -10,14 +10,18 @@
     border-right-width: 5px;
     border-top-width: 5px;
     border-bottom-width: 5px;
-    border-left-color: rgba(166, 166, 166, 255);
-    border-right-color: rgba(166, 166, 166, 255);
-    border-top-color: rgba(166, 166, 166, 255);
-    border-bottom-color: rgba(166, 166, 166, 255);
-    color: rgba(255, 255, 255, 255);
+    border-left-color: rgb(166, 166, 166);
+    border-right-color: rgb(166, 166, 166);
+    border-top-color: rgb(166, 166, 166);
+    border-bottom-color: rgb(166, 166, 166);
+    color: rgb(255, 255, 255);
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+    transition-property: position;
 }
 
 .Button:hover {
-    transition-duration: 0.5s;
     left: 100px;
+    transition-property: left;
+    transition-duration: 0.5s;
 }

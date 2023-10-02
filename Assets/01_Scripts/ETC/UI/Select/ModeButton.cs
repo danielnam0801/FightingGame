@@ -10,11 +10,11 @@ namespace SelectScene
         string computer = "cp";
 
         Button _modBtn;
-        Player _currentMod;
-        Player _linkedPlayer;
-        public Player GetCurrentMode => _currentMod;
+        PlayerType _currentMod;
+        PlayerType _linkedPlayer;
+        public PlayerType GetCurrentMode => _currentMod;
 
-        public ModeButton(Button button, Player player)
+        public ModeButton(Button button, PlayerType player)
         {
             _linkedPlayer = player;
             _currentMod = player;
@@ -28,21 +28,21 @@ namespace SelectScene
         {
             switch (_currentMod) 
             {
-                case Player.player1:
+                case PlayerType.player1:
                     CPSetting();
                     break;
-                case Player.player2:
+                case PlayerType.player2:
                     CPSetting();
                     break;
-                case Player.computer:
+                case PlayerType.AI:
                     PlayerSetting(_linkedPlayer);
                     break;
             }
         }
 
-        private void PlayerSetting(Player player)
+        private void PlayerSetting(PlayerType player)
         {
-            if(player == Player.player1)
+            if(player == PlayerType.player1)
             {
                 SetText("1p");
                 RemoveAndAddClass(computer, player1);
@@ -57,10 +57,10 @@ namespace SelectScene
 
         private void CPSetting()
         {
-            _currentMod = Player.computer;
+            _currentMod = PlayerType.AI;
             SetText("cp");
 
-            if (_linkedPlayer == Player.player1)
+            if (_linkedPlayer == PlayerType.player1)
             {
                 RemoveAndAddClass(player1, computer);
             }

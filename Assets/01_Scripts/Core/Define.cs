@@ -13,26 +13,33 @@ namespace SelectScene
         public KeyCode selectKey;
     }
 
-    public enum Player
-    {
-        player1 = 1,
-        player2 = 2,
-        computer = 3,
-    }
-
     public enum SelectState
     {
         none,
         focus,
         select,
     }
-
-    public enum SceneEnum
-    {
-        Start,
-        Loading,
-        InGame,
-        End,
-    }
 }
+
+public enum PlayerType
+{
+    player1 = 1,
+    player2 = 2,
+    AI = 3,
+}
+
+public enum SceneEnum
+{
+    Start,
+    Loading,
+    InGame,
+    End,
+}
+public enum ImageType
+{
+    RenderTexture,
+    Sprite,
+    Texture2d,
+}
+
 

@@ -7,15 +7,6 @@ using CustomUI;
 
 namespace SelectScene
 {
-
-    [Serializable]
-    class PlayerInfo : IJsonData
-    {
-        public Character character;
-        public Player mode;
-        public string Path { get; set; }
-    }
-
     public class SelectUI : MonoBehaviour
     {
         [SerializeField] CharacterListSO _characterListSO;
@@ -88,14 +79,14 @@ namespace SelectScene
             p2.rightKey = KeyCode.RightArrow;
             p2.selectKey = KeyCode.Return;
 
-            player1 = new Selector(Player.player1, p1, _characters);
-            player2 = new Selector(Player.player2, p2, _characters);
+            player1 = new Selector(PlayerType.player1, p1, _characters);
+            player2 = new Selector(PlayerType.player2, p2, _characters);
             #endregion
             //Slot 클릭이벤트 구현해야함  
 
             timeLabel = new TimeLabel(this, _timeElement, 90f);
-            modeBtn1p = new ModeButton(_modBtnleft, Player.player1);
-            modeBtn2p = new ModeButton(_modBtnright, Player.player2);
+            modeBtn1p = new ModeButton(_modBtnleft, PlayerType.player1);
+            modeBtn2p = new ModeButton(_modBtnright, PlayerType.player2);
 
             _returnBtn.RegisterCallback<ClickEvent>((evt) =>
             {
@@ -219,8 +210,8 @@ namespace SelectScene
 
             SceneManager.Instance.LoadGameScene();
 
-            //Debug.Log(DataManager<PlayerInfo>.LoadData(Path.Player1Path).character.name);
-            //Debug.Log(DataManager<PlayerInfo>.LoadData(Path.Player2Path).character.name);
+            Debug.Log(DataManager<PlayerInfo>.LoadData(Path.Player1Path).character.material);
+            Debug.Log(DataManager<PlayerInfo>.LoadData(Path.Player2Path).character.material);
         }
 
         public void GoIntro()

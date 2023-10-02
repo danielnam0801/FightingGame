@@ -3,19 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum ImageType
-{
-    RenderTexture,
-    Sprite,
-    Texture2d,
-}
-
 [Serializable]
 public class Character
 {
     public string name;
     public string description;
-
+    public Material material;
     //[HideInInspector, SerializeField] private ImageType imageType;
     //[HideInInspector, SerializeField] private RenderTexture renderTexture;
     //[HideInInspector, SerializeField] private Sprite sprite;

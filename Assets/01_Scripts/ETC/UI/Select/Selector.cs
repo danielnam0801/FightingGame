@@ -12,9 +12,9 @@ namespace SelectScene
         public SelectState currentState;
 
         protected InputKey keys;
-        protected Player player;
+        protected PlayerType player;
         protected int _curIdx;
-        public Player GetPlayer => player;
+        public PlayerType GetPlayer => player;
         public int GetCurSlotIdx => _curIdx;
 
         protected int _prevIdx;
@@ -24,7 +24,7 @@ namespace SelectScene
 
         public bool isSelect = false;
 
-        public Selector(Player player, InputKey keys, List<Slot> slots)
+        public Selector(PlayerType player, InputKey keys, List<Slot> slots)
         {
             this.slots = slots;
             this.keys = keys;
