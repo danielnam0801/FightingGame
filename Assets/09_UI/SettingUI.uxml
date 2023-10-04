@@ -1,0 +1,64 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/09_UI/SettingUI.uss?fileID=7433441132597879392&amp;guid=45c74e4a8ae1b654cbbf889fec15a1dc&amp;type=3#SettingUI" />
+    <ui:VisualElement name="SettingPannel" style="height: 1026px; width: 1464px; background-color: rgb(99, 99, 99); border-top-left-radius: 35px; border-bottom-left-radius: 35px; border-top-right-radius: 35px; border-bottom-right-radius: 35px; left: 432px; top: 2.5%; align-items: stretch; justify-content: flex-start; flex-direction: row;">
+        <ui:VisualElement name="NormalSetting" class="Setting" style="-unity-background-image-tint-color: rgb(200, 163, 148); background-color: rgb(200, 148, 152);">
+            <ui:Label text="SETTING" display-tooltip-when-elided="true" style="font-size: 45px; -unity-font-style: bold; -unity-text-align: middle-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="SoundSetting" class="Setting" style="background-color: rgb(148, 163, 200);">
+            <ui:Label text="SOUND SETTING" display-tooltip-when-elided="true" style="font-size: 45px; -unity-font-style: bold; -unity-text-align: middle-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="NormalSettingPannel" class="Pannel" style="background-color: rgb(200, 148, 152); position: absolute;">
+            <ui:VisualElement name="Master" style="flex-direction: row;">
+                <ui:Label text="Master Volume" display-tooltip-when-elided="true" name="MasterTex" class="text" />
+                <ui:Slider picking-mode="Ignore" value="50" high-value="100" name="Slider" style="width: 871px; left: 286px; top: 56px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="BGM" style="flex-direction: row; top: 20%;">
+                <ui:Label text="BGM Volume" display-tooltip-when-elided="true" name="BGMTex" class="text" />
+                <ui:Slider picking-mode="Ignore" value="50" high-value="100" name="Slider" style="width: 871px; left: 286px; top: 56px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="VFX" style="flex-direction: row; top: 40%;">
+                <ui:Label text="VFX Volume" display-tooltip-when-elided="true" name="VFXTex" class="text" />
+                <ui:Slider picking-mode="Ignore" value="50" high-value="100" name="Slider" style="width: 871px; left: 286px; top: 56px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="SoundSettingPannel" class="Pannel" style="background-color: rgb(148, 163, 200); position: absolute; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
+            <ui:VisualElement name="HitTextPannel" class="TextPannel" style="flex-direction: row;">
+                <ui:Label text="맞는 소리" name="HitText" class="text" style="justify-content: center; top: -45px;" />
+                <ui:VisualElement name="Recoarding" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStartBtn.png?fileID=2800000&amp;guid=e4973d8d831706b4fbebc572dc85bb90&amp;type=3#RecodingStartBtn&apos;);" />
+                <ui:VisualElement name="RecoardingEnd" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStopBitn.png?fileID=2800000&amp;guid=91e16f69526fbc94e9a59ad8300b97a1&amp;type=3#RecodingStopBitn&apos;);" />
+                <ui:VisualElement name="Listen" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/pngegg%20(24).png?fileID=2800000&amp;guid=1ba675117705d544289f8467a414968c&amp;type=3#pngegg (24)&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="StartTextPannel" class="TextPannel" style="flex-direction: row;">
+                <ui:Label text="시작 소리" name="StartText" class="text" style="justify-content: center; top: -45px;" />
+                <ui:VisualElement name="Recoarding" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStartBtn.png?fileID=2800000&amp;guid=e4973d8d831706b4fbebc572dc85bb90&amp;type=3#RecodingStartBtn&apos;);" />
+                <ui:VisualElement name="RecoardingEnd" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStopBitn.png?fileID=2800000&amp;guid=91e16f69526fbc94e9a59ad8300b97a1&amp;type=3#RecodingStopBitn&apos;);" />
+                <ui:VisualElement name="Listen" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/pngegg%20(24).png?fileID=2800000&amp;guid=1ba675117705d544289f8467a414968c&amp;type=3#pngegg (24)&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="AttackTextPannel" class="TextPannel" style="flex-direction: row;">
+                <ui:Label text="공격 소리" name="AttackText" class="text" style="justify-content: center; top: -45px;" />
+                <ui:VisualElement name="Recoarding" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStartBtn.png?fileID=2800000&amp;guid=e4973d8d831706b4fbebc572dc85bb90&amp;type=3#RecodingStartBtn&apos;);" />
+                <ui:VisualElement name="RecoardingEnd" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStopBitn.png?fileID=2800000&amp;guid=91e16f69526fbc94e9a59ad8300b97a1&amp;type=3#RecodingStopBitn&apos;);" />
+                <ui:VisualElement name="Listen" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/pngegg%20(24).png?fileID=2800000&amp;guid=1ba675117705d544289f8467a414968c&amp;type=3#pngegg (24)&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="BlockTextPannel" class="TextPannel" style="flex-direction: row;">
+                <ui:Label text="방어 소리" name="BlockText" class="text" style="justify-content: center; top: -45px;" />
+                <ui:VisualElement name="Recoarding" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStartBtn.png?fileID=2800000&amp;guid=e4973d8d831706b4fbebc572dc85bb90&amp;type=3#RecodingStartBtn&apos;);" />
+                <ui:VisualElement name="RecoardingEnd" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStopBitn.png?fileID=2800000&amp;guid=91e16f69526fbc94e9a59ad8300b97a1&amp;type=3#RecodingStopBitn&apos;);" />
+                <ui:VisualElement name="Listen" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/pngegg%20(24).png?fileID=2800000&amp;guid=1ba675117705d544289f8467a414968c&amp;type=3#pngegg (24)&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="WinTextPannel" class="TextPannel" style="flex-direction: row;">
+                <ui:Label text="게임 이긴 소리" name="WinText" class="text" style="justify-content: center; top: -45px;" />
+                <ui:VisualElement name="Recoarding" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStartBtn.png?fileID=2800000&amp;guid=e4973d8d831706b4fbebc572dc85bb90&amp;type=3#RecodingStartBtn&apos;);" />
+                <ui:VisualElement name="RecoardingEnd" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStopBitn.png?fileID=2800000&amp;guid=91e16f69526fbc94e9a59ad8300b97a1&amp;type=3#RecodingStopBitn&apos;);" />
+                <ui:VisualElement name="Listen" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/pngegg%20(24).png?fileID=2800000&amp;guid=1ba675117705d544289f8467a414968c&amp;type=3#pngegg (24)&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="LosePannel" class="TextPannel" style="flex-direction: row;">
+                <ui:Label text="게임 진 소리" name="LoseText" class="text" style="justify-content: center; top: -45px;" />
+                <ui:VisualElement name="Recoarding" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStartBtn.png?fileID=2800000&amp;guid=e4973d8d831706b4fbebc572dc85bb90&amp;type=3#RecodingStartBtn&apos;);" />
+                <ui:VisualElement name="RecoardingEnd" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/RecodingStopBitn.png?fileID=2800000&amp;guid=91e16f69526fbc94e9a59ad8300b97a1&amp;type=3#RecodingStopBitn&apos;);" />
+                <ui:VisualElement name="Listen" class="Visual" style="background-image: url(&apos;project://database/Assets/02_Assets/Sprite/pngegg%20(24).png?fileID=2800000&amp;guid=1ba675117705d544289f8467a414968c&amp;type=3#pngegg (24)&apos;);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="ESC" style="background-image: url(&apos;project://database/Packages/com.unity.collab-proxy/Editor/PlasticSCM/Assets/Images/d_icondeletedlocaloverlay@2x.png?fileID=2800000&amp;guid=92b204cca46037444ab18ba6701f86f7&amp;type=3#d_icondeletedlocaloverlay@2x&apos;); width: 150px; height: 150px; right: 892px; bottom: 10px;" />
+    </ui:VisualElement>
+</ui:UXML>
