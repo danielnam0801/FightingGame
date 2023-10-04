@@ -1,1 +1,1 @@
-{"character":{"name":"BlackGuy","description":"검정색 기본 캐릭터","material":{"instanceID":30418},"imageType":0,"renderTexture":{"instanceID":30414},"sprite":{"instanceID":0},"texture2d":{"instanceID":0}},"mode":1}
+{"character":{"name":"RedGuy","description":"빨간색 기본 캐릭터","material":{"instanceID":27768},"imageType":0,"renderTexture":{"instanceID":27358},"sprite":{"instanceID":0},"texture2d":{"instanceID":0}},"mode":1}

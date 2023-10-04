@@ -9,27 +9,31 @@ using UnityEngine.Timeline;
 
 public class CameraShake : MonoBehaviour
 {
-    private CinemachineVirtualCamera vCam;
+    [SerializeField] CinemachineVirtualCamera vCam;
+    [SerializeField] CinemachineVirtualCamera vCam2;
     private CinemachineBasicMultiChannelPerlin perlin;
     [SerializeField] CinemachineFreeLook blueGuyFCam;
     [SerializeField] CinemachineFreeLook redGuyFCam;
-    [SerializeField] VisualEffect hitEffect;
+    //[SerializeField] VisualEffect hitEffect;
     [SerializeField] PlayableDirector introDirector;
     [SerializeField] PlayableDirector winningDirector;
     [SerializeField] PlayableDirector losingDirector;
 
     [SerializeField] float hitAmplitudeGain = 2, hitFrequencyGain = 2, shakeTime = 1;
+    Vector3 vec = new Vector3(0.17f, -0.2f, 3.1f);
     private bool isWin = false;
     private bool isLose = false;
 
     private void Awake()
     {
-        vCam = GetComponent<CinemachineVirtualCamera>();
-        perlin = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        blueGuyFCam =GameObject.Find("BlueGuyFreeLook").GetComponent<CinemachineFreeLook>();
+        vCam = GameObject.Find("IntroCamera").GetComponent<CinemachineVirtualCamera>();
+        vCam2 = GameObject.Find("ShakeCamera").GetComponent<CinemachineVirtualCamera>();
+        perlin = vCam2.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+        blueGuyFCam = GameObject.Find("BlueGuyFreeLook").GetComponent<CinemachineFreeLook>();
         redGuyFCam = GameObject.Find("RedGuyFreeLook").GetComponent<CinemachineFreeLook>();
-        
+
 
         blueGuyFCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
         blueGuyFCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
@@ -37,8 +41,8 @@ public class CameraShake : MonoBehaviour
         redGuyFCam.m_XAxis.m_InputAxisName = "";
         redGuyFCam.m_YAxis.m_InputAxisName = "";
 
-        winningDirector = GameObject.Find("BlueGuy_123").GetComponent<PlayableDirector>();
-        losingDirector = GameObject.Find("RedGuy_123").GetComponent<PlayableDirector>();
+        winningDirector = GameObject.Find("PlayerUnit").GetComponent<PlayableDirector>();
+        losingDirector = GameObject.Find("AIUnit").GetComponent<PlayableDirector>();
         introDirector = GameObject.Find("IntroTimeLine").GetComponent<PlayableDirector>();
 
         blueGuyFCam.gameObject.SetActive(false);
@@ -48,25 +52,31 @@ public class CameraShake : MonoBehaviour
     void Start()
     {
         introDirector.Play();
-        winningDirector.Stop();
-        losingDirector.Stop();
+        //winningDirector.Stop();
+        //losingDirector.Stop();
+
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (vCam.transform.position == vec)
+        {
+            vCam.gameObject.SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
         {
             introDirector.Stop();
             StartCoroutine(ShakeCamera());
         }
-        if(Input.GetKeyDown(KeyCode.E) )
+        if (Input.GetKeyDown(KeyCode.Q) )
         {
+            introDirector.Stop();
             StartCoroutine(WinnerRotateCamera());
-            vCam.gameObject.SetActive(false);
+            vCam2.gameObject.SetActive(false);
         }
         if(Input.GetKeyDown(KeyCode.R))
         {
             StartCoroutine(LoserRotateCamera());
-            vCam.gameObject.SetActive(false);
+            vCam2.gameObject.SetActive(false);
         }
     }
 
@@ -76,9 +86,9 @@ public class CameraShake : MonoBehaviour
     {
         perlin.m_AmplitudeGain = hitAmplitudeGain;
         perlin.m_FrequencyGain = hitFrequencyGain;
-        hitEffect.Play();
         yield return new WaitForSeconds(0.1f);
         StartCoroutine(StopShake());
+        //hitEffect.Play();
     }
     IEnumerator StopShake()
     {

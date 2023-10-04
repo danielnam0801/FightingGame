@@ -695,6 +695,7 @@ GameObject:
   - component: {fileID: 8303825491279981190}
   - component: {fileID: 8303825491279981189}
   - component: {fileID: 6409722103625518625}
+  - component: {fileID: -1076004556429445816}
   m_Layer: 7
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -790,6 +791,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0612ba09855d1448abac0be2c5de49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!320 &-1076004556429445816
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8303825491279981188}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 5ab132fdc3fede2498432d41c3345d8e, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -4757276817291262294, guid: 5ab132fdc3fede2498432d41c3345d8e, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1096484098165233410, guid: 5ab132fdc3fede2498432d41c3345d8e, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &8303825491336747907
 GameObject:
   m_ObjectHideFlags: 0
