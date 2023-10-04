@@ -33,9 +33,15 @@ public class FightManager : MonoBehaviour
             ? Instantiate(aiModel, p2SpawnPoint.position, Quaternion.Euler(0, -90, 0))
             : Instantiate(playerModel, p2SpawnPoint.position, Quaternion.Euler(0, -90, 0));
 
-        p1.GetComponent<PlayerSetting>().SetVisual(player1Info.character.material);
-        p2.GetComponent<PlayerSetting>().SetVisual(player2Info.character.material);
 
+        PlayerSetting p1Setting = p1.GetComponent<PlayerSetting>();
+        p1Setting.SetPlayerNum(PlayerSpawnState.left);
+        p1Setting.SetVisual(player1Info.character.material);
+        
+        PlayerSetting p2Setting = p2.GetComponent<PlayerSetting>();
+        p2Setting.SetPlayerNum(PlayerSpawnState.right);
+        p2Setting.SetVisual(player2Info.character.material);
+        
     }
 
     private void OnDisable()
