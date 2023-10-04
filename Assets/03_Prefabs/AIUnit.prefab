@@ -204,7 +204,6 @@ GameObject:
   - component: {fileID: 3311597928127319129}
   - component: {fileID: 3311597928127319128}
   - component: {fileID: -4848446038975253164}
-  - component: {fileID: 4402338278569872021}
   m_Layer: 6
   m_Name: AIUnit
   m_TagString: Untagged
@@ -301,27 +300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0612ba09855d1448abac0be2c5de49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!320 &4402338278569872021
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3311597928127319143}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 665776254bcaa5447a89c9f35eb014a2, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -3359960513218980673, guid: 665776254bcaa5447a89c9f35eb014a2, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: -6390619429672847289, guid: 665776254bcaa5447a89c9f35eb014a2, type: 2}
-    value: {fileID: 0}
-  m_ExposedReferences:
-    m_References: []
 --- !u!1 &3311597928140331182
 GameObject:
   m_ObjectHideFlags: 0
