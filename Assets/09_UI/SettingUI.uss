@@ -1,0 +1,93 @@
+.Setting {
+    width: 459px;
+    height: 132px;
+    left: 312px;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+}
+
+.Pannel {
+    width: 95%;
+    height: 84%;
+    border-top-left-radius: 35px;
+    border-bottom-left-radius: 35px;
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
+    left: 36px;
+    top: 130px;
+}
+
+.text {
+    font-size: 45px;
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+    width: 10px;
+    height: 10px;
+    left: 143px;
+    padding-left: 81px;
+    padding-right: 81px;
+    padding-top: 81px;
+    padding-bottom: 81px;
+    margin-left: -6px;
+    margin-right: -6px;
+    margin-top: -6px;
+    margin-bottom: -6px;
+    color: rgba(0, 0, 0, 255);
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.TextPannel {
+    left: 27px;
+    top: 54px;
+    width: 1334px;
+    height: 93px;
+    background-color: rgba(192, 192, 192, 255);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-top: 34px;
+}
+
+.Visual {
+    width: 90px;
+    height: 90px;
+    left: 729px;
+}
+
+.text {
+    font-size: 45px;
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+    width: 10px;
+    height: 10px;
+    left: 143px;
+    padding-left: 81px;
+    padding-right: 81px;
+    padding-top: 81px;
+    padding-bottom: 81px;
+    margin-left: -6px;
+    margin-right: -6px;
+    margin-top: -6px;
+    margin-bottom: -6px;
+    color: rgba(0, 0, 0, 255);
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#Slider #unity-dragger {
+    width: 70px;
+    height: 70px;
+    background-image: url('project://database/Packages/com.unity.collab-proxy/Editor/PlasticSCM/Assets/Images/d_iconaddedlocal@2x.png?fileID=2800000&guid=02800fb9cff14da47a04572790384d8b&type=3#d_iconaddedlocal@2x');
+    position: relative;
+    top: auto;
+    bottom: 36px;
+}
+
+#Slider #unity-tracker {
+    height: 11px;
+    position: relative;
+}
