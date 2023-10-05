@@ -17,39 +17,20 @@
     border-bottom-right-radius: 35px;
     left: 36px;
     top: 130px;
+    position: absolute;
 }
 
-.text {
-    font-size: 45px;
-    -unity-font-style: bold;
-    -unity-text-align: upper-center;
-    width: 10px;
-    height: 10px;
-    left: 143px;
-    padding-left: 81px;
-    padding-right: 81px;
-    padding-top: 81px;
-    padding-bottom: 81px;
-    margin-left: -6px;
-    margin-right: -6px;
-    margin-top: -6px;
-    margin-bottom: -6px;
-    color: rgba(0, 0, 0, 255);
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.TextPannel {
-    left: 27px;
-    top: 54px;
-    width: 1334px;
-    height: 93px;
-    background-color: rgba(192, 192, 192, 255);
+.SettingContainer {
+    width: 95%;
+    height: 100px;
+    background-color: rgb(192, 192, 192);
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    margin-top: 34px;
+    margin-top: 35px;
+    margin-right: 0;
+    margin-bottom: 0;
 }
 
 .Visual {
@@ -61,21 +42,10 @@
 .text {
     font-size: 45px;
     -unity-font-style: bold;
-    -unity-text-align: upper-center;
-    width: 10px;
-    height: 10px;
-    left: 143px;
-    padding-left: 81px;
-    padding-right: 81px;
-    padding-top: 81px;
-    padding-bottom: 81px;
-    margin-left: -6px;
-    margin-right: -6px;
-    margin-top: -6px;
-    margin-bottom: -6px;
-    color: rgba(0, 0, 0, 255);
-    align-items: center;
-    justify-content: flex-start;
+    -unity-text-align: middle-center;
+    color: rgb(0, 0, 0);
+    height: 50px;
+    width: 300px;
 }
 
 #Slider #unity-dragger {
@@ -90,4 +60,47 @@
 #Slider #unity-tracker {
     height: 11px;
     position: relative;
+}
+
+.ESC {
+    background-image: url('project://database/Packages/com.unity.collab-proxy/Editor/PlasticSCM/Assets/Images/d_icondeletedlocaloverlay@2x.png?fileID=2800000&guid=92b204cca46037444ab18ba6701f86f7&type=3#d_icondeletedlocaloverlay@2x');
+    width: 150px;
+    height: 150px;
+    right: 892px;
+    bottom: 10px;
+}
+
+.ESC:hover {
+    background-color: rgb(99, 99, 99);
+}
+
+.RecordButton {
+    height: 83%;
+    width: 80px;
+    background-image: url('project://database/Assets/02_Assets/Sprite/RecodingStartBtn.png?fileID=2800000&guid=e4973d8d831706b4fbebc572dc85bb90&type=3#RecodingStartBtn');
+    background-color: rgba(255, 255, 255, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.VolumeContainer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.Slider {
+    width: 871px;
+    top: 28px;
 }

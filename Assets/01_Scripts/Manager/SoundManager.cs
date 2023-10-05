@@ -61,6 +61,7 @@ public class SoundManager : Singleton<SoundManager>
         string filename = $"{player}-{Enum.GetName(typeof(SoundType), soundType)}";
         StartCoroutine(LoadAudio(filename, _audioSources[(int)soundType]));
     }
+
     public void PlaySound(SoundType soundType)
     {
         _audioSources[(int)soundType].Play();

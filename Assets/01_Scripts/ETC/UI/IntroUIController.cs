@@ -6,7 +6,16 @@ public class IntroUIController : MonoBehaviour{
     private UIDocument _document;
     private GameObject _settingDocumentObj;
 
-    bool isSettingOn = false;
+    private bool isSettingOn = false;
+    public bool IsSettingOn
+    {
+        get { return isSettingOn; }
+        set 
+        {
+            isSettingOn = value;
+            ShowSettingPanel(value);
+        }
+    }
     private void Awake()
     {
         _document = GetComponent<UIDocument>();
@@ -14,7 +23,7 @@ public class IntroUIController : MonoBehaviour{
 
     private void Start()
     {
-        _settingDocumentObj = transform.Find("SettingUI").gameObject;
+        _settingDocumentObj = transform.parent.Find("SettingUI").gameObject;
     }
 
     private void OnEnable()
@@ -30,10 +39,22 @@ public class IntroUIController : MonoBehaviour{
         quitBtn.RegisterCallback<ClickEvent>(Quit);
     }
 
+
     private void ActiveSetting(ClickEvent evt)
     {
-        isSettingOn = !isSettingOn;
-        
+        IsSettingOn = !IsSettingOn;
+    }
+
+    private void ShowSettingPanel(bool value)
+    {
+        if(value)
+        {
+            _settingDocumentObj.SetActive(true);
+        }
+        else
+        {
+            _settingDocumentObj.SetActive(false);
+        }
     }
 
     private void Quit(ClickEvent evt)
