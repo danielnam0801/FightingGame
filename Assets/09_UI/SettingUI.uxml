@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/09_UI/SettingUI.uss?fileID=7433441132597879392&amp;guid=45c74e4a8ae1b654cbbf889fec15a1dc&amp;type=3#SettingUI" />
-    <ui:VisualElement name="SettingPannel" style="height: 1026px; width: 1464px; background-color: rgb(99, 99, 99); border-top-left-radius: 35px; border-bottom-left-radius: 35px; border-top-right-radius: 35px; border-bottom-right-radius: 35px; left: 432px; top: 2.5%; align-items: stretch; justify-content: flex-start; flex-direction: row;">
+    <ui:VisualElement name="SettingPannel" style="height: 1026px; width: 1464px; background-color: rgb(99, 99, 99); border-top-left-radius: 35px; border-bottom-left-radius: 35px; border-top-right-radius: 35px; border-bottom-right-radius: 35px; left: 432px; top: 2.5%; align-items: stretch; justify-content: flex-start; flex-direction: row; position: absolute;">
         <ui:VisualElement name="NormalSetting" class="Setting" style="-unity-background-image-tint-color: rgb(200, 163, 148); background-color: rgb(200, 148, 152);">
             <ui:Label text="SETTING" display-tooltip-when-elided="true" style="font-size: 45px; -unity-font-style: bold; -unity-text-align: middle-center;" />
         </ui:VisualElement>
