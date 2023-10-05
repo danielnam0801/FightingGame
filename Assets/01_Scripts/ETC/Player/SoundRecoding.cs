@@ -26,10 +26,8 @@ public class SoundRecoding : MonoBehaviour
 
     private void SaveRecording()
     {
-        string tempPath = $"Sound-{Enum.GetName(typeof(SoundType), soundType)}";
-        
-        SoundManager.Instance.saveLoadWav.Save(tempPath, recordedClip, false);
-        SoundManager.Instance.LoadAudio(tempPath);
+        SoundManager.Instance.Save(soundType, recordedClip);
+        SoundManager.Instance.Load(soundType);
     }
 
     public void StartSound()

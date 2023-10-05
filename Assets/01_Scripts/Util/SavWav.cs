@@ -36,6 +36,7 @@ public static class SavWav
 
 	public static bool Save(string filename, AudioClip clip)
 	{
+		clip = TrimSilence(clip, 0.001f);
 		if (!filename.ToLower().EndsWith(".wav"))
 		{
 			filename += ".wav";
@@ -50,11 +51,11 @@ public static class SavWav
 
 		using (var fileStream = CreateEmpty(filepath))
 		{
-
 			ConvertAndWrite(fileStream, clip);
 
 			WriteHeader(fileStream, clip);
 		}
+
 
 		return true; // TODO: return false if there's a failure saving the file
 	}
@@ -64,6 +65,10 @@ public static class SavWav
 		var samples = new float[clip.samples];
 
 		clip.GetData(samples, 0);
+		//for(int i = 0; i < samples.Length; i++)
+  //      {
+		//	Debug.Log(samples[i]);
+  //      }
 
 		return TrimSilence(new List<float>(samples), min, clip.channels, clip.frequency);
 	}
