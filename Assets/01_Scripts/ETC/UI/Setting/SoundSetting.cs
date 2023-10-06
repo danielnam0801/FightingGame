@@ -1,3 +1,4 @@
+using System;
 using UnityEngine.UIElements;
 
 public class SoundSetting
@@ -28,10 +29,26 @@ public class SoundSetting
         #endregion
         Init();
         #region CallbackEvt
-
+        _recordStartBtn.RegisterCallback<ClickEvent>(RecordStart);
+        _recordStoptBtn.RegisterCallback<ClickEvent>(RecordStop);
+        _listenBtn.RegisterCallback<ClickEvent>(Listen);
         #endregion
     }
 
+
+    private void RecordStart(ClickEvent evt)
+    {
+        _recoding.StartRecording();
+    }
+    private void RecordStop(ClickEvent evt)
+    {
+        _recoding.StopRecording();
+    }
+
+    private void Listen(ClickEvent evt)
+    {
+        SoundManager.Instance.PlaySound();
+    }
     private void Init()
     {
         _recoding = new SoundRecoding(Type);
@@ -68,8 +85,4 @@ public class SoundSetting
         return name;
     }
 
-    private void Record()
-    {
-
-    }
 }

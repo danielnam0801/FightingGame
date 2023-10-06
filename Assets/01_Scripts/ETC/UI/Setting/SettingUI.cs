@@ -41,9 +41,5 @@ public class SettingUI : MonoBehaviour
             soundSettings.Add(soundSetting);
             soundSettingContainer.Add(soundSetting._container);
         }
-
-        foreach(var setting in soundSettings)
-        {
-        }
     }
 }

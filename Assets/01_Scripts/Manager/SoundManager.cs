@@ -20,6 +20,7 @@ public class SoundManager : Singleton<SoundManager>
 {
 
     AudioSource[] _audioSources = new AudioSource[(int)SoundType.MAXCOUNT];
+    AudioSource _playOneAudioSource;
 
     public Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
@@ -46,20 +47,35 @@ public class SoundManager : Singleton<SoundManager>
             _audioSources[i].playOnAwake = false;
             go.transform.parent = root.transform;
         }
+        GameObject go2 = new GameObject { name = "PlayOneShotAudio" };
+        _playOneAudioSource = go2.AddComponent<AudioSource>();
+        _playOneAudioSource.playOnAwake = false;
+        go2.transform.parent = root.transform;
 
         _audioSources[(int)SoundType.BGM].loop = true; // bgm 재생기는 무한 반복 재생
     }
 
     public void Save(SoundType soundType, AudioClip clip, PlayerType player = PlayerType.player1)
     {
-        string filename = $"{player}-{Enum.GetName(typeof(SoundType), soundType)}";
+        string filename = $"{player}-{soundType}";
         SavWav.Save(filename, clip);
     }
 
     public void Load(SoundType soundType, PlayerType player = PlayerType.player1)
     {
-        string filename = $"{player}-{Enum.GetName(typeof(SoundType), soundType)}";
+        string filename = $"{player}-{soundType}";
         StartCoroutine(LoadAudio(filename, _audioSources[(int)soundType]));
+    }
+
+    public void PlayOneShot(SoundType soundType, PlayerType player = PlayerType.player1)
+    {
+        string filename = $"{player}-{soundType}";
+        StartCoroutine(LoadAudio(filename, _playOneAudioSource, true));
+    }
+
+    private string GetFileName(SoundType soundType, PlayerType player = PlayerType.player1)
+    {
+        return string filename = $"{player}-{soundType}";
     }
 
     public void PlaySound(SoundType soundType)
@@ -72,7 +88,7 @@ public class SoundManager : Singleton<SoundManager>
         _audioSources[(int)soundType].Stop();
     }
 
-    public IEnumerator<WWW> LoadAudio(string filename, AudioSource audioSource)
+    public IEnumerator<WWW> LoadAudio(string filename, AudioSource audioSource, bool play = false)
     {
         if (!String.IsNullOrEmpty(filename) && audioSource != null)
         {
@@ -84,6 +100,8 @@ public class SoundManager : Singleton<SoundManager>
                 yield return www;
                 audioSource.clip = www.GetAudioClip(false, false, AudioType.WAV);
                 audioSource.clip.name = filename;
+                if(play)
+                    audioSource.Play();
             }
         }
         yield break;
