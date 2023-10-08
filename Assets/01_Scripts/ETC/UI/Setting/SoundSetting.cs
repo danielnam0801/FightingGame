@@ -18,7 +18,8 @@ public class SoundSetting
     private SettingUI _setting;
 
     public int Index;
-   
+    private bool canClick = true;
+
     public SoundSetting(SettingUI setting, VisualTreeAsset asset, SoundType type, int index)
     {
         Index = index;
@@ -46,18 +47,39 @@ public class SoundSetting
 
     private void RecordStart(ClickEvent evt)
     {
+        if (!canClick) return;
         _setting.SetRecordingTrue(Index);
         _recoding.StartRecording();
     }
 
     private void RecordStop(ClickEvent evt)
     {
+        if (!canClick) return;
         _recoding.StopRecording();
         _setting.SetRecordingFalse(Index);
     }
 
+    public void SetClickLock(bool value)
+    {
+        if (value == true)
+        {
+            _recordStartBtn.AddToClassList("lock");
+            _recordStoptBtn.AddToClassList("lock");
+            _listenBtn.AddToClassList("lock");
+            canClick = false;
+        }
+        else
+        {
+            _recordStartBtn.RemoveFromClassList("lock");
+            _recordStoptBtn.RemoveFromClassList("lock");
+            _listenBtn.RemoveFromClassList("lock");
+            canClick = true;
+        }
+    }
+
     private void Listen(ClickEvent evt)
     {
+        if (!canClick) return;
         SoundManager.Instance.PlaySound(Type);
     }
 

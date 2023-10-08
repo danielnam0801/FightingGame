@@ -49,12 +49,17 @@ public class SettingUI : MonoBehaviour
         foreach(var setting in soundSettings)
         {
             if (setting.Index == index) continue;
-            setting.SetClickAble(false);
+            setting.SetClickLock(true);
         }
     }
 
     public void SetRecordingFalse(int index)
     {
-
+        isRecording = false;
+        foreach (var setting in soundSettings)
+        {
+            if (setting.Index == index) continue;
+            setting.SetClickLock(false);
+        }
     }
 }

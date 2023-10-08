@@ -77,9 +77,6 @@
 .RecordButton {
     height: 83%;
     width: 80px;
-    background-image: url('project://database/Assets/02_Assets/Sprite/RecodingStartBtn.png?fileID=2800000&guid=e4973d8d831706b4fbebc572dc85bb90&type=3#RecodingStartBtn');
-    background-color: rgba(255, 255, 255, 0);
-    -unity-background-image-tint-color: rgb(255, 255, 255);
     border-left-width: 3px;
     border-right-width: 3px;
     border-top-width: 3px;
@@ -90,6 +87,7 @@
     border-bottom-right-radius: 15px;
     margin-left: 10px;
     margin-right: 10px;
+    background-color: rgba(255, 255, 255, 255);
 }
 
 .VolumeContainer {
@@ -103,4 +101,21 @@
 .Slider {
     width: 871px;
     top: 28px;
+}
+
+.RecordButton.lock {
+    background-image: url('project://database/Packages/com.unity.timeline/Editor/StyleSheets/Images/Icons/d_TrackLockButtonEnabled.png?fileID=2800000&guid=e8aa120f1b4731e43a2dd31eb70bbbe2&type=3#d_TrackLockButtonEnabled');
+    background-color: rgba(91, 91, 91, 255);
+}
+
+.RecordButton.Record {
+    background-image: url('project://database/Assets/02_Assets/Sprite/RecodingStartBtn.png?fileID=2800000&guid=e4973d8d831706b4fbebc572dc85bb90&type=3#RecodingStartBtn');
+}
+
+.RecordButton.Stop {
+    background-image: url('project://database/Assets/02_Assets/Sprite/RecodingStopBitn.png?fileID=2800000&guid=91e16f69526fbc94e9a59ad8300b97a1&type=3#RecodingStopBitn');
+}
+
+.RecordButton.Listen {
+    background-image: url('project://database/Assets/02_Assets/Sprite/pngegg%20(24).png?fileID=2800000&guid=1ba675117705d544289f8467a414968c&type=3#pngegg (24)');
 }
