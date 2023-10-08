@@ -57,25 +57,17 @@ public class SoundManager : Singleton<SoundManager>
 
     public void Save(SoundType soundType, AudioClip clip, PlayerType player = PlayerType.player1)
     {
-        string filename = $"{player}-{soundType}";
-        SavWav.Save(filename, clip);
+        SavWav.Save(GetFileName(soundType, player), clip);
     }
 
     public void Load(SoundType soundType, PlayerType player = PlayerType.player1)
     {
-        string filename = $"{player}-{soundType}";
-        StartCoroutine(LoadAudio(filename, _audioSources[(int)soundType]));
+        StartCoroutine(LoadAudio(GetFileName(soundType, player), _audioSources[(int)soundType]));
     }
 
     public void PlayOneShot(SoundType soundType, PlayerType player = PlayerType.player1)
     {
-        string filename = $"{player}-{soundType}";
-        StartCoroutine(LoadAudio(filename, _playOneAudioSource, true));
-    }
-
-    private string GetFileName(SoundType soundType, PlayerType player = PlayerType.player1)
-    {
-        return string filename = $"{player}-{soundType}";
+        StartCoroutine(LoadAudio(GetFileName(soundType, player), _playOneAudioSource, true));
     }
 
     public void PlaySound(SoundType soundType)
@@ -109,5 +101,9 @@ public class SoundManager : Singleton<SoundManager>
     private string GetPath(string filename)
     {
         return Path.Combine(Application.persistentDataPath, filename.EndsWith(".wav") ? filename : filename + ".wav");
+    }
+    private string GetFileName(SoundType soundType, PlayerType player = PlayerType.player1)
+    {
+        return $"{player}-{soundType}";
     }
 }

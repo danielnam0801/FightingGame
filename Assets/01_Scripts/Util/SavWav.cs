@@ -65,10 +65,6 @@ public static class SavWav
 		var samples = new float[clip.samples];
 
 		clip.GetData(samples, 0);
-		//for(int i = 0; i < samples.Length; i++)
-  //      {
-		//	Debug.Log(samples[i]);
-  //      }
 
 		return TrimSilence(new List<float>(samples), min, clip.channels, clip.frequency);
 	}

@@ -9,7 +9,7 @@ public class SettingUI : MonoBehaviour
     private IntroUIController controller;
     [SerializeField] VisualTreeAsset soundSettingAsset;
     List<SoundSetting> soundSettings = new List<SoundSetting>();
-
+    public bool isRecording = false;
 
     private void Awake()
     {
@@ -37,9 +37,24 @@ public class SettingUI : MonoBehaviour
         soundSettingContainer.style.alignItems = Align.Center;
         for(int i = 0; i < (int)SoundType.MAXCOUNT; i++)
         {
-            SoundSetting soundSetting = new SoundSetting(soundSettingAsset, (SoundType)i);
+            SoundSetting soundSetting = new SoundSetting(this, soundSettingAsset, (SoundType)i, i);
             soundSettings.Add(soundSetting);
             soundSettingContainer.Add(soundSetting._container);
         }
+    }
+
+    public void SetRecordingTrue(int index)
+    {
+        isRecording = true;
+        foreach(var setting in soundSettings)
+        {
+            if (setting.Index == index) continue;
+            setting.SetClickAble(false);
+        }
+    }
+
+    public void SetRecordingFalse(int index)
+    {
+
     }
 }

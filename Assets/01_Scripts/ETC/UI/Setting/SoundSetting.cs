@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public class SoundSetting
@@ -14,10 +15,16 @@ public class SoundSetting
     public VisualElement _container;
     
     private SoundRecoding _recoding;
+    private SettingUI _setting;
+
+    public int Index;
    
-    public SoundSetting(VisualTreeAsset asset, SoundType type)
+    public SoundSetting(SettingUI setting, VisualTreeAsset asset, SoundType type, int index)
     {
+        Index = index;
         Type = type;
+        _setting = setting;
+
         #region VisualElement
         _container = asset.Instantiate().Q<VisualElement>("SoundSetting");
         _soundNameLabel = _container.Q<Label>("SoundName");
@@ -27,6 +34,7 @@ public class SoundSetting
         _listenBtn = _container.Q<Button>("Listen");
         _stateMark = _container.Q<VisualElement>("StateMark");
         #endregion
+
         Init();
         #region CallbackEvt
         _recordStartBtn.RegisterCallback<ClickEvent>(RecordStart);
@@ -38,17 +46,21 @@ public class SoundSetting
 
     private void RecordStart(ClickEvent evt)
     {
+        _setting.SetRecordingTrue(Index);
         _recoding.StartRecording();
     }
+
     private void RecordStop(ClickEvent evt)
     {
         _recoding.StopRecording();
+        _setting.SetRecordingFalse(Index);
     }
 
     private void Listen(ClickEvent evt)
     {
-        SoundManager.Instance.PlaySound();
+        SoundManager.Instance.PlaySound(Type);
     }
+
     private void Init()
     {
         _recoding = new SoundRecoding(Type);

@@ -4,7 +4,7 @@ public class SoundRecoding
 {
     public SoundType soundType;
     private AudioClip recordedClip;
-
+    
     public SoundRecoding(SoundType soundType)
     {
         this.soundType = soundType;
@@ -18,6 +18,7 @@ public class SoundRecoding
 
     public void StopRecording()
     {
+        Debug.Log($"{recordedClip}, {soundType}");
         Microphone.End(null);
         SaveRecording();
     }
