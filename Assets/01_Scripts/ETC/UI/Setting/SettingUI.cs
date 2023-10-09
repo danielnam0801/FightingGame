@@ -40,6 +40,7 @@ public class SettingUI : MonoBehaviour
             SoundSetting soundSetting = new SoundSetting(this, soundSettingAsset, (SoundType)i, i);
             soundSettings.Add(soundSetting);
             soundSettingContainer.Add(soundSetting._container);
+            SoundManager.Instance.Load((SoundType)i);
         }
     }
 

@@ -55,16 +55,6 @@ public class SoundManager : Singleton<SoundManager>
         _audioSources[(int)SoundType.BGM].loop = true; // bgm 재생기는 무한 반복 재생
     }
 
-    public void Save(SoundType soundType, AudioClip clip, PlayerType player = PlayerType.player1)
-    {
-        SavWav.Save(GetFileName(soundType, player), clip);
-    }
-
-    public void Load(SoundType soundType, PlayerType player = PlayerType.player1)
-    {
-        StartCoroutine(LoadAudio(GetFileName(soundType, player), _audioSources[(int)soundType]));
-    }
-
     public void PlayOneShot(SoundType soundType, PlayerType player = PlayerType.player1)
     {
         StartCoroutine(LoadAudio(GetFileName(soundType, player), _playOneAudioSource, true));
@@ -78,6 +68,16 @@ public class SoundManager : Singleton<SoundManager>
     public void StopSound(SoundType soundType)
     {
         _audioSources[(int)soundType].Stop();
+    }
+
+    public void Save(SoundType soundType, AudioClip clip, PlayerType player = PlayerType.player1)
+    {
+        SavWav.Save(GetFileName(soundType, player), clip);
+    }
+
+    public void Load(SoundType soundType, PlayerType player = PlayerType.player1)
+    {
+        StartCoroutine(LoadAudio(GetFileName(soundType, player), _audioSources[(int)soundType]));
     }
 
     public IEnumerator<WWW> LoadAudio(string filename, AudioSource audioSource, bool play = false)
@@ -105,5 +105,10 @@ public class SoundManager : Singleton<SoundManager>
     private string GetFileName(SoundType soundType, PlayerType player = PlayerType.player1)
     {
         return $"{player}-{soundType}";
+    }
+    public bool GetFileCheck(SoundType soundType, PlayerType player = PlayerType.player1)
+    {
+        string path = GetPath(GetFileName(soundType, player));
+        return File.Exists(path);
     }
 }

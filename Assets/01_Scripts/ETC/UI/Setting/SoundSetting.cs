@@ -42,6 +42,16 @@ public class SoundSetting
         _recordStoptBtn.RegisterCallback<ClickEvent>(RecordStop);
         _listenBtn.RegisterCallback<ClickEvent>(Listen);
         #endregion
+
+        if(SoundManager.Instance.GetFileCheck(Type))
+        {
+            ChangeState("≥Ï¿Ω øœ∑·", Color.green);
+        }
+        else
+        {
+            ChangeState("¥Î±‚ ¡ﬂ", Color.gray);
+        }
+
     }
 
 
@@ -50,6 +60,7 @@ public class SoundSetting
         if (!canClick) return;
         _setting.SetRecordingTrue(Index);
         _recoding.StartRecording();
+        ChangeState("≥Ï¿Ω ¡ﬂ", Color.red);
     }
 
     private void RecordStop(ClickEvent evt)
@@ -57,6 +68,7 @@ public class SoundSetting
         if (!canClick) return;
         _recoding.StopRecording();
         _setting.SetRecordingFalse(Index);
+        ChangeState("≥Ï¿Ω øœ∑·", Color.green);
     }
 
     public void SetClickLock(bool value)
@@ -80,13 +92,19 @@ public class SoundSetting
     private void Listen(ClickEvent evt)
     {
         if (!canClick) return;
-        SoundManager.Instance.PlaySound(Type);
+        SoundManager.Instance.PlayOneShot(Type);
     }
 
     private void Init()
     {
         _recoding = new SoundRecoding(Type);
         _soundNameLabel.text = NameText(Type);
+    }
+
+    private void ChangeState(string text, Color color)
+    {
+        _recordStateLabel.text = text;
+        _stateMark.style.unityBackgroundImageTintColor = color;
     }
 
     private string NameText(SoundType soundType)
