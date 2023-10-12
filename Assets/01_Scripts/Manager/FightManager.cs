@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FightManager : MonoBehaviour
-{
+{   
+    [Space(30)]
+    [Header("Player")]
     [SerializeField] GameObject aiModel;
     [SerializeField] GameObject playerModel;
     [SerializeField] Transform p1SpawnPoint;

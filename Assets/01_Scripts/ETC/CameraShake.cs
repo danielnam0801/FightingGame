@@ -42,15 +42,15 @@ public class CameraShake : MonoBehaviour
 
     private void Awake()
     {
-        winTimeline = winDirector.playableAsset as TimelineAsset;
-        loseTimeline = winDirector.playableAsset as TimelineAsset;
+        //winTimeline = winDirector.playableAsset as TimelineAsset;
+        //loseTimeline = winDirector.playableAsset as TimelineAsset;
 
 
 
-        winTrack = winTimeline.GetOutputTrack(0);
-        winCameraTrack = winTimeline.GetOutputTrack(0);
-        loseTrack = loseTimeline.GetOutputTrack(0);
-        loseCameraTrack = loseTimeline.GetOutputTrack(0);
+        //winTrack = winTimeline.GetOutputTrack(0);
+        //winCameraTrack = winTimeline.GetOutputTrack(0);
+        //loseTrack = loseTimeline.GetOutputTrack(0);
+        //loseCameraTrack = loseTimeline.GetOutputTrack(0);
 
         vCam = GameObject.Find("IntroCamera").GetComponent<CinemachineVirtualCamera>();
         vCam2 = GameObject.Find("ShakeCamera").GetComponent<CinemachineVirtualCamera>();
