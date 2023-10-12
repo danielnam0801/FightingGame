@@ -120,7 +120,10 @@ public class AI : Unit, IDamageable
         _handRVector = new Vector3(_handR.position.x, _handR.position.y + 0.05f, _handR.position.z - 0.03f);
         _footLVector = new Vector3(_footL.position.x, _footL.position.y - 0.05f, _footL.position.z - 0.07f);
         _footRVector = new Vector3(_footR.position.x, _footR.position.y - 0.05f, _footR.position.z - 0.07f);
+<<<<<<< Updated upstream
         _ultimateVector = _body.position;
+=======
+>>>>>>> Stashed changes
         if (!_die && !_win && _aiHealth > 0)
         {
             Charging();
@@ -134,7 +137,11 @@ public class AI : Unit, IDamageable
 
     private void RayCheck()
     {
+<<<<<<< Updated upstream
         Ray ray = new Ray(new Vector3(transform.position.x, -0.6f, transform.position.z), _checkVec);
+=======
+        Ray ray = new Ray(new Vector3(transform.position.x, -0.5f, transform.position.z), Vector3.left);
+>>>>>>> Stashed changes
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 1f))
         {
@@ -144,6 +151,10 @@ public class AI : Unit, IDamageable
         {
             _attack = false;
         }
+<<<<<<< Updated upstream
+=======
+        Debug.DrawRay(new Vector3(transform.position.x, -0.5f, transform.position.z), Vector3.left, Color.cyan, 1f);
+>>>>>>> Stashed changes
     }
 
     protected override void Move()
@@ -268,7 +279,11 @@ public class AI : Unit, IDamageable
             case 1:
                 {
                     _animator.SetTrigger(_hashLPunch);
+<<<<<<< Updated upstream
                     if (Physics.SphereCast(_handLVector, _punchRadius, _punchVec, out hit, _maxDistance))
+=======
+                    if (Physics.SphereCast(_handLVector, _punchRadius, Vector3.left, out hit, _maxDistance, Player))
+>>>>>>> Stashed changes
                     {
                         _low = false;
                         OnHitEnemy(hit, _low, _useUltimate);
@@ -278,7 +293,11 @@ public class AI : Unit, IDamageable
             case 2:
                 {
                     _animator.SetTrigger(_hashRPunch);
+<<<<<<< Updated upstream
                     if (Physics.SphereCast(_handRVector, _punchRadius, _punchVec, out hit, _maxDistance))
+=======
+                    if (Physics.SphereCast(_handRVector, _punchRadius, Vector3.left, out hit, _maxDistance, Player))
+>>>>>>> Stashed changes
                     {
                         _low = false;
                         OnHitEnemy(hit, _low, _useUltimate);
@@ -288,7 +307,11 @@ public class AI : Unit, IDamageable
             case 3:
                 {
                     _animator.SetTrigger(_hashLKick);
+<<<<<<< Updated upstream
                     if (Physics.SphereCast(_footLVector, _kickRadius, _kickVecL, out hit, _maxDistance))
+=======
+                    if (Physics.SphereCast(_footLVector, _kickRadius, new Vector3(-1, 1, 0), out hit, _maxDistance, Player))
+>>>>>>> Stashed changes
                     {
                         _low = true;
                         OnHitEnemy(hit, _low, _useUltimate);
@@ -298,10 +321,107 @@ public class AI : Unit, IDamageable
             case 4:
                 {
                     _animator.SetTrigger(_hashRKick);
+<<<<<<< Updated upstream
                     if (Physics.SphereCast(_footRVector, _kickRadius + 1, _kickVecR, out hit, _maxDistance))
                     {
                         _low = true;
                         OnHitEnemy(hit, _low, _useUltimate);
+=======
+                    if (Physics.SphereCast(_footRVector, _kickRadius + 1, new Vector3(-1, 1, 1), out hit, _maxDistance, Player))
+                    {
+                        _low = false;
+                        _middle = true;
+                        OnHitEnemy(hit, _low, _middle);
+                    }
+                    break;
+                }
+            default:
+                break;
+        }
+    }
+
+    private void MiddleAttack(int attack)
+    {
+        if (_die)
+        {
+            Die();
+        }
+        switch (attack)
+        {
+            case 1:
+                {
+                    _animator.SetTrigger(_hashLMiddlePunch);
+                    if (Physics.SphereCast(_handLVector, _punchRadius, Vector3.left, out hit, _maxDistance, Player))
+                    {
+                        _middle = _low = false;
+                        OnHitEnemy(hit, _low, _middle);
+                    }
+                    break;
+                }
+            case 2:
+                {
+                    _animator.SetTrigger(_hashRMiddlePunch);
+                    if (Physics.SphereCast(_handRVector, _punchRadius, Vector3.left, out hit, _maxDistance, Player))
+                    {
+                        _middle = _low = false;
+                        OnHitEnemy(hit, _low, _middle);
+                    }
+                    break;
+                }
+            case 3:
+                {
+                    _animator.SetTrigger(_hashLMiddleKick);
+                    if (Physics.SphereCast(_footLVector, _kickRadius, new Vector3(-1, 1, 0), out hit, _maxDistance, Player))
+                    {
+                        _middle = _low = false;
+                        OnHitEnemy(hit, _low, _middle);
+                    }
+
+                    break;
+                }
+            case 4:
+                {
+                    _animator.SetTrigger(_hashRMiddleKick);
+                    if (Physics.SphereCast(_footRVector, _kickRadius + 1, new Vector3(-1, 1, 1), out hit, _maxDistance, Player))
+                    {
+                        _middle = _low = false;
+                        OnHitEnemy(hit, _low, _middle);
+                    }
+                    break;
+                }
+            default:
+                break;
+        }
+    }
+
+    private void LowAttack(int attack)
+    {
+        if(_die)
+        {
+            Die();
+        }
+        switch (attack)
+        {
+            case 1:
+                {
+                    _animator.SetTrigger(_hashLLowKick);
+                    if (Physics.SphereCast(_footLVector, _kickRadius, new Vector3(-1, 1, 0), out hit, _maxDistance, Player))
+                    {
+                        _middle = false;
+                        _low = true;
+                        OnHitEnemy(hit, _low, _middle);
+                    }
+                    break;
+                }
+            case 2:
+                {
+                    _animator.SetTrigger(_hashRLowKick);
+                    if (Physics.SphereCast(_footRVector, _kickRadius + 1, new Vector3(-1, 1, 1), out hit, _maxDistance, Player))
+                    {
+                        _middle = false;
+                        _low = true;
+                        OnHitEnemy(hit, _low, _middle);
+>>>>>>> Stashed changes
                     }
                     break;
                 }

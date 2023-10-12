@@ -113,7 +113,10 @@ public class Player : Unit, IDamageable
         _handRVector = new Vector3(_handR.position.x, _handR.position.y + 0.05f, _handR.position.z + 0.03f);
         _footLVector = new Vector3(_footL.position.x, _footL.position.y - 0.05f, _footL.position.z + 0.07f);
         _footRVector = new Vector3(_footR.position.x, _footR.position.y - 0.05f, _footR.position.z + 0.07f);
+<<<<<<< Updated upstream
         _ultimateVector = _body.position;
+=======
+>>>>>>> Stashed changes
         if(!_die && !_win && _playerHealth > 0)
         {
             if(!_charging)
@@ -247,20 +250,50 @@ public class Player : Unit, IDamageable
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
+<<<<<<< Updated upstream
                 _useUltimate = false;
                 _low = false;
                 RandomPunch();
+=======
+                _animator.SetTrigger(_hashLMiddlePunch);
+                if (Physics.SphereCast(_handLVector, _punchRadius, Vector3.right, out hit, _maxDistance, Enemy))
+                {
+                    _low = false;
+                    _middle = true;
+                    OnHitEnemy(hit, _low, _middle);
+                }
+>>>>>>> Stashed changes
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
+<<<<<<< Updated upstream
                 _useUltimate = false;
                 _low = true;
                 RandomKick();
+=======
+                _animator.SetTrigger(_hashRMiddlePunch);
+                if (Physics.SphereCast(_handRVector, _punchRadius, Vector3.right, out hit, _maxDistance, Enemy))
+                {
+                    _low = false;
+                    _middle = true;
+                    OnHitEnemy(hit, _low, _middle);
+                }
+>>>>>>> Stashed changes
             }
             if (Input.GetKey(KeyCode.LeftShift))
             {
+<<<<<<< Updated upstream
                 _animator.SetBool(_hashBlock, true);
                 _isBlock = true;
+=======
+                _animator.SetTrigger(_hashLMiddleKick);
+                if (Physics.SphereCast(_footLVector, _kickRadius, new Vector3(1, 1, 0), out hit, _maxDistance, Enemy))
+                {
+                    _low = false;
+                    _middle = true;
+                    OnHitEnemy(hit, _low, _middle);
+                }
+>>>>>>> Stashed changes
             }
             if(Input.GetKeyUp(KeyCode.LeftShift))
             {
@@ -272,9 +305,19 @@ public class Player : Unit, IDamageable
         {
             if (Input.GetKeyDown(KeyCode.O))
             {
+<<<<<<< Updated upstream
                 _useUltimate = false;
                 _low = false;
                 RandomPunch();
+=======
+                _animator.SetTrigger(_hashLLowKick);
+                if (Physics.SphereCast(_footLVector, _kickRadius, new Vector3(1, 1, 0), out hit, _maxDistance, Enemy))
+                {
+                    _middle = false;
+                    _low = true;
+                    OnHitEnemy(hit, _low, _middle);
+                }
+>>>>>>> Stashed changes
             }
             if (Input.GetKeyDown(KeyCode.L))
             {
@@ -311,7 +354,16 @@ public class Player : Unit, IDamageable
             _animator.SetTrigger(_hashRPunch);
             if (Physics.SphereCast(_handRVector, _punchRadius, _punchVec, out hit, _maxDistance))
             {
+<<<<<<< Updated upstream
                 OnHitEnemy(hit, _low, _useUltimate);
+=======
+                _animator.SetTrigger(_hashLPunch);
+                if (Physics.SphereCast(_handLVector, _punchRadius, Vector3.right, out hit, _maxDistance, Enemy))
+                {
+                    _middle = _low = false;
+                    OnHitEnemy(hit, _low, _middle);
+                }
+>>>>>>> Stashed changes
             }
         }
     }
@@ -324,7 +376,16 @@ public class Player : Unit, IDamageable
             _animator.SetTrigger(_hashLLowKick);
             if (Physics.SphereCast(_footLVector, _kickRadius, _kickVec, out hit, _maxDistance))
             {
+<<<<<<< Updated upstream
                 OnHitEnemy(hit, _low, _useUltimate);
+=======
+                _animator.SetTrigger(_hashRPunch);
+                if (Physics.SphereCast(_handRVector, _punchRadius, Vector3.right, out hit, _maxDistance, Enemy))
+                {
+                    _middle = _low = false;
+                    OnHitEnemy(hit, _low, _middle);
+                }
+>>>>>>> Stashed changes
             }
         }
         else
@@ -332,7 +393,25 @@ public class Player : Unit, IDamageable
             _animator.SetTrigger(_hashRLowKick);
             if (Physics.SphereCast(_footRVector, _kickRadius + 1, Vector3.one, out hit, _maxDistance))
             {
+<<<<<<< Updated upstream
                 OnHitEnemy(hit, _low, _useUltimate);
+=======
+                _animator.SetTrigger(_hashLKick);
+                if (Physics.SphereCast(_footLVector, _kickRadius, new Vector3(1, 1, 0), out hit, _maxDistance, Enemy))
+                {
+                    _middle = _low = false;
+                    OnHitEnemy(hit, _low, _middle);
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                _animator.SetTrigger(_hashRKick);
+                if (Physics.SphereCast(_footRVector, _kickRadius + 1, Vector3.one, out hit, _maxDistance, Enemy))
+                {
+                    _middle = _low = false;
+                    OnHitEnemy(hit, _low, _middle);
+                }
+>>>>>>> Stashed changes
             }
         }
     }
