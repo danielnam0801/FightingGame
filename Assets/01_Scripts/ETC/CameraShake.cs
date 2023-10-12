@@ -21,7 +21,6 @@ public class CameraShake : MonoBehaviour
     [SerializeField] PlayableDirector winDirector;
 
 
-
     private TrackAsset winTrack = null;
     private TrackAsset winCameraTrack = null;
     private TrackAsset loseTrack = null;
@@ -130,9 +129,15 @@ public class CameraShake : MonoBehaviour
                 loseTrack = track;
                 loseCameraTrack = track;
             }
+            else if(winTimeline.duration==7.2f)
+            {
+                track.locked = false;
+                track.muted = false;
+                loseTrack = track;
+                loseCameraTrack = track;
+            }
         }
         winDirector.Play();
-
         yield return null;
     }
     IEnumerator LoserRotateCamera()
@@ -150,7 +155,6 @@ public class CameraShake : MonoBehaviour
             }
         }
         winDirector.Play();
-
         yield return null;
     }
 }
