@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundRecoding : MonoBehaviour
+public class SoundRecoding
 {
-    [SerializeField]
-    AudioSource _audioSource;
-
-    AudioClip recordedClip;
+    public SoundType soundType;
+    private AudioClip recordedClip;
     
+    public SoundRecoding(SoundType soundType)
+    {
+        this.soundType = soundType;
+    }
+
     public void StartRecording()
     {
         Debug.Log("≥Ï¿Ω¡ﬂ");
@@ -17,13 +18,14 @@ public class SoundRecoding : MonoBehaviour
 
     public void StopRecording()
     {
-        Debug.Log("≥Ï¿Ω ≥°");
+        Debug.Log($"{recordedClip}, {soundType}");
         Microphone.End(null);
-        _audioSource.clip = recordedClip;
+        SaveRecording();
     }
 
-    public void StartSound()
+    private void SaveRecording()
     {
-        _audioSource.Play();
+        SoundManager.Instance.Save(soundType, recordedClip);
+        SoundManager.Instance.Load(soundType);
     }
 }

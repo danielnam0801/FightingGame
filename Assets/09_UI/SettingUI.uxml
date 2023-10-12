@@ -1,0 +1,28 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/09_UI/SettingUI.uss?fileID=7433441132597879392&amp;guid=45c74e4a8ae1b654cbbf889fec15a1dc&amp;type=3#SettingUI" />
+    <ui:VisualElement style="position: absolute; width: 100%; height: 100%; background-color: rgba(60, 60, 60, 0.27);" />
+    <ui:VisualElement name="SettingPannel" style="height: 1026px; width: 1464px; background-color: rgb(99, 99, 99); border-top-left-radius: 35px; border-bottom-left-radius: 35px; border-top-right-radius: 35px; border-bottom-right-radius: 35px; left: 432px; top: 2.5%; align-items: stretch; justify-content: flex-start; flex-direction: row; position: absolute;">
+        <ui:VisualElement name="NormalSetting" class="Setting" style="-unity-background-image-tint-color: rgb(200, 163, 148); background-color: rgb(200, 148, 152);">
+            <ui:Label text="SETTING" display-tooltip-when-elided="true" style="font-size: 45px; -unity-font-style: bold; -unity-text-align: middle-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="SoundSetting" class="Setting" style="background-color: rgb(148, 163, 200);">
+            <ui:Label text="SOUND SETTING" display-tooltip-when-elided="true" style="font-size: 45px; -unity-font-style: bold; -unity-text-align: middle-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="NormalSettingPannel" class="Pannel" style="background-color: rgb(200, 148, 152); position: absolute; display: flex; justify-content: center;">
+            <ui:VisualElement name="Master" class="VolumeContainer">
+                <ui:Label text="Master Volume" display-tooltip-when-elided="true" name="MasterTex" class="text" />
+                <ui:Slider picking-mode="Ignore" value="50" high-value="100" name="Slider" class="Slider" />
+            </ui:VisualElement>
+            <ui:VisualElement name="BGM" class="VolumeContainer">
+                <ui:Label text="BGM Volume" display-tooltip-when-elided="true" name="BGMTex" class="text" />
+                <ui:Slider picking-mode="Ignore" value="50" high-value="100" name="Slider" class="Slider" style="width: 871px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="VFX" class="VolumeContainer">
+                <ui:Label text="VFX Volume" display-tooltip-when-elided="true" name="VFXTex" class="text" />
+                <ui:Slider picking-mode="Ignore" value="50" high-value="100" name="Slider" class="Slider" style="width: 871px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:ScrollView name="SoundSettingContainer" vertical-scroller-visibility="AlwaysVisible" class="Pannel" style="align-items: center; background-color: rgb(148, 163, 200);" />
+        <ui:Button display-tooltip-when-elided="true" name="ESC" enable-rich-text="true" class="ESC" style="background-color: rgba(99, 99, 99, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+    </ui:VisualElement>
+</ui:UXML>
