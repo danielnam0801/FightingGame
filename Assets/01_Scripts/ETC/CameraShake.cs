@@ -9,64 +9,96 @@ using UnityEngine.Timeline;
 
 public class CameraShake : MonoBehaviour
 {
-    private CinemachineVirtualCamera vCam;
+    [SerializeField] CinemachineVirtualCamera vCam;
+    [SerializeField] CinemachineVirtualCamera vCam2;
+
     private CinemachineBasicMultiChannelPerlin perlin;
-    [SerializeField] CinemachineFreeLook blueGuyFCam;
-    [SerializeField] CinemachineFreeLook redGuyFCam;
-    [SerializeField] VisualEffect hitEffect;
+
+    [SerializeField] CinemachineFreeLook PlayerFCam;
+    [SerializeField] CinemachineFreeLook AIFCam;
+
     [SerializeField] PlayableDirector introDirector;
-    [SerializeField] PlayableDirector winningDirector;
-    [SerializeField] PlayableDirector losingDirector;
+    [SerializeField] PlayableDirector winDirector;
+
+
+
+    private TrackAsset winTrack = null;
+    private TrackAsset winCameraTrack = null;
+    private TrackAsset loseTrack = null;
+    private TrackAsset loseCameraTrack = null;
+
+    private TimelineAsset winTimeline;
+    private TimelineAsset loseTimeline;
+
+    string winTrackName = "Winning";
+    string loseTrackName = "Losing";
+    string winCameraTrackName = "WinCameraSpin";
+    string loseCameraTrackName = "LoseCameraSpin";
+
+
 
     [SerializeField] float hitAmplitudeGain = 2, hitFrequencyGain = 2, shakeTime = 1;
-    private bool isWin = false;
-    private bool isLose = false;
+    Vector3 vec = new Vector3(0.17f, -0.2f, 3.1f);
 
     private void Awake()
     {
-        vCam = GetComponent<CinemachineVirtualCamera>();
-        perlin = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        winTimeline = winDirector.playableAsset as TimelineAsset;
+        loseTimeline = winDirector.playableAsset as TimelineAsset;
 
-        blueGuyFCam =GameObject.Find("BlueGuyFreeLook").GetComponent<CinemachineFreeLook>();
-        redGuyFCam = GameObject.Find("RedGuyFreeLook").GetComponent<CinemachineFreeLook>();
+
+
+        winTrack = winTimeline.GetOutputTrack(0);
+        winCameraTrack = winTimeline.GetOutputTrack(0);
+        loseTrack = loseTimeline.GetOutputTrack(0);
+        loseCameraTrack = loseTimeline.GetOutputTrack(0);
+
+        vCam = GameObject.Find("IntroCamera").GetComponent<CinemachineVirtualCamera>();
+        vCam2 = GameObject.Find("ShakeCamera").GetComponent<CinemachineVirtualCamera>();
+        perlin = vCam2.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+        PlayerFCam = GameObject.Find("PlayerFreeLook").GetComponent<CinemachineFreeLook>();
+        AIFCam = GameObject.Find("AIFreeLook").GetComponent<CinemachineFreeLook>();
+
         
 
-        blueGuyFCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
-        blueGuyFCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
+        PlayerFCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
+        PlayerFCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
 
-        redGuyFCam.m_XAxis.m_InputAxisName = "";
-        redGuyFCam.m_YAxis.m_InputAxisName = "";
+        AIFCam.m_XAxis.m_InputAxisName = "";
+        AIFCam.m_YAxis.m_InputAxisName = "";
 
-        winningDirector = GameObject.Find("BlueGuy_123").GetComponent<PlayableDirector>();
-        losingDirector = GameObject.Find("RedGuy_123").GetComponent<PlayableDirector>();
         introDirector = GameObject.Find("IntroTimeLine").GetComponent<PlayableDirector>();
 
-        blueGuyFCam.gameObject.SetActive(false);
-        redGuyFCam.gameObject.SetActive(false);
+        PlayerFCam.gameObject.SetActive(false);
+        AIFCam.gameObject.SetActive(false);
     }
 
     void Start()
     {
         introDirector.Play();
-        winningDirector.Stop();
-        losingDirector.Stop();
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (vCam.transform.position == vec)
+        {
+            vCam.gameObject.SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
         {
             introDirector.Stop();
             StartCoroutine(ShakeCamera());
         }
-        if(Input.GetKeyDown(KeyCode.E) )
+        if (Input.GetKeyDown(KeyCode.Q) )
         {
+            introDirector.Stop();
             StartCoroutine(WinnerRotateCamera());
-            vCam.gameObject.SetActive(false);
+            vCam2.gameObject.SetActive(false);
         }
         if(Input.GetKeyDown(KeyCode.R))
         {
+            introDirector.Stop();
             StartCoroutine(LoserRotateCamera());
-            vCam.gameObject.SetActive(false);
+            vCam2.gameObject.SetActive(false);
         }
     }
 
@@ -76,7 +108,6 @@ public class CameraShake : MonoBehaviour
     {
         perlin.m_AmplitudeGain = hitAmplitudeGain;
         perlin.m_FrequencyGain = hitFrequencyGain;
-        hitEffect.Play();
         yield return new WaitForSeconds(0.1f);
         StartCoroutine(StopShake());
     }
@@ -88,16 +119,38 @@ public class CameraShake : MonoBehaviour
     }
     IEnumerator WinnerRotateCamera()
     {
-        blueGuyFCam.gameObject.SetActive(true);
+        PlayerFCam.gameObject.SetActive(true);
         introDirector.Stop();
-        winningDirector.Play();
+        foreach (TrackAsset track in winTimeline.GetOutputTracks())
+        {
+            if (track.name == loseTrackName)
+            {
+                track.locked = true;
+                track.muted = true;
+                loseTrack = track;
+                loseCameraTrack = track;
+            }
+        }
+        winDirector.Play();
+
         yield return null;
     }
     IEnumerator LoserRotateCamera()
     {
-        redGuyFCam.gameObject.SetActive(true);
+        PlayerFCam.gameObject.SetActive(true);
         introDirector.Stop();
-        losingDirector.Play();
+        foreach(TrackAsset track in loseTimeline.GetOutputTracks())
+        {
+            if(track.name == winTrackName)
+            {
+                track.locked = true;
+                track.muted = true;
+                winTrack = track;
+                winCameraTrack = track;
+            }
+        }
+        winDirector.Play();
+
         yield return null;
     }
 }
