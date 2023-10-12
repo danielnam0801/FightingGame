@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class AI : Unit, IDamageable
 {
-    public LayerMask Player;
+    //Ï∞®ÏßïÍµ¨ÌòÑ_ÎûúÎç§ÏùÑ Ïñ¥ÎîîÏóê Ïñ¥ÎñªÍ≤å Ï†ÅÏö©ÏãúÏºúÏïº Ï∞®ÏßïÏ§ëÏóêÎäî ÏïÑÎ¨¥Í≤ÉÎèÑ ÏïàÌïòÍ≥† Ï∞®ÏßïÏù¥ Î©àÏ∂∞Ïïº Îã§Î•∏ Í±∏ Ìï†Íπå
+    public UnityEvent HitSoundPlay; 
+    public UnityEvent BlockSoundPlay; 
+
+    public GameObject visual;
 
     private Animator _animator;
 
@@ -16,71 +23,118 @@ public class AI : Unit, IDamageable
     private Transform _footL;
     [SerializeField]
     private Transform _footR;
+    [SerializeField]
+    private Transform _head;
+    [SerializeField]
+    private Transform _body;
+    [SerializeField]
+    private Transform _leg;
 
     private bool _attack = false;
     private bool _low = false;
-    private bool _middle = false;
+    private bool _useUltimate = false;
     private bool _win = false;
+    private bool _charging = false;
 
     private float _currentTime = 0;
     [SerializeField]
     private float _coolTime = 1f;
     [SerializeField]
-    private float _aiHealth = 3;
+    private float _aiHealth = 100;
+    [SerializeField]
+    private float _maxHealth = 100;
+    [SerializeField]
+    private float _aiUltimate = 0;
+    [SerializeField]
+    private float _maxUltimate = 100;
 
     private RaycastHit hit;
 
     private readonly int _hashMoveForward = Animator.StringToHash("MoveForward");
-    private readonly int _hashMoveBackward = Animator.StringToHash("MoveBackward");      // √ ±ﬁ aiø°º≠¥¬ √º∑¬¿Ã ¿œ¡§ ¿Ã«œ∑Œ ≥ª∑¡∞°∏È ¿œ¡§»Æ∑¸∑Œ µ⁄∑Œ ∞• øπ¡§ æ∆∏∂µµ
-    private readonly int _hashLPunch = Animator.StringToHash("LPunch");                  // ªÛ¥‹ øﬁ¬  ¡÷∏‘ ∞¯∞›
-    private readonly int _hashRPunch = Animator.StringToHash("RPunch");                  // ªÛ¥‹ ø¿∏•¬  ¡÷∏‘ ∞¯∞›
-    private readonly int _hashLKick = Animator.StringToHash("LKick");                    // ªÛ¥‹ øﬁ¬  πﬂ¬˜±‚ ∞¯∞›
-    private readonly int _hashRKick = Animator.StringToHash("RKick");                    // ªÛ¥‹ ø¿∏•¬  πﬂ¬˜±‚ ∞¯∞›
-    private readonly int _hashLMiddlePunch = Animator.StringToHash("LMiddlePunch");      // ¡ﬂ¥‹ øﬁ¬  ¡÷∏‘ ∞¯∞›
-    private readonly int _hashRMiddlePunch = Animator.StringToHash("RMiddlePunch");      // ¡ﬂ¥‹ ø¿∏•¬  ¡÷∏‘ ∞¯∞›
-    private readonly int _hashLMiddleKick = Animator.StringToHash("LMiddleKick");        // ¡ﬂ¥‹ øﬁ¬  πﬂ¬˜±‚ ∞¯∞›
-    private readonly int _hashRMiddleKick = Animator.StringToHash("RMiddleKick");        // ¡ﬂ¥‹ ø¿∏•¬  πﬂ¬˜±‚ ∞¯∞›
-    private readonly int _hashLLowKick = Animator.StringToHash("LLowKick");              // «œ¥‹ øﬁ¬  πﬂ¬˜±‚ ∞¯∞›
-    private readonly int _hashRLowKick = Animator.StringToHash("RLowKick");              // «œ¥‹ ø¿∏•¬  πﬂ¬˜±‚ ∞¯∞›
-    private readonly int _hashHit = Animator.StringToHash("Hit");                        // ªÛ¥‹¿ª ∏¬¿Ω
-    private readonly int _hashMiddleHit = Animator.StringToHash("MiddleHit");            // ¡ﬂ¥‹¿ª ∏¬¿Ω
-    private readonly int _hashLowHit = Animator.StringToHash("LowHit");                  // «œ¥‹¿ª ∏¬¿Ω
-    private readonly int _hashBlock = Animator.StringToHash("Block");                    // ªÛ¥‹¿ª ∏∑¿Ω
-    private readonly int _hashMiddleBlock = Animator.StringToHash("MiddleBlock");        // ¡ﬂ¥‹¿ª ∏∑¿Ω
-    private readonly int _hashLowBlock = Animator.StringToHash("LowBlock");              // «œ¥‹¿ª ∏∑¿Ω
-    private readonly int _hashKnockDown = Animator.StringToHash("KnockDown");            // æ≤∑Ø¡¸
-    private readonly int _hashGetUp = Animator.StringToHash("GetUp");                    // ¿œæÓ≥≤
-    private readonly int _hashDie = Animator.StringToHash("Die");                        // æ≤∑Ø¡¯ ªÛ≈¬∑Œ ¡ˆº”
-    private readonly int _hashWin = Animator.StringToHash("Win");                        // Ω¬∏Æ ∏º«
+    private readonly int _hashMoveBackward = Animator.StringToHash("MoveBackward");
+    private readonly int _hashLPunch = Animator.StringToHash("LPunch");                  
+    private readonly int _hashRPunch = Animator.StringToHash("RPunch");                  
+    private readonly int _hashLKick = Animator.StringToHash("LKick");                    
+    private readonly int _hashRKick = Animator.StringToHash("RKick");
+    private readonly int _hashHit = Animator.StringToHash("Hit");
+    private readonly int _hashLowHit = Animator.StringToHash("LowHit");                  
+    private readonly int _hashBlock = Animator.StringToHash("Block");
+    private readonly int _hashKnockDown = Animator.StringToHash("KnockDown");            
+    private readonly int _hashGetUp = Animator.StringToHash("GetUp");                    
+    private readonly int _hashDie = Animator.StringToHash("Die");                        
+    private readonly int _hashWin = Animator.StringToHash("Win");                        
+
+    private Vector3 _punchVec;
+    private Vector3 _kickVecR;
+    private Vector3 _kickVecL;
+    private Vector3 _checkVec;
+    private Vector3 _ultimateVec;
+
+    private PlayerSetting _ps;
+
+    private Image _hp;
+    private Image _ultimate;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _ps = GetComponent<PlayerSetting>();
     }
 
     protected override void Start()
     {
-        
+        _aiHealth = _maxHealth;
+        _aiUltimate = 0;
+        base.Start();
+        if (_ps.state == PlayerSpawnState.left)
+        {
+            _punchVec = Vector3.right;
+            _checkVec = Vector3.right;
+            _ultimateVec = Vector3.right;
+            _kickVecR = new Vector3(1, 1, 1);
+            _kickVecL = new Vector3(1, 1, 0);
+            _hp = GameObject.Find("FrontHealthBar1").GetComponent<Image>();
+            _ultimate = GameObject.Find("FrontUltimateBar1").GetComponent<Image>();
+            _hp.fillAmount = 1;
+            _ultimate.fillAmount = 0;
+        }
+        else if (_ps.state == PlayerSpawnState.right)
+        {
+            _punchVec = Vector3.left;
+            _checkVec = Vector3.left;
+            _ultimateVec = Vector3.left;
+            _kickVecR = new Vector3(-1, 1, 1);
+            _kickVecL = new Vector3(-1, 1, 0);
+            _hp = GameObject.Find("FrontHealthBar2").GetComponent<Image>();
+            _ultimate = GameObject.Find("FrontUltimateBar2").GetComponent<Image>();
+            _hp.fillAmount = 1;
+            _ultimate.fillAmount = 0;
+        }
     }
 
     protected override void Update()
     {
+        _hp.fillAmount = _aiHealth / _maxHealth;
+        _ultimate.fillAmount = _aiUltimate / _maxUltimate;
         _handLVector = new Vector3(_handL.position.x, _handL.position.y + 0.05f, _handL.position.z - 0.03f);
         _handRVector = new Vector3(_handR.position.x, _handR.position.y + 0.05f, _handR.position.z - 0.03f);
         _footLVector = new Vector3(_footL.position.x, _footL.position.y - 0.05f, _footL.position.z - 0.07f);
         _footRVector = new Vector3(_footR.position.x, _footR.position.y - 0.05f, _footR.position.z - 0.07f);
-        if (!_die || !_win)
+        _ultimateVector = _body.position;
+        if (!_die && !_win && _aiHealth > 0)
         {
-            RayCheck(); 
-            Move();     
+            Charging();
+            Move();
             Attack();
+            Ultimate();
+            RayCheck();
             Win();
         }
     }
 
     private void RayCheck()
     {
-        Ray ray = new Ray(new Vector3(transform.position.x, 1, transform.position.z), Vector3.back);
+        Ray ray = new Ray(new Vector3(transform.position.x, -0.6f, transform.position.z), _checkVec);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 1f))
         {
@@ -90,7 +144,6 @@ public class AI : Unit, IDamageable
         {
             _attack = false;
         }
-        Debug.DrawRay(new Vector3(transform.position.x, 1, transform.position.z), Vector3.back, Color.cyan, 1f);
     }
 
     protected override void Move()
@@ -99,9 +152,9 @@ public class AI : Unit, IDamageable
         if (_aiHealth <= 1)
         {
             rand = Random.Range(1, 4);
-            if(rand > 2)
+            if (rand > 2)
             {
-                if(!_attack)
+                if (!_attack && !_useUltimate)
                 {
                     _animator.SetBool(_hashMoveForward, false);
                     _animator.SetBool(_hashMoveBackward, true);
@@ -113,7 +166,7 @@ public class AI : Unit, IDamageable
             }
             else
             {
-                if (_attack == false)
+                if (_attack == false && !_useUltimate)
                 {
                     _animator.SetBool(_hashMoveBackward, false);
                     _animator.SetBool(_hashMoveForward, true);
@@ -126,7 +179,7 @@ public class AI : Unit, IDamageable
         }
         else
         {
-            if (_attack == false)
+            if (_attack == false && !_useUltimate)
             {
                 _animator.SetBool(_hashMoveForward, true);
             }
@@ -139,7 +192,7 @@ public class AI : Unit, IDamageable
 
     protected override void Attack()
     {
-        if(_currentTime + _coolTime < Time.time)
+        if (_currentTime + _coolTime < Time.time)
         {
             LowLevelAi();
             _currentTime = Time.time;
@@ -149,7 +202,14 @@ public class AI : Unit, IDamageable
     protected override void Die()
     {
         _die = true;
-        GameManager.Instance.PlayerWin = true;
+        if(_ps.state == PlayerSpawnState.left)
+        {
+            GameManager.Instance.PlayerWin2 = true;
+        }
+        else if(_ps.state == PlayerSpawnState.right)
+        {
+            GameManager.Instance.PlayerWin1 = true;
+        }
         _animator.SetTrigger(_hashKnockDown);
         _animator.SetTrigger(_hashDie);
     }
@@ -159,37 +219,46 @@ public class AI : Unit, IDamageable
     {
         if (_attack)
         {
-            int hittingPosition = Random.Range(1, 4);
-            int attack = 0;
-            switch (hittingPosition)
-            {
-                case 1:
-                    {
-                        attack = Random.Range(1, 5);
-                        HighAttack(attack);
-                        break;
-                    }
-                case 2:
-                    {
-                        attack = Random.Range(1, 5);
-                        MiddleAttack(attack);
-                        break;
-                    }
-                case 3:
-                    {
-                        attack = Random.Range(1, 3);
-                        LowAttack(attack);
-                        break;
-                    }
-                default:
-                    break;
-            }
-
+            int attack = Random.Range(1, 5);
+            Attack(attack);
         }
     }
 
-    private void HighAttack(int attack)
+    protected override void Charging()
     {
+        if(_charging)
+        {
+            if(_aiUltimate == _maxUltimate)
+            {
+                _charging = false;
+                return;
+            }
+            // boolÎ°ú Ï∞®Ïßï Ïï†ÎãàÎ©îÏù¥ÏÖò ÎÇòÏò§Í∏∞ 
+            _aiUltimate += 0.01f;
+        }
+    }
+
+    protected override void Ultimate()
+    {
+        if (_aiUltimate == _maxUltimate)
+        {
+            // TriggerÎ°ú Í∂ÅÍ∑πÍ∏∞ Ïï†ÎãàÎ©îÏù¥ÏÖò ÎÇòÏò§Í∏∞ 
+            if (Physics.Raycast(_ultimateVector, _ultimateVec, out hit, 1f))
+            {
+                _useUltimate = true;
+                _aiUltimate = 0;
+                OnHitEnemy(hit, _low, _useUltimate);
+            }
+            else
+            {
+                _aiUltimate = 0;
+            }
+        }
+    }
+
+    private void Attack(int attack)
+    {
+        _useUltimate = false;
         if (_die)
         {
             Die();
@@ -199,133 +268,40 @@ public class AI : Unit, IDamageable
             case 1:
                 {
                     _animator.SetTrigger(_hashLPunch);
-                    if (Physics.SphereCast(_handLVector, _punchRadius, Vector3.back, out hit, _maxDistance, Player))
+                    if (Physics.SphereCast(_handLVector, _punchRadius, _punchVec, out hit, _maxDistance))
                     {
                         _low = false;
-                        _middle = true;
-                        OnHitEnemy(hit, _low, _middle);
+                        OnHitEnemy(hit, _low, _useUltimate);
                     }
                     break;
                 }
             case 2:
                 {
                     _animator.SetTrigger(_hashRPunch);
-                    if (Physics.SphereCast(_handRVector, _punchRadius, Vector3.back, out hit, _maxDistance, Player))
+                    if (Physics.SphereCast(_handRVector, _punchRadius, _punchVec, out hit, _maxDistance))
                     {
                         _low = false;
-                        _middle = true;
-                        OnHitEnemy(hit, _low, _middle);
+                        OnHitEnemy(hit, _low, _useUltimate);
                     }
                     break;
                 }
             case 3:
                 {
                     _animator.SetTrigger(_hashLKick);
-                    if (Physics.SphereCast(_footLVector, _kickRadius, new Vector3(0, 1, -1), out hit, _maxDistance, Player))
+                    if (Physics.SphereCast(_footLVector, _kickRadius, _kickVecL, out hit, _maxDistance))
                     {
-                        _low = false;
-                        _middle = true;
-                        OnHitEnemy(hit, _low, _middle);
+                        _low = true;
+                        OnHitEnemy(hit, _low, _useUltimate);
                     }
                     break;
                 }
             case 4:
                 {
                     _animator.SetTrigger(_hashRKick);
-                    if (Physics.SphereCast(_footRVector, _kickRadius + 1, new Vector3(1, 1, -1), out hit, _maxDistance, Player))
+                    if (Physics.SphereCast(_footRVector, _kickRadius + 1, _kickVecR, out hit, _maxDistance))
                     {
-                        _low = false;
-                        _middle = true;
-                        OnHitEnemy(hit, _low, _middle);
-                    }
-                    break;
-                }
-            default:
-                break;
-        }
-    }
-
-    private void MiddleAttack(int attack)
-    {
-        if (_die)
-        {
-            Die();
-        }
-        switch (attack)
-        {
-            case 1:
-                {
-                    _animator.SetTrigger(_hashLMiddlePunch);
-                    if (Physics.SphereCast(_handLVector, _punchRadius, Vector3.back, out hit, _maxDistance, Player))
-                    {
-                        _middle = _low = false;
-                        OnHitEnemy(hit, _low, _middle);
-                    }
-                    break;
-                }
-            case 2:
-                {
-                    _animator.SetTrigger(_hashRMiddlePunch);
-                    if (Physics.SphereCast(_handRVector, _punchRadius, Vector3.back, out hit, _maxDistance, Player))
-                    {
-                        _middle = _low = false;
-                        OnHitEnemy(hit, _low, _middle);
-                    }
-                    break;
-                }
-            case 3:
-                {
-                    _animator.SetTrigger(_hashLMiddleKick);
-                    if (Physics.SphereCast(_footLVector, _kickRadius, new Vector3(0, 1, -1), out hit, _maxDistance, Player))
-                    {
-                        _middle = _low = false;
-                        OnHitEnemy(hit, _low, _middle);
-                    }
-
-                    break;
-                }
-            case 4:
-                {
-                    _animator.SetTrigger(_hashRMiddleKick);
-                    if (Physics.SphereCast(_footRVector, _kickRadius + 1, new Vector3(1, 1, -1), out hit, _maxDistance, Player))
-                    {
-                        _middle = _low = false;
-                        OnHitEnemy(hit, _low, _middle);
-                    }
-                    break;
-                }
-            default:
-                break;
-        }
-    }
-
-    private void LowAttack(int attack)
-    {
-        if(_die)
-        {
-            Die();
-        }
-        switch (attack)
-        {
-            case 1:
-                {
-                    _animator.SetTrigger(_hashLLowKick);
-                    if (Physics.SphereCast(_footLVector, _kickRadius, new Vector3(0, 1, -1), out hit, _maxDistance, Player))
-                    {
-                        _middle = false;
                         _low = true;
-                        OnHitEnemy(hit, _low, _middle);
-                    }
-                    break;
-                }
-            case 2:
-                {
-                    _animator.SetTrigger(_hashRLowKick);
-                    if (Physics.SphereCast(_footRVector, _kickRadius + 1, new Vector3(1, 1, -1), out hit, _maxDistance, Player))
-                    {
-                        _middle = false;
-                        _low = true;
-                        OnHitEnemy(hit, _low, _middle);
+                        OnHitEnemy(hit, _low, _useUltimate);
                     }
                     break;
                 }
@@ -334,23 +310,30 @@ public class AI : Unit, IDamageable
         }
     }
 
-    public void TakeDamage(float damage, RaycastHit hit, bool low, bool middle)
+    public void TakeDamage(float damage, RaycastHit hit, bool low, bool ultimate)
     {
         int block = Random.Range(1, 11);
-        if(!_die)
+        if (!_die)
         {
-            if(block < 8)
+            _aiUltimate += 0.5f;
+            _charging = false;
+            if (block < 8)
             {
-                Hit(low, middle);
-                _aiHealth -= damage;
+                if (ultimate)
+                    _aiHealth -= damage * 5;
+                else
+                    _aiHealth -= damage;
+                Hit(low, ultimate);
             }
             else
             {
-                Block(low, middle);
-                _aiHealth -= damage / 4;
+                if (ultimate)
+                    _aiHealth -= damage;
+                else
+                    _aiHealth -= damage / 2;
+                Block(low, ultimate);
             }
         }
-        Debug.Log(_aiHealth);
         if (_aiHealth <= 0 && !_die)
         {
             Die();
@@ -366,44 +349,77 @@ public class AI : Unit, IDamageable
         }
     }
 
-    protected override void Hit(bool low, bool middle)
+    protected override void Hit(bool low, bool ultimate)
     {
-        if (middle)
-        {
-            _animator.SetTrigger(_hashMiddleHit);
-        }
-        else if(low)
+        HitSound();
+        if (low)
         {
             _animator.SetTrigger(_hashLowHit);
+            Invoke("LegHitEffect", 0.3f);
+        }
+        else if(ultimate)
+        {
+            _animator.SetTrigger(_hashKnockDown);
+            Invoke("GetUp", 0.5f);
         }
         else
         {
             _animator.SetTrigger(_hashHit);
+            Invoke("HeadHitEffect", 0.3f);
         }
     }
 
-    protected override void OnHitEnemy(RaycastHit hit, bool low, bool middle)
+    protected override void OnHitEnemy(RaycastHit hit, bool low, bool ultimate)
     {
         IDamageable damageable = hit.collider.GetComponent<IDamageable>();
         if (damageable != null)
         {
-            damageable.TakeDamage(_damage, hit, low, middle);
+            damageable.TakeDamage(_damage, hit, low, ultimate);
         }
     }
 
-    protected override void Block(bool low, bool middle)
+    protected override void Block(bool low, bool ultimate)
     {
-        if (middle)
+        BlockSound();
+        if (low)
         {
-            _animator.SetTrigger(_hashMiddleBlock);
+            Invoke("LegHitEffect", 0.3f);
         }
-        else if (low)
+        else if(ultimate)
         {
-            _animator.SetTrigger(_hashLowBlock);
+            Invoke("LegHitEffect", 0.3f);
+            Invoke("HeadHitEffect", 0.3f);
         }
         else
         {
-            _animator.SetTrigger(_hashBlock);
+            Invoke("HeadHitEffect", 0.3f);
         }
+    }
+
+    private void GetUp()
+    {
+        _animator.SetTrigger(_hashGetUp);
+    }
+
+    private void HitSound()
+    {
+        HitSoundPlay.Invoke();
+    }
+
+    private void BlockSound()
+    {
+        BlockSoundPlay.Invoke();
+    }
+
+    private void HeadHitEffect()
+    {
+        Instantiate(visual, _head);
+        Destroy(visual, 0.5f);
+    }
+
+    private void LegHitEffect()
+    {
+        Instantiate(visual, _leg);
+        Destroy(visual, 0.5f);
     }
 }
