@@ -7,7 +7,8 @@ public class GameManager
     private static GameManager instance;
 
     public bool AiWin = false;
-    public bool PlayerWin = false;
+    public bool PlayerWin1 = false;
+    public bool PlayerWin2 = false;
 
     public static GameManager Instance
     {

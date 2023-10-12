@@ -28,6 +28,15 @@ public enum PlayerType
     AI = 3,
 }
 
+/// <summary>
+/// playerPostion when player spawned;
+/// </summary>
+public enum PlayerSpawnState
+{
+    left = 1, 
+    right  = 2,
+}
+
 public enum SceneEnum
 {
     Start,
@@ -42,4 +51,10 @@ public enum ImageType
     Texture2d,
 }
 
+public enum Sound
+{
+    Bgm,
+    Effect,
+    MaxCount,  // 아무것도 아님. 그냥 Sound enum의 개수 세기 위해 추가. (0, 1, '2' 이렇게 2개) 
+}
 

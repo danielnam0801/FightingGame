@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class StartGameUI : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class StartGameUI : MonoBehaviour
     [SerializeField] private TMP_Text _timer;
     [SerializeField] private Image readyImg;
     [SerializeField] private Image fightImg;
+
+    public UnityEvent startEvent; //게임 시작하면
+    public UnityEvent playingEvent; //게임 중일때
 
     public int Round = 0;
 
@@ -32,6 +36,7 @@ public class StartGameUI : MonoBehaviour
 
     public void GameStart()
     {
+        startEvent.Invoke();
         StartCoroutine(GameStartCoroutine());
     }
 

@@ -1,0 +1,121 @@
+.Setting {
+    width: 459px;
+    height: 132px;
+    left: 312px;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+}
+
+.Pannel {
+    width: 95%;
+    height: 84%;
+    border-top-left-radius: 35px;
+    border-bottom-left-radius: 35px;
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
+    left: 36px;
+    top: 130px;
+    position: absolute;
+}
+
+.SettingContainer {
+    width: 95%;
+    height: 100px;
+    background-color: rgb(192, 192, 192);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-top: 35px;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.Visual {
+    width: 90px;
+    height: 90px;
+    left: 729px;
+}
+
+.text {
+    font-size: 45px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    color: rgb(0, 0, 0);
+    height: 50px;
+    width: 300px;
+}
+
+#Slider #unity-dragger {
+    width: 70px;
+    height: 70px;
+    background-image: url('project://database/Packages/com.unity.collab-proxy/Editor/PlasticSCM/Assets/Images/d_iconaddedlocal@2x.png?fileID=2800000&guid=02800fb9cff14da47a04572790384d8b&type=3#d_iconaddedlocal@2x');
+    position: relative;
+    top: auto;
+    bottom: 36px;
+}
+
+#Slider #unity-tracker {
+    height: 11px;
+    position: relative;
+}
+
+.ESC {
+    background-image: url('project://database/Packages/com.unity.collab-proxy/Editor/PlasticSCM/Assets/Images/d_icondeletedlocaloverlay@2x.png?fileID=2800000&guid=92b204cca46037444ab18ba6701f86f7&type=3#d_icondeletedlocaloverlay@2x');
+    width: 150px;
+    height: 150px;
+    right: 892px;
+    bottom: 10px;
+}
+
+.ESC:hover {
+    background-color: rgb(99, 99, 99);
+}
+
+.RecordButton {
+    height: 83%;
+    width: 80px;
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: rgba(255, 255, 255, 255);
+}
+
+.VolumeContainer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.Slider {
+    width: 871px;
+    top: 28px;
+}
+
+.RecordButton.lock {
+    background-image: url('project://database/Packages/com.unity.timeline/Editor/StyleSheets/Images/Icons/d_TrackLockButtonEnabled.png?fileID=2800000&guid=e8aa120f1b4731e43a2dd31eb70bbbe2&type=3#d_TrackLockButtonEnabled');
+    background-color: rgba(91, 91, 91, 255);
+}
+
+.RecordButton.Record {
+    background-image: url('project://database/Assets/02_Assets/Sprite/RecodingStartBtn.png?fileID=2800000&guid=e4973d8d831706b4fbebc572dc85bb90&type=3#RecodingStartBtn');
+}
+
+.RecordButton.Stop {
+    background-image: url('project://database/Assets/02_Assets/Sprite/RecodingStopBitn.png?fileID=2800000&guid=91e16f69526fbc94e9a59ad8300b97a1&type=3#RecodingStopBitn');
+}
+
+.RecordButton.Listen {
+    background-image: url('project://database/Assets/02_Assets/Sprite/pngegg%20(24).png?fileID=2800000&guid=1ba675117705d544289f8467a414968c&type=3#pngegg (24)');
+}

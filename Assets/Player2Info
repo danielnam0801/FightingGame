@@ -1,1 +1,1 @@
-{"character":{"name":"GreenGuy","description":"초록색 기본 캐릭터","material":{"instanceID":27434},"imageType":0,"renderTexture":{"instanceID":27362},"sprite":{"instanceID":0},"texture2d":{"instanceID":0}},"mode":2}
+{"character":{"name":"RedGuy","description":"빨간색 기본 캐릭터","material":{"instanceID":32046},"imageType":0,"renderTexture":{"instanceID":31928},"sprite":{"instanceID":0},"texture2d":{"instanceID":0}},"mode":3}

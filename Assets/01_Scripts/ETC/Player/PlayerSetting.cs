@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class PlayerSetting : MonoBehaviour
 {
-    SkinnedMeshRenderer skinnedMeshRenderer;
+    public PlayerSpawnState state; //spawn pos
+    private SkinnedMeshRenderer skinnedMeshRenderer;
+
     private void Awake()
     {
         skinnedMeshRenderer = transform.Find("Visual").GetComponent<SkinnedMeshRenderer>();       
@@ -14,5 +16,10 @@ public class PlayerSetting : MonoBehaviour
     public void SetVisual(Material material)
     {
         skinnedMeshRenderer.material = material;    
+    }
+
+    public void SetPlayerNum(PlayerSpawnState state)
+    {
+        this.state = state;
     }
 }
