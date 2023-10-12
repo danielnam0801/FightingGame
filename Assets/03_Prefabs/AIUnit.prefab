@@ -286,9 +286,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   visual: {fileID: 2850201696441222666, guid: 718269eed4b223a45af6945e7fe442a0, type: 3}
-  PlayerMask:
-    serializedVersion: 2
-    m_Bits: 128
   _handL: {fileID: 3311597928305091060}
   _handR: {fileID: 3311597927896320720}
   _footL: {fileID: 3311597928442833906}
@@ -784,7 +781,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
+  - {fileID: 2100000, guid: 9ea132d7967ba3640983b0c5b54524d0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

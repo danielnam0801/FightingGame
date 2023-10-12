@@ -921,3 +921,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundSettingAsset: {fileID: 9197481963319205126, guid: 51694a9d401cad143b77fbbfb9964a2d,
     type: 3}
+  isRecording: 0

@@ -695,6 +695,7 @@ GameObject:
   - component: {fileID: 8303825491279981190}
   - component: {fileID: 8303825491279981189}
   - component: {fileID: 6409722103625518625}
+  - component: {fileID: 8742767534448162352}
   m_Layer: 6
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -776,9 +777,6 @@ MonoBehaviour:
   BlockSoundPlay:
     m_PersistentCalls:
       m_Calls: []
-  PlayerMask:
-    serializedVersion: 2
-    m_Bits: 128
   visual: {fileID: 2850201696441222666, guid: 718269eed4b223a45af6945e7fe442a0, type: 3}
   _handL: {fileID: 8303825490130294082}
   _handR: {fileID: 8303825489550495284}
@@ -803,6 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0612ba09855d1448abac0be2c5de49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
 --- !u!320 &8742767534448162352
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -821,6 +820,10 @@ PlayableDirector:
   - key: {fileID: 1613963156737209329, guid: eaa41f027ba371e4497a51f09113cc8b, type: 2}
     value: {fileID: 0}
   - key: {fileID: 5469866263560070930, guid: eaa41f027ba371e4497a51f09113cc8b, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1094184926848853146, guid: eaa41f027ba371e4497a51f09113cc8b, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4443043361353382516, guid: eaa41f027ba371e4497a51f09113cc8b, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
