@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    private readonly float distance = 2;
+    [SerializeField]
+    private float distance = 2;
 
     private Transform spawnPoint1;
     private Transform spawnPoint2;
