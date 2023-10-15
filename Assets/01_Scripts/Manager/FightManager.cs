@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+using UnityEngine.UI;
+using UnityEngine.Playables;
 
 public class FightManager : MonoBehaviour
 {   
@@ -9,6 +12,10 @@ public class FightManager : MonoBehaviour
     [SerializeField] GameObject playerModel;
     [SerializeField] Transform p1SpawnPoint;
     [SerializeField] Transform p2SpawnPoint;
+    [SerializeField] PlayableDirector introCinematic;
+    [SerializeField] Image roundUI;
+    [SerializeField] Image fightUI;
+
 
     PlayerInfo player1Info;
     PlayerInfo player2Info;
