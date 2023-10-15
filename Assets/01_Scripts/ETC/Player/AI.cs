@@ -15,6 +15,8 @@ public class AI : Unit, IDamageable
 
     private Animator _animator;
 
+    private CharacterController _ai;
+
     [SerializeField]
     private Transform _handL;
     [SerializeField]
@@ -47,6 +49,8 @@ public class AI : Unit, IDamageable
     private float _aiUltimate = 0;
     [SerializeField]
     private float _maxUltimate = 100;
+    private float _time = 0;
+    private float _maxtime = 0.5f;
 
     private RaycastHit hit;
 
@@ -79,6 +83,7 @@ public class AI : Unit, IDamageable
     {
         _animator = GetComponent<Animator>();
         _ps = GetComponent<PlayerSetting>();
+        _ai = GetComponent<CharacterController>();
     }
 
     protected override void Start()
@@ -114,22 +119,43 @@ public class AI : Unit, IDamageable
 
     protected override void Update()
     {
+        int rand = Random.Range(1, 11);
+        if (rand < 3)
+        {
+            _charging = true;
+        }
+        else
+            _charging = false;
+
+        if(!_charging)
+            _time += Time.deltaTime;
         _hp.fillAmount = _aiHealth / _maxHealth;
         _ultimate.fillAmount = _aiUltimate / _maxUltimate;
         _handLVector = new Vector3(_handL.position.x, _handL.position.y + 0.05f, _handL.position.z - 0.03f);
         _handRVector = new Vector3(_handR.position.x, _handR.position.y + 0.05f, _handR.position.z - 0.03f);
-        _footLVector = new Vector3(_footL.position.x, _footL.position.y - 0.05f, _footL.position.z - 0.07f);
-        _footRVector = new Vector3(_footR.position.x, _footR.position.y - 0.05f, _footR.position.z - 0.07f);
+        _footLVector = new Vector3(_footL.position.x, _footL.position.y - 0.05f, _footL.position.z);
+        _footRVector = new Vector3(_footR.position.x, _footR.position.y - 0.05f, _footR.position.z);
         _ultimateVector = _body.position;
         if (!_die && !_win && _aiHealth > 0)
         {
-            Charging();
-            Move();
-            Attack();
-            Ultimate();
-            RayCheck();
+            if(!_charging)
+            {
+                if (_time >= _maxtime)
+                {
+                    Move();
+                    _time = 0;
+                }
+                Attack();
+                Ultimate();
+                RayCheck();
+            }
+            if(_charging)
+            {
+                Charging();
+            }
             Win();
         }
+        
     }
 
     private void RayCheck()
@@ -149,43 +175,44 @@ public class AI : Unit, IDamageable
     protected override void Move()
     {
         int rand;
-        if (_aiHealth <= 1)
+        if(_ps.state == PlayerSpawnState.left)
         {
-            rand = Random.Range(1, 4);
-            if (rand > 2)
+            rand = Random.Range(1, 11);
+            if (rand > 7)
             {
                 if (!_attack && !_useUltimate)
                 {
-                    _animator.SetBool(_hashMoveForward, false);
-                    _animator.SetBool(_hashMoveBackward, true);
-                }
-                else
-                {
-                    _animator.SetBool(_hashMoveBackward, false);
+                    _animator.SetTrigger(_hashMoveBackward);
+                    Invoke("MoveL", 0.3f);
                 }
             }
             else
             {
                 if (_attack == false && !_useUltimate)
                 {
-                    _animator.SetBool(_hashMoveBackward, false);
-                    _animator.SetBool(_hashMoveForward, true);
-                }
-                else
-                {
-                    _animator.SetBool(_hashMoveForward, false);
+                    _animator.SetTrigger(_hashMoveForward);
+                    Invoke("MoveR", 0.3f);
                 }
             }
         }
-        else
+        else if(_ps.state == PlayerSpawnState.right)
         {
-            if (_attack == false && !_useUltimate)
+            rand = Random.Range(1, 11);
+            if (rand > 7)
             {
-                _animator.SetBool(_hashMoveForward, true);
+                if (!_attack && !_useUltimate)
+                {
+                    _animator.SetTrigger(_hashMoveBackward);
+                    Invoke("MoveR", 0.3f);
+                }
             }
             else
             {
-                _animator.SetBool(_hashMoveForward, false);
+                if (_attack == false && !_useUltimate)
+                {
+                    _animator.SetTrigger(_hashMoveForward);
+                    Invoke("MoveL", 0.3f);
+                }
             }
         }
     }
@@ -226,13 +253,12 @@ public class AI : Unit, IDamageable
 
     protected override void Charging()
     {
-        if(_charging)
+        if (_aiUltimate >= _maxUltimate)
         {
-            if(_aiUltimate == _maxUltimate)
-            {
-                _charging = false;
-                return;
-            }
+            _charging = false;
+        }
+        else
+        {
             // bool로 차징 애니메이션 나오기 
             _aiUltimate += 0.01f;
         }
@@ -288,7 +314,7 @@ public class AI : Unit, IDamageable
             case 3:
                 {
                     _animator.SetTrigger(_hashLKick);
-                    if (Physics.SphereCast(_footLVector, _kickRadius, _kickVecL, out hit, _maxDistance))
+                    if (Physics.BoxCast(_footLVector, _boxSize / 2, _kickVecL, out hit))
                     {
                         _low = true;
                         OnHitEnemy(hit, _low, _useUltimate);
@@ -298,7 +324,7 @@ public class AI : Unit, IDamageable
             case 4:
                 {
                     _animator.SetTrigger(_hashRKick);
-                    if (Physics.SphereCast(_footRVector, _kickRadius + 1, _kickVecR, out hit, _maxDistance))
+                    if (Physics.BoxCast(_footRVector,  _boxSize / 2, _kickVecR, out hit))
                     {
                         _low = true;
                         OnHitEnemy(hit, _low, _useUltimate);
@@ -312,10 +338,11 @@ public class AI : Unit, IDamageable
 
     public void TakeDamage(float damage, RaycastHit hit, bool low, bool ultimate)
     {
+        _charging = false;
         int block = Random.Range(1, 11);
         if (!_die)
         {
-            _aiUltimate += 0.5f;
+            _aiUltimate += 5f;
             _charging = false;
             if (block < 8)
             {
@@ -360,7 +387,10 @@ public class AI : Unit, IDamageable
         else if(ultimate)
         {
             _animator.SetTrigger(_hashKnockDown);
-            Invoke("GetUp", 0.5f);
+            if (_aiHealth > 0)
+                Invoke("GetUp", 0.5f);
+            else
+                Die();
         }
         else
         {
@@ -381,19 +411,33 @@ public class AI : Unit, IDamageable
     protected override void Block(bool low, bool ultimate)
     {
         BlockSound();
+        _animator.SetBool(_hashBlock, true);
         if (low)
         {
             Invoke("LegHitEffect", 0.3f);
+            _animator.SetBool(_hashBlock, false);
         }
         else if(ultimate)
         {
             Invoke("LegHitEffect", 0.3f);
             Invoke("HeadHitEffect", 0.3f);
+            _animator.SetBool(_hashBlock, false);
         }
         else
         {
             Invoke("HeadHitEffect", 0.3f);
+            _animator.SetBool(_hashBlock, false);
         }
+    }
+
+    private void MoveL()
+    {
+        _ai.Move(Vector3.left / 3);
+    }
+
+    private void MoveR()
+    {
+        _ai.Move(Vector3.right / 3);
     }
 
     private void GetUp()

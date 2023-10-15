@@ -12,6 +12,8 @@ public class Player : Unit, IDamageable
 
     public GameObject visual;
 
+    private CharacterController _player;
+
     [SerializeField]
     private Transform _handL;
     [SerializeField]
@@ -76,6 +78,7 @@ public class Player : Unit, IDamageable
     {
         _animator = GetComponent<Animator>();
         _ps = GetComponent<PlayerSetting>();
+        _player = GetComponent<CharacterController>();
     }
 
     protected override void Start()
@@ -111,8 +114,8 @@ public class Player : Unit, IDamageable
         _ultimate.fillAmount = _playerUltimate / _maxUltimate;
         _handLVector = new Vector3(_handL.position.x, _handL.position.y + 0.05f, _handL.position.z + 0.03f);
         _handRVector = new Vector3(_handR.position.x, _handR.position.y + 0.05f, _handR.position.z + 0.03f);
-        _footLVector = new Vector3(_footL.position.x, _footL.position.y - 0.05f, _footL.position.z + 0.07f);
-        _footRVector = new Vector3(_footR.position.x, _footR.position.y - 0.05f, _footR.position.z + 0.07f);
+        _footLVector = new Vector3(_footL.position.x, _footL.position.y - 0.05f, _footL.position.z);
+        _footRVector = new Vector3(_footR.position.x, _footR.position.y - 0.05f, _footR.position.z);
         _ultimateVector = _body.position;
         if(!_die && !_win && _playerHealth > 0)
         {
@@ -125,47 +128,35 @@ public class Player : Unit, IDamageable
             Win();
             Charging();
         }
-        
+        Debug.Log(_playerUltimate);
     }
 
     protected override void Move()
     {
         if (_ps.state == PlayerSpawnState.left)
         {
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A))
             {
-                _animator.SetBool(_hashMoveBackward, true);
+                _animator.SetTrigger(_hashMoveBackward);
+                Invoke("MoveL", 0.3f);
             }
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D))
             {
-                _animator.SetBool(_hashMoveForward, true);
-            }
-            if (Input.GetKeyUp(KeyCode.A))
-            {
-                _animator.SetBool(_hashMoveBackward, false);
-            }
-            if (Input.GetKeyUp(KeyCode.D))
-            {
-                _animator.SetBool(_hashMoveForward, false);
+                _animator.SetTrigger(_hashMoveForward);
+                Invoke("MoveR", 0.3f);
             }
         }
         else if(_ps.state == PlayerSpawnState.right)
         {
-            if (Input.GetKey(KeyCode.Semicolon))
+            if (Input.GetKeyDown(KeyCode.Semicolon))
             {
-                _animator.SetBool(_hashMoveBackward, true);
+                _animator.SetTrigger(_hashMoveBackward);
+                Invoke("MoveR", 0.3f);
             }
-            if (Input.GetKey(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.K))
             {
-                _animator.SetBool(_hashMoveForward, true);
-            }
-            if (Input.GetKeyUp(KeyCode.Semicolon))
-            {
-                _animator.SetBool(_hashMoveBackward, false);
-            }
-            if (Input.GetKeyUp(KeyCode.K))
-            {
-                _animator.SetBool(_hashMoveForward, false);
+                _animator.SetTrigger(_hashMoveForward);
+                Invoke("MoveL", 0.3f);
             }
         }
     }
@@ -178,8 +169,10 @@ public class Player : Unit, IDamageable
             if(Input.GetKey(KeyCode.E) && _playerUltimate < _maxUltimate)
             {
                 _charging = true;
+                _animator.SetBool(_hashMoveForward, false);
+                _animator.SetBool(_hashMoveBackward, false);
                 // bool로 차징 애니메이션 나오기 
-                _playerUltimate += 0.01f;
+                _playerUltimate += 0.05f;
             }
             if(Input.GetKeyUp(KeyCode.E))
             {
@@ -192,8 +185,10 @@ public class Player : Unit, IDamageable
             if(Input.GetKey(KeyCode.P) && _playerUltimate < _maxUltimate)
             {
                 _charging = true;
+                _animator.SetBool(_hashMoveForward, false);
+                _animator.SetBool(_hashMoveBackward, false);
                 // bool로 차징 애니메이션 나오기
-                _playerUltimate += 0.01f;
+                _playerUltimate += 0.05f;
             }
             if (Input.GetKeyUp(KeyCode.P))
             {
@@ -207,7 +202,7 @@ public class Player : Unit, IDamageable
     {
         if (_ps.state == PlayerSpawnState.left)
         {
-            if (_playerUltimate == _maxUltimate && Input.GetKeyDown(KeyCode.Q))
+            if (_playerUltimate >= _maxUltimate && Input.GetKeyDown(KeyCode.Q))
             {
                 // Trigger로 궁극기 애니메이션 나오기 
                 if (Physics.Raycast(_ultimateVector, _ultimateVec, out hit, 1f))
@@ -224,7 +219,7 @@ public class Player : Unit, IDamageable
         }
         else if (_ps.state == PlayerSpawnState.right)
         {
-            if (_playerUltimate == _maxUltimate && Input.GetKeyDown(KeyCode.I))
+            if (_playerUltimate >= _maxUltimate && Input.GetKeyDown(KeyCode.I))
             {
                 // Trigger로 궁극기 애니메이션 나오기
                 if (Physics.Raycast(_ultimateVector, _ultimateVec, out hit, 1f))
@@ -322,7 +317,7 @@ public class Player : Unit, IDamageable
         if (rand > 5)
         {
             _animator.SetTrigger(_hashLLowKick);
-            if (Physics.SphereCast(_footLVector, _kickRadius, _kickVec, out hit, _maxDistance))
+            if (Physics.BoxCast(_footLVector, _boxSize / 2, _kickVec.normalized, out hit))
             {
                 OnHitEnemy(hit, _low, _useUltimate);
             }
@@ -330,7 +325,7 @@ public class Player : Unit, IDamageable
         else
         {
             _animator.SetTrigger(_hashRLowKick);
-            if (Physics.SphereCast(_footRVector, _kickRadius + 1, Vector3.one, out hit, _maxDistance))
+            if (Physics.BoxCast(_footRVector, _boxSize / 2, _kickVec.normalized, out hit))
             {
                 OnHitEnemy(hit, _low, _useUltimate);
             }
@@ -367,7 +362,7 @@ public class Player : Unit, IDamageable
         _charging = false;
         if (!_die)
         {
-            _playerUltimate += 0.5f;
+            _playerUltimate += 5f;
             if(_isBlock)
             {
                 if (ultimate)
@@ -422,7 +417,10 @@ public class Player : Unit, IDamageable
         else if (ultimate)
         {
             _animator.SetTrigger(_hashKnockDown);
-            Invoke("GetUp", 0.5f);
+            if (_playerHealth > 0)
+                Invoke("GetUp", 0.5f);
+            else
+                Die();
         }
         else
         {
@@ -447,6 +445,16 @@ public class Player : Unit, IDamageable
         {
             Invoke("HeadHitEffect", 0.3f);
         }
+    }
+
+    private void MoveL()
+    {
+        _player.Move(Vector3.left / 3);
+    }
+
+    private void MoveR()
+    {
+        _player.Move(Vector3.right / 3);
     }
 
     private void GetUp()
