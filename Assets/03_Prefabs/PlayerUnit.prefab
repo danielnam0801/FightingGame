@@ -780,8 +780,8 @@ MonoBehaviour:
   visual: {fileID: 2850201696441222666, guid: 718269eed4b223a45af6945e7fe442a0, type: 3}
   _handL: {fileID: 8303825490130294082}
   _handR: {fileID: 8303825489550495284}
-  _footL: {fileID: 8303825491336747908}
-  _footR: {fileID: 8303825490897262647}
+  _footL: {fileID: 8303825491605603426}
+  _footR: {fileID: 8303825490107354238}
   _head: {fileID: 8303825489805643381}
   _body: {fileID: 8303825490190035538}
   _leg: {fileID: 8303825489512706719}
@@ -789,6 +789,7 @@ MonoBehaviour:
   _maxHealth: 100
   _playerUltimate: 0
   _maxUltimate: 100
+  _speed: 100
 --- !u!114 &6409722103625518625
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ public abstract class Unit : MonoBehaviour
     protected Vector3 _handRVector;
     protected Vector3 _footLVector;
     protected Vector3 _footRVector;
+    protected Vector3 _boxSize = new Vector3(0.1f, 0.1f, 0.1f);
     protected Vector3 _ultimateVector;
 
     protected virtual void Start()
