@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 3311597928127319129}
   - component: {fileID: 3311597928127319128}
   - component: {fileID: -4848446038975253164}
+  - component: {fileID: -2869233328394710629}
   m_Layer: 7
   m_Name: AIUnit
   m_TagString: Untagged
@@ -311,6 +312,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
+--- !u!320 &-2869233328394710629
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3311597928127319143}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: eaa41f027ba371e4497a51f09113cc8b, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 1613963156737209329, guid: eaa41f027ba371e4497a51f09113cc8b, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5469866263560070930, guid: eaa41f027ba371e4497a51f09113cc8b, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1094184926848853146, guid: eaa41f027ba371e4497a51f09113cc8b, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4443043361353382516, guid: eaa41f027ba371e4497a51f09113cc8b, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &3311597928140331182
 GameObject:
   m_ObjectHideFlags: 0

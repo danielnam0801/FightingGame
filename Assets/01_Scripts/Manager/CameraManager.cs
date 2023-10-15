@@ -14,8 +14,8 @@ public class CameraManager : MonoBehaviour
 
     private CinemachineBasicMultiChannelPerlin perlin;
 
-    [SerializeField] CinemachineFreeLook PlayerFCam;
-    [SerializeField] CinemachineFreeLook AIFCam;
+    [SerializeField] CinemachineFreeLook Player1FCam;
+    [SerializeField] CinemachineFreeLook Player2FCam;
 
     [SerializeField] PlayableDirector introDirector;
     [SerializeField] PlayableDirector winDirector;
@@ -42,12 +42,17 @@ public class CameraManager : MonoBehaviour
     [SerializeField] float hitAmplitudeGain = 2, hitFrequencyGain = 2, shakeTime = 1;
     Vector3 vec = new Vector3(0.17f, -0.2f, 3.1f);
 
-    private void Awake()
+    public void Init(GameObject player1, GameObject player2)
+    {
+        Able = true;
+        introDirector.Play();
+        CameraInit(player1, player2);
+    }
+
+    public void CameraInit(GameObject player1, GameObject player2)
     {
         winTimeline = winDirector.playableAsset as TimelineAsset;
         loseTimeline = winDirector.playableAsset as TimelineAsset;
-
-
 
         winTrack = winTimeline.GetOutputTrack(0);
         winCameraTrack = winTimeline.GetOutputTrack(0);
@@ -58,27 +63,24 @@ public class CameraManager : MonoBehaviour
         shakeCam = GameObject.Find("ShakeCamera").GetComponent<CinemachineVirtualCamera>();
         perlin = shakeCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        PlayerFCam = GameObject.Find("PlayerFreeLook").GetComponent<CinemachineFreeLook>();
-        AIFCam = GameObject.Find("AIFreeLook").GetComponent<CinemachineFreeLook>();
+        Player1FCam = GameObject.Find("PlayerFreeLook").GetComponent<CinemachineFreeLook>();
+        Player2FCam = GameObject.Find("Player2FreeLook").GetComponent<CinemachineFreeLook>();
 
+        Player1FCam.Follow = player1.transform;
+        Player1FCam.LookAt = player1.transform.Find("Chest");
+        Player2FCam.Follow = player2.transform;
+        Player2FCam.LookAt = player2.transform.Find("Chest");
 
+        Player1FCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
+        Player1FCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
 
-        PlayerFCam.m_XAxis.m_InputAxisName = ""; // X축 입력 무시
-        PlayerFCam.m_YAxis.m_InputAxisName = ""; // Y축 입력 무시
-
-        AIFCam.m_XAxis.m_InputAxisName = "";
-        AIFCam.m_YAxis.m_InputAxisName = "";
+        Player2FCam.m_XAxis.m_InputAxisName = "";
+        Player2FCam.m_YAxis.m_InputAxisName = "";
 
         introDirector = GameObject.Find("IntroTimeLine").GetComponent<PlayableDirector>();
 
-        PlayerFCam.gameObject.SetActive(false);
-        AIFCam.gameObject.SetActive(false);
-    }
-
-    public void Init()
-    {
-        Able = true;
-        introDirector.Play();
+        Player1FCam.gameObject.SetActive(false);
+        Player2FCam.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -111,7 +113,25 @@ public class CameraManager : MonoBehaviour
         #endregion
     }
 
+    public void Shake(bool flag)
+    {
+        if (flag)
+            StartCoroutine(nameof(ShakeCamera));
+        else
+            StartCoroutine(nameof(StopShake));
+    }
 
+    public void Win(PlayerType winPlayer)
+    {
+        if(winPlayer == PlayerType.player1)
+        {
+            StartCoroutine(WinnerRotateCamera(Player1FCam));
+        }
+        else if(winPlayer == PlayerType.player2)
+        {
+            StartCoroutine(WinnerRotateCamera(Player2FCam));
+        }
+    }
 
     IEnumerator ShakeCamera()
     {
@@ -126,9 +146,9 @@ public class CameraManager : MonoBehaviour
         perlin.m_FrequencyGain = 0;
         yield return new WaitForSeconds(0.5f);
     }
-    IEnumerator WinnerRotateCamera()
+    IEnumerator WinnerRotateCamera(CinemachineFreeLook cam)
     {
-        PlayerFCam.gameObject.SetActive(true);
+        cam.gameObject.SetActive(true);
         introDirector.Stop();
         foreach (TrackAsset track in winTimeline.GetOutputTracks())
         {
@@ -144,9 +164,10 @@ public class CameraManager : MonoBehaviour
 
         yield return null;
     }
-    IEnumerator LoserRotateCamera()
+
+    IEnumerator LoserRotateCamera(CinemachineFreeLook cam)
     {
-        PlayerFCam.gameObject.SetActive(true);
+        cam.gameObject.SetActive(true);
         introDirector.Stop();
         foreach (TrackAsset track in loseTimeline.GetOutputTracks())
         {
