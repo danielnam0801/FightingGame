@@ -19,6 +19,10 @@ public class ColorLerp : MonoBehaviour
 
     private void Update()
     {
+
+    }
+    public void ColorChange()
+    {
         float lerpValue = Mathf.PingPong(Time.time * speed, 1.0f);
         image.color = Color.Lerp(startColor, endColor, lerpValue);
     }

@@ -20,19 +20,32 @@ public class CameraShake : MonoBehaviour
     [SerializeField] PlayableDirector introDirector;
     [SerializeField] PlayableDirector winDirector;
 
-
+    #region 트랙들
     private TrackAsset winTrack = null;
     private TrackAsset winCameraTrack = null;
     private TrackAsset loseTrack = null;
     private TrackAsset loseCameraTrack = null;
+    private TrackAsset specialMoveTrack = null;
+    private TrackAsset moveCameraTrack = null;
+    private TrackAsset enemyFallTrack = null;
+    private TrackAsset activeImageTrack = null;
+    #endregion
 
     private TimelineAsset winTimeline;
     private TimelineAsset loseTimeline;
+    private TimelineAsset specialMoveTimeline;
+    private TimelineAsset activeTimeline;
 
+    #region 트랙이름들
     string winTrackName = "Winning";
     string loseTrackName = "Losing";
+    string specialMoveTrackName = "SpecialMove";
+    string moveCameraTrackName = "JumpingCamera";
+    string enemyFallTrackName = "FallingDown";
     string winCameraTrackName = "WinCameraSpin";
     string loseCameraTrackName = "LoseCameraSpin";
+    string activeTrackName = "ActivationTrack";
+    #endregion
 
 
 
@@ -43,6 +56,7 @@ public class CameraShake : MonoBehaviour
     {
         winTimeline = winDirector.playableAsset as TimelineAsset;
         loseTimeline = winDirector.playableAsset as TimelineAsset;
+        specialMoveTimeline = winDirector.playableAsset as TimelineAsset;
 
 
 
@@ -50,6 +64,10 @@ public class CameraShake : MonoBehaviour
         winCameraTrack = winTimeline.GetOutputTrack(0);
         loseTrack = loseTimeline.GetOutputTrack(0);
         loseCameraTrack = loseTimeline.GetOutputTrack(0);
+        specialMoveTrack = specialMoveTimeline.GetOutputTrack(0);
+        moveCameraTrack = specialMoveTimeline.GetOutputTrack(0);
+        enemyFallTrack = specialMoveTimeline.GetOutputTrack(0);
+        activeImageTrack = activeTimeline.GetOutputTrack(0);
 
         vCam = GameObject.Find("IntroCamera").GetComponent<CinemachineVirtualCamera>();
         vCam2 = GameObject.Find("ShakeCamera").GetComponent<CinemachineVirtualCamera>();
@@ -99,9 +117,56 @@ public class CameraShake : MonoBehaviour
             StartCoroutine(LoserRotateCamera());
             vCam2.gameObject.SetActive(false);
         }
+        if(Input.GetKeyDown(KeyCode.Y))
+        {
+            introDirector.Stop();
+            StartCoroutine(SpecialMove());
+            vCam2.gameObject.SetActive(false);
+        }
     }
 
-
+    IEnumerator SpecialMove()
+    {
+        PlayerFCam.gameObject.SetActive(true);
+        introDirector.Stop();
+        foreach(TrackAsset track in specialMoveTimeline.GetOutputTracks())
+        {
+            if(track.name==winTrackName)
+            {
+                track.locked = true;
+                track.muted = true;
+                specialMoveTrack = track;
+                moveCameraTrack = track;
+                enemyFallTrack = track;
+            }
+            else if(track.name == winCameraTrackName)
+            {
+                track.locked = true;
+                track.muted = true;
+                specialMoveTrack = track;
+                moveCameraTrack = track;
+                enemyFallTrack = track;
+            }
+            else if(track.name == loseCameraTrackName)
+            {
+                track.locked = true;
+                track.muted = true;
+                specialMoveTrack = track;
+                moveCameraTrack = track;
+                enemyFallTrack = track;
+            }
+            else if(track.name == loseTrackName)
+            {
+                track.locked = true; 
+                track.muted = true;
+                specialMoveTrack = track;
+                moveCameraTrack = track;
+                enemyFallTrack = track;
+            }
+        }
+        winDirector.Play();
+        yield return null;
+    }
 
     IEnumerator ShakeCamera()
     {
@@ -129,10 +194,24 @@ public class CameraShake : MonoBehaviour
                 loseTrack = track;
                 loseCameraTrack = track;
             }
-            else if(winTimeline.duration==7.2f)
+            else if (track.name == specialMoveTrackName)
             {
-                track.locked = false;
-                track.muted = false;
+                track.locked = true;
+                track.muted = true;
+                loseTrack = track;
+                loseCameraTrack = track;
+            }
+            else if(track.name == moveCameraTrackName)
+            {
+                track.locked = true;
+                track.muted = true;
+                loseTrack = track;
+                loseCameraTrack = track;
+            }
+            else if (track.name == enemyFallTrackName)
+            {
+                track.locked = true;
+                track.muted = true;
                 loseTrack = track;
                 loseCameraTrack = track;
             }
@@ -147,6 +226,27 @@ public class CameraShake : MonoBehaviour
         foreach(TrackAsset track in loseTimeline.GetOutputTracks())
         {
             if(track.name == winTrackName)
+            {
+                track.locked = true;
+                track.muted = true;
+                winTrack = track;
+                winCameraTrack = track;
+            }
+            else if (track.name == specialMoveTrackName)
+            {
+                track.locked = true;
+                track.muted = true;
+                winTrack = track;
+                winCameraTrack = track;
+            }
+            else if (track.name == moveCameraTrackName)
+            {
+                track.locked = true;
+                track.muted = true;
+                winTrack = track;
+                winCameraTrack = track;
+            }
+            else if (track.name == enemyFallTrackName)
             {
                 track.locked = true;
                 track.muted = true;
