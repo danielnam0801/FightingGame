@@ -85,6 +85,10 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            introDirector.Play();
+        }
         if (Vector3.Distance(introCam.transform.localPosition, vec) <= 0.01f)
         {
             if(IntroTimeLineDone == false)

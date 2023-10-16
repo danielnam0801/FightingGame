@@ -22,5 +22,5 @@ public class SceneManager : Singleton<SceneManager>
 
     public void LoadIntroScene() => LoadScene("IntroScene");
     public void LoadSelectScene() => LoadScene("SelectScene");
-    public void LoadGameScene() => LoadScene("GameScene");
+    public void LoadGameScene() => LoadScene("TrashMap");
 }
