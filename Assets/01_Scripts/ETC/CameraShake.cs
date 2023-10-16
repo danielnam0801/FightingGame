@@ -6,6 +6,7 @@ using System;
 using UnityEngine.VFX;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using UnityEngine.UI;
 
 public class CameraShake : MonoBehaviour
 {
@@ -20,6 +21,14 @@ public class CameraShake : MonoBehaviour
     [SerializeField] PlayableDirector introDirector;
     [SerializeField] PlayableDirector winDirector;
 
+    //[SerializeField] private ColorLerp colorLerp;
+    public Color startColor = Color.black;
+    public Color endColor = Color.white;
+    [Range(0, 10)]
+    public float speed = 1;
+
+    public Image image;
+
     #region 트랙들
     private TrackAsset winTrack = null;
     private TrackAsset winCameraTrack = null;
@@ -28,13 +37,11 @@ public class CameraShake : MonoBehaviour
     private TrackAsset specialMoveTrack = null;
     private TrackAsset moveCameraTrack = null;
     private TrackAsset enemyFallTrack = null;
-    private TrackAsset activeImageTrack = null;
     #endregion
 
     private TimelineAsset winTimeline;
     private TimelineAsset loseTimeline;
     private TimelineAsset specialMoveTimeline;
-    private TimelineAsset activeTimeline;
 
     #region 트랙이름들
     string winTrackName = "Winning";
@@ -44,7 +51,6 @@ public class CameraShake : MonoBehaviour
     string enemyFallTrackName = "FallingDown";
     string winCameraTrackName = "WinCameraSpin";
     string loseCameraTrackName = "LoseCameraSpin";
-    string activeTrackName = "ActivationTrack";
     #endregion
 
 
@@ -67,7 +73,6 @@ public class CameraShake : MonoBehaviour
         specialMoveTrack = specialMoveTimeline.GetOutputTrack(0);
         moveCameraTrack = specialMoveTimeline.GetOutputTrack(0);
         enemyFallTrack = specialMoveTimeline.GetOutputTrack(0);
-        activeImageTrack = activeTimeline.GetOutputTrack(0);
 
         vCam = GameObject.Find("IntroCamera").GetComponent<CinemachineVirtualCamera>();
         vCam2 = GameObject.Find("ShakeCamera").GetComponent<CinemachineVirtualCamera>();
@@ -75,6 +80,7 @@ public class CameraShake : MonoBehaviour
 
         PlayerFCam = GameObject.Find("PlayerFreeLook").GetComponent<CinemachineFreeLook>();
         AIFCam = GameObject.Find("AIFreeLook").GetComponent<CinemachineFreeLook>();
+
 
         
 
@@ -164,7 +170,19 @@ public class CameraShake : MonoBehaviour
                 enemyFallTrack = track;
             }
         }
+
+        StartCoroutine(ColorChange());
         winDirector.Play();
+        //colorLerp.gameObject.SetActive(true);
+        //colorLerp.ColorChange();
+        yield return null;
+    }
+
+    IEnumerator ColorChange()
+    {
+        image.gameObject.SetActive(true);
+        float lerpValue = Mathf.PingPong(Time.time * speed, 1.0f);
+        image.color = Color.Lerp(startColor, endColor, lerpValue);
         yield return null;
     }
 
