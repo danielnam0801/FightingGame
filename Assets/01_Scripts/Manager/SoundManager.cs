@@ -47,12 +47,23 @@ public class SoundManager : Singleton<SoundManager>
             _audioSources[i].playOnAwake = false;
             go.transform.parent = root.transform;
         }
+        
         GameObject go2 = new GameObject { name = "PlayOneShotAudio" };
         _playOneAudioSource = go2.AddComponent<AudioSource>();
         _playOneAudioSource.playOnAwake = false;
         go2.transform.parent = root.transform;
 
         _audioSources[(int)SoundType.BGM].loop = true; // bgm 재생기는 무한 반복 재생
+
+        LoadAll();
+    }
+
+    private void LoadAll()
+    {
+        for (int i = 0; i < (int)SoundType.MAXCOUNT; i++)
+        {
+            Load((SoundType)i);
+        }
     }
 
     public void PlayOneShot(SoundType soundType, PlayerType player = PlayerType.player1)

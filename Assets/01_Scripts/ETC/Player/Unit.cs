@@ -1,9 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Unit : MonoBehaviour
 {
+    public event Action<SoundType> HitSoundPlay;
+    public event Action<SoundType> BlockSoundPlay;
+    public event Action<SoundType> AttackSoundPlay;
+    public event Action<SoundType> WinSoundPlay;
+
     protected float _punchRadius = 0.07f;
     protected float _kickRadius = 0.5f;
     protected float _ultimateRadius = 1f;
@@ -11,6 +18,7 @@ public abstract class Unit : MonoBehaviour
     protected float _damage = 5f;
 
     protected bool _die = false;
+    public bool Able { get; set; } = false;
 
     protected Vector3 _handLVector;
     protected Vector3 _handRVector;
@@ -21,12 +29,40 @@ public abstract class Unit : MonoBehaviour
 
     protected virtual void Start()
     {
-        
+        HitSoundPlay += SoundManager.Instance.PlaySound;
+        BlockSoundPlay += SoundManager.Instance.PlaySound;
+        AttackSoundPlay += SoundManager.Instance.PlaySound;
+        WinSoundPlay += SoundManager.Instance.PlaySound; 
+    }
+
+    protected virtual void OnDestroy()
+    {
+        HitSoundPlay -= SoundManager.Instance.PlaySound;
+        BlockSoundPlay -= SoundManager.Instance.PlaySound;
+        AttackSoundPlay -= SoundManager.Instance.PlaySound;
+        WinSoundPlay -= SoundManager.Instance.PlaySound;
     }
 
     protected virtual void Update()
     {
         
+    }
+
+    protected void HitSound()
+    {
+        HitSoundPlay?.Invoke(SoundType.Hit);
+    }
+    protected void BlockSound()
+    {
+        BlockSoundPlay.Invoke(SoundType.Block);
+    }
+    protected void AttackSound()
+    {
+        AttackSoundPlay?.Invoke(SoundType.Attack);
+    }
+    protected void WinSound()
+    {
+        WinSoundPlay?.Invoke(SoundType.Win);
     }
 
     protected abstract void Move();

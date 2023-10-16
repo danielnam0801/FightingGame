@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class Player : Unit, IDamageable
 {
     // 움직이거나 공격 또는 맞았을 경우 차징 멈추기 추가
-    public UnityEvent HitSoundPlay;
-    public UnityEvent BlockSoundPlay;
 
     public GameObject visual;
 
@@ -83,9 +81,9 @@ public class Player : Unit, IDamageable
 
     protected override void Start()
     {
+        base.Start();
         _playerHealth = _maxHealth;
         _playerUltimate = 0;
-        base.Start();
         if (_ps.state == PlayerSpawnState.left)
         {
             _punchVec = Vector3.right;
@@ -117,7 +115,7 @@ public class Player : Unit, IDamageable
         _footLVector = new Vector3(_footL.position.x, _footL.position.y - 0.05f, _footL.position.z);
         _footRVector = new Vector3(_footR.position.x, _footR.position.y - 0.05f, _footR.position.z);
         _ultimateVector = _body.position;
-        if(!_die && !_win && _playerHealth > 0)
+        if(Able &&!_die && !_win && _playerHealth > 0)
         {
             if(!_charging)
             {
@@ -128,7 +126,7 @@ public class Player : Unit, IDamageable
             Win();
             Charging();
         }
-        Debug.Log(_playerUltimate);
+        //Debug.Log(_playerUltimate);
     }
 
     protected override void Move()
@@ -238,6 +236,7 @@ public class Player : Unit, IDamageable
 
     protected override void Attack()
     {
+        AttackSound();
         if (_ps.state == PlayerSpawnState.left)
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -335,15 +334,7 @@ public class Player : Unit, IDamageable
     protected override void Die()
     {
         _die = true;
-        GameManager.Instance.AiWin = true;
-        if(_ps.state == PlayerSpawnState.left)
-        {
-            GameManager.Instance.PlayerWin2 = true;
-        }
-        else if(_ps.state == PlayerSpawnState.right)
-        {
-            GameManager.Instance.PlayerWin1 = true;
-        }
+        FightManager.Instance.Lose(_ps.state);
         _animator.SetTrigger(_hashKnockDown);
         _animator.SetTrigger(_hashDie);
     }
@@ -390,16 +381,18 @@ public class Player : Unit, IDamageable
     {
         if(_ps.state == PlayerSpawnState.left)
         {
-            if (GameManager.Instance.PlayerWin1 && !_win)
+            if (FightManager.Instance.PlayerWin1 && !_win)
             {
+                WinSound();
                 _animator.SetTrigger(_hashWin);
                 _win = true;
             }
         }
         else if (_ps.state == PlayerSpawnState.right)
         {
-            if (GameManager.Instance.PlayerWin2 && !_win)
+            if (FightManager.Instance.PlayerWin2 && !_win)
             {
+                WinSound();
                 _animator.SetTrigger(_hashWin);
                 _win = true;
             }
@@ -449,27 +442,17 @@ public class Player : Unit, IDamageable
 
     private void MoveL()
     {
-        _player.Move(Vector3.left / 3);
+        _player.Move(new Vector3(0, 0, -1) / 3);
     }
 
     private void MoveR()
     {
-        _player.Move(Vector3.right / 3);
+        _player.Move(new Vector3(0, 0, 1) / 3);
     }
 
     private void GetUp()
     {
         _animator.SetTrigger(_hashGetUp);
-    }
-
-    private void HitSound()
-    {
-        HitSoundPlay.Invoke();
-    }
-
-    private void BlockSound()
-    {
-        BlockSoundPlay.Invoke();
     }
 
     private void HeadHitEffect()

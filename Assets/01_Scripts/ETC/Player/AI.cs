@@ -8,8 +8,6 @@ using UnityEngine.VFX;
 public class AI : Unit, IDamageable
 {
     //차징구현_랜덤을 어디에 어떻게 적용시켜야 차징중에는 아무것도 안하고 차징이 멈춰야 다른 걸 할까
-    public UnityEvent HitSoundPlay; 
-    public UnityEvent BlockSoundPlay; 
 
     public GameObject visual;
 
@@ -119,6 +117,7 @@ public class AI : Unit, IDamageable
 
     protected override void Update()
     {
+        if (!Able) return;
         int rand = Random.Range(1, 11);
         if (rand < 3)
         {
@@ -221,6 +220,7 @@ public class AI : Unit, IDamageable
     {
         if (_currentTime + _coolTime < Time.time)
         {
+            AttackSound();
             LowLevelAi();
             _currentTime = Time.time;
         }
@@ -229,14 +229,7 @@ public class AI : Unit, IDamageable
     protected override void Die()
     {
         _die = true;
-        if(_ps.state == PlayerSpawnState.left)
-        {
-            GameManager.Instance.PlayerWin2 = true;
-        }
-        else if(_ps.state == PlayerSpawnState.right)
-        {
-            GameManager.Instance.PlayerWin1 = true;
-        }
+        FightManager.Instance.Lose(_ps.state);
         _animator.SetTrigger(_hashKnockDown);
         _animator.SetTrigger(_hashDie);
     }
@@ -369,10 +362,23 @@ public class AI : Unit, IDamageable
 
     protected override void Win()
     {
-        if (GameManager.Instance.AiWin && !_win)
+        if (_ps.state == PlayerSpawnState.left)
         {
-            _animator.SetTrigger(_hashWin);
-            _win = true;
+            if (FightManager.Instance.PlayerWin1 && !_win)
+            {
+                WinSound();
+                _animator.SetTrigger(_hashWin);
+                _win = true;
+            }
+        }
+        else if (_ps.state == PlayerSpawnState.right)
+        {
+            if (FightManager.Instance.PlayerWin2 && !_win)
+            {
+                WinSound();
+                _animator.SetTrigger(_hashWin);
+                _win = true;
+            }
         }
     }
 
@@ -432,27 +438,17 @@ public class AI : Unit, IDamageable
 
     private void MoveL()
     {
-        _ai.Move(Vector3.left / 3);
+        _ai.Move(new Vector3(0, 0, -1) / 3);
     }
 
     private void MoveR()
     {
-        _ai.Move(Vector3.right / 3);
+        _ai.Move(new Vector3(0,0,1) / 3);
     }
 
     private void GetUp()
     {
         _animator.SetTrigger(_hashGetUp);
-    }
-
-    private void HitSound()
-    {
-        HitSoundPlay.Invoke();
-    }
-
-    private void BlockSound()
-    {
-        BlockSoundPlay.Invoke();
     }
 
     private void HeadHitEffect()

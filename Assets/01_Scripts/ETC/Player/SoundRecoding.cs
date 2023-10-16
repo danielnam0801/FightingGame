@@ -8,6 +8,7 @@ public class SoundRecoding
     public SoundRecoding(SoundType soundType)
     {
         this.soundType = soundType;
+        //if (soundType.ToString() == "BGM") ;
     }
 
     public void StartRecording()

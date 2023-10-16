@@ -213,7 +213,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 2
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -322,7 +322,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 2
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -498,7 +498,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 2
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -632,6 +632,39 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &631422982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 631422983}
+  m_Layer: 0
+  m_Name: RenderCharacters
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &631422983
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631422982}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.1828747, y: 2.7587028, z: -17.179712}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1197038554}
+  - {fileID: 1248931315}
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &772812773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -789,7 +822,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 2
   field of view: 44.536
   orthographic: 0
   orthographic size: 5
@@ -831,8 +864,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197038553}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -47.123787, y: 5.4877625, z: -9.125002}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -52.306664, y: 2.7290597, z: 8.05471}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -841,8 +874,8 @@ Transform:
   - {fileID: 772812774}
   - {fileID: 197657293}
   - {fileID: 1815802865}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 631422983}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1248931314
 GameObject:
@@ -854,7 +887,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1248931315}
   m_Layer: 0
-  m_Name: Cameras
+  m_Name: TextureCams
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -867,8 +900,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1248931314}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -116.81147, y: -6.7040167, z: 16.72336}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -121.99435, y: -9.462719, z: 33.903072}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -877,8 +910,8 @@ Transform:
   - {fileID: 149340684}
   - {fileID: 107516458}
   - {fileID: 870790824}
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 631422983}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1357517277
 GameObject:
@@ -970,7 +1003,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 2
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -1369,6 +1402,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 8b6ca66cf21170749b7c0644ee77cc39, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1e1c9a1deae9a6b46afd13d6beef18db, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b6ca66cf21170749b7c0644ee77cc39, type: 3}
 --- !u!4 &2120919854 stripped

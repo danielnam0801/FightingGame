@@ -20,8 +20,6 @@ public class CameraManager : MonoBehaviour
     [SerializeField] PlayableDirector introDirector;
     [SerializeField] PlayableDirector winDirector;
 
-
-
     private TrackAsset winTrack = null;
     private TrackAsset winCameraTrack = null;
     private TrackAsset loseTrack = null;
@@ -29,6 +27,7 @@ public class CameraManager : MonoBehaviour
 
     private TimelineAsset winTimeline;
     private TimelineAsset loseTimeline;
+    private FightManager fightManager;
 
     string winTrackName = "Winning";
     string loseTrackName = "Losing";
@@ -44,6 +43,7 @@ public class CameraManager : MonoBehaviour
 
     public void Init(GameObject player1, GameObject player2)
     {
+        fightManager = GameObject.Find("FightManager").GetComponent<FightManager>();
         Able = true;
         introDirector.Play();
         CameraInit(player1, player2);
@@ -79,38 +79,21 @@ public class CameraManager : MonoBehaviour
 
         introDirector = GameObject.Find("IntroTimeLine").GetComponent<PlayableDirector>();
 
-        Player1FCam.gameObject.SetActive(false);
-        Player2FCam.gameObject.SetActive(false);
+        //Player1FCam.gameObject.SetActive(false);
+        //Player2FCam.gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        if (!Able) return;
-
-        if (introCam.transform.position == vec)
+        if (Vector3.Distance(introCam.transform.localPosition, vec) <= 0.01f)
         {
-            IntroTimeLineDone = true;
-            introCam.gameObject.SetActive(false);
+            if(IntroTimeLineDone == false)
+            {
+                IntroTimeLineDone = true;
+                introCam.gameObject.SetActive(false);
+                fightManager.StartUI();
+            }
         }
-        #region DebugÄÚµå
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    introDirector.Stop();
-        //    StartCoroutine(ShakeCamera());
-        //}
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    introDirector.Stop();
-        //    StartCoroutine(WinnerRotateCamera());
-        //    shakeCam.gameObject.SetActive(false);
-        //}
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    introDirector.Stop();
-        //    StartCoroutine(LoserRotateCamera());
-        //    shakeCam.gameObject.SetActive(false);
-        //}
-        #endregion
     }
 
     public void Shake(bool flag)
